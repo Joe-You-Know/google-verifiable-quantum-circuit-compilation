@@ -48,32 +48,65 @@ The full source dataset and large binaries are not committed.
 
 ## Reproduce under WSL
 
-Run from the repository root:
+Run from the repository root. **The bundled Kaggle `kickmix/kickmix.so`
+requires CPython 3.13.** In particular, Python 3.12 lacks
+`PyObject_ClearManagedDict`. Structural optimizer tests require only
+the Python standard library and also work on 3.12.
+
+If `python3.13` is already available:
 
 ~~~bash
-python3 -m unittest discover -s tests -v
-python3 tools/causal_frontier_kmx.py original.kmx optimized.kmx --report optimized.audit.json
+python3.13 -m venv ~/vqcc-venv
+source ~/vqcc-venv/bin/activate
+python -m pip install -U pip
+python -m pip install numpy scipy
 ~~~
+
+Otherwise install a separate 3.13 runtime with `uv` (rather than replacing
+Ubuntu's system Python). See https://docs.astral.sh/uv/getting-started/installation/
+
+~~~bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+export PATH="$HOME/.local/bin:$PATH"
+uv python install 3.13
+uv venv --python 3.13 ~/vqcc-venv
+source ~/vqcc-venv/bin/activate
+uv pip install numpy scipy
+~~~
+
+Check the exact library load **before** running conversions:
+
+~~~bash
+export PYTHONPATH="$PWD/kickmix:$PWD/verifiers"
+python -c 'import sys,kickmix,numpy,scipy; print(sys.version); print(kickmix.__file__)'
+python -m unittest discover -s tests -v
+python tools/causal_frontier_kmx.py original.kmx optimized.kmx --report optimized.audit.json
+~~~
+
+If `import kickmix` fails with a missing `GLIBCXX_3.4.32`, the local
+`libstdc++.so.6` is too old; it needs the corresponding GCC 13 runtime.
+Ubuntu 24.04 normally has a sufficiently recent C++ runtime, but confirm
+the actual diagnostic rather than overriding shared-library paths blindly.
 
 For binary competition circuits, first configure the Kickmix package
 already provided under kickmix/:
 
 ~~~bash
 export PYTHONPATH="$PWD/kickmix:$PWD/verifiers"
-python3 scripts/convert_kickmix.py sample_submission/invsqrt.kmb \
+python scripts/convert_kickmix.py sample_submission/invsqrt.kmb \
   /tmp/invsqrt_original.kmx
-python3 tools/causal_frontier_kmx.py /tmp/invsqrt_original.kmx \
+python tools/causal_frontier_kmx.py /tmp/invsqrt_original.kmx \
   /tmp/invsqrt_optimized.kmx --report /tmp/invsqrt_optimized.audit.json
-python3 scripts/convert_kickmix.py /tmp/invsqrt_optimized.kmx \
+python scripts/convert_kickmix.py /tmp/invsqrt_optimized.kmx \
   /tmp/invsqrt_optimized.kmb
 ~~~
 
 Short smoke test, **not** full benchmark verification:
 
 ~~~bash
-python3 verifiers/invsqrt/verify_submission_invsqrt.py \
+python verifiers/invsqrt/verify_submission_invsqrt.py \
   sample_submission/invsqrt.kmb --max-x 16 --shots-per-x 2 --max-workers 1
-python3 verifiers/invsqrt/verify_submission_invsqrt.py \
+python verifiers/invsqrt/verify_submission_invsqrt.py \
   /tmp/invsqrt_optimized.kmb --max-x 16 --shots-per-x 2 --max-workers 1
 ~~~
 
@@ -87,8 +120,8 @@ family directory, retaining the same submission.npz. Then run the
 original verifiers from this repository:
 
 ~~~bash
-python3 verifiers/dfthcsos/verify.py sample_submission/dfthcsos --shots-per-address 1
-python3 verifiers/dfthcsos/verify.py /path/to/optimized_family --shots-per-address 1
+python verifiers/dfthcsos/verify.py sample_submission/dfthcsos --shots-per-address 1
+python verifiers/dfthcsos/verify.py /path/to/optimized_family --shots-per-address 1
 ~~~
 
 The chemistry verifier requires the locally retained FCIDUMP file under
