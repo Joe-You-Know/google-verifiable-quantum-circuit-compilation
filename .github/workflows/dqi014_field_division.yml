@@ -5,6 +5,7 @@ on:
     paths:
       - 'scripts/probe_dqi014_field_division.py'
       - 'scripts/verify_dqi014b_source_shear.py'
+      - 'scripts/bench_dqi015_quotient_modes.py'
       - '.github/workflows/dqi014_field_division.yml'
   workflow_dispatch:
 
@@ -29,9 +30,14 @@ jobs:
         run: |
           PYTHONPATH="$PWD/kickmix:$PWD/verifiers:$PWD" python scripts/verify_dqi014b_source_shear.py \
             --degree 4 12 --cases 500 --report /tmp/dqi014b_source_qr.json
+      - name: Compare quotient gadget circuit alternatives
+        run: |
+          PYTHONPATH="$PWD/kickmix:$PWD/verifiers:$PWD" python scripts/bench_dqi015_quotient_modes.py \
+            --degree 4 12 --report /tmp/dqi015_quotient_modes.json
       - uses: actions/upload-artifact@v4
         with:
           name: dqi014_field_scaffold
           path: |
             /tmp/dqi014_field_scaffold.jsonl
             /tmp/dqi014b_source_qr.json
+            /tmp/dqi015_quotient_modes.json
