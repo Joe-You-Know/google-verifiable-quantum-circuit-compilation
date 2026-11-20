@@ -1,0 +1,57 @@
+{
+  "experiment": "001",
+  "date": "2026-11-20",
+  "task": "Invsqrt",
+  "verification": "Official supplied Invsqrt verifier, deliberately shortened smoke test only",
+  "command_arguments": {
+    "max_x": 16,
+    "shots_per_x": 2,
+    "batch_size": 16,
+    "max_workers": 1,
+    "seed": 20261120
+  },
+  "full_benchmark_completed": false,
+  "original": {
+    "status": "PASS",
+    "score": 2064361.8235632381,
+    "toffoli_equivalent": 7939.853167550916,
+    "toffoli_count": 7735,
+    "max_toffoli_count": 7735,
+    "t_count": 1,
+    "rotation_count": 37,
+    "rotation_eps": 9.093815087336398e-10,
+    "num_qubits": 260,
+    "reaction_depth": 4005,
+    "num_ops": 62160,
+    "verified_shots": 32,
+    "worst_error_over_tolerance": 0.28125,
+    "worst_x": 1,
+    "circuit_sha256": "e2bf8eb64350a4460a271fc7f1d591ef125b1e276377e9a0f64b96ab3ca321e1"
+  },
+  "optimized": {
+    "status": "PASS",
+    "score": 2064361.8235632381,
+    "toffoli_equivalent": 7939.853167550916,
+    "toffoli_count": 7735,
+    "max_toffoli_count": 7735,
+    "t_count": 1,
+    "rotation_count": 37,
+    "rotation_eps": 9.093815087336398e-10,
+    "num_qubits": 260,
+    "reaction_depth": 4005,
+    "num_ops": 62156,
+    "verified_shots": 32,
+    "worst_error_over_tolerance": 0.28125,
+    "worst_x": 1,
+    "circuit_sha256": "c56be5aea2d9ef05dc74f3019971b73fe23535f895897e21726765223d7d28e3"
+  },
+  "delta": {
+    "num_ops": -4,
+    "toffoli_count": 0,
+    "num_qubits": 0,
+    "reaction_depth": 0,
+    "score": 0
+  },
+  "source": "user-provided WSL terminal output",
+  "independent_reexecution_in_chat": false
+}
