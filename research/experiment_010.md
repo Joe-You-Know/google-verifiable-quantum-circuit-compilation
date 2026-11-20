@@ -127,3 +127,52 @@ with Kickmix, compare exact phase and all register outputs over every
 basis-state input, and measure Toffoli-like cost and qubits. If the
 remainder circuit costs more, retain the counterexample rather than
 claiming an advantage.
+
+
+## Experiment 011 — literal field-multiplication cost falsifies naive QR
+
+The unmodified Kickmix reversible operation
+builder.ixor_gf2_mul(a,b,target=t,field=gf) was compiled on 2026-11-20.
+Static Toffoli costs were:
+
+| GF degree | Variable field-multiply Toffoli cost |
+|---|---:|
+| 6 | 21 |
+| 8 | 27 |
+| 12 | **63** |
+
+These values were measured from the original builder in
+scripts/profile_dqi_forney_gadgets.py, not inferred from a presumed
+quadratic cost formula.
+
+For q=4096, naive degree-4094 by degree-35 monic polynomial long
+division has up to
+
+    (4095 - 35) * 35 = 142,100
+
+nontrivial variable field coefficient products. At 63 Toffoli-like
+gates each, a straightforward unshared Kickmix implementation would
+cost up to 8,952,300 Toffoli-like gates in those multiplications,
+before reversible cleanup and ancilla costs.
+
+By comparison, the existing Forney inverse scaffold costs
+
+    4,095 * 315 = 1,289,925
+
+static Toffoli-like gates if its measured b=12 source law extends to
+the full decoder. The break-even multiplication-only budget is
+
+    1,289,925 / 63 = 20,475
+
+variable GF(2^12) multiplication equivalents, before accounting
+for any replacement's other gates and qubit occupancy.
+
+**Conclusion:** naive polynomial long division is unattractive as an
+implementation of the exact source-relative phase identity. This
+falsifies a particular cost proposal, not the identity or the
+possibility of faster quotient/remainder transport.
+
+Next target: fast or transposed polynomial remainder algorithms on
+a locator of degree at most 35, where the 4095-element mask input is
+classical. Derive full reversible Toffoli and qubit costs, including
+scratch cleanup, against this budget before replacing the DQI circuit.
