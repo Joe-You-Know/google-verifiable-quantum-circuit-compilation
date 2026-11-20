@@ -1,0 +1,75 @@
+{
+  "experiment": "006_preflight",
+  "date": "2026-11-20",
+  "source": "sample_submission/dfthcsos/submission.npz angle_words, original 12 bit, J=8",
+  "method": "compare original scalar uniformity test with correct whole-vector uniformity",
+  "verification": "GitHub Actions source-tree scan, no physical verifier executed",
+  "ci_run": "https://github.com/Joe-You-Know/google-verifiable-quantum-circuit-compilation/actions/runs/44827749977",
+  "circuits": 10,
+  "source_rows": 3976,
+  "predicted_and_reduction_total": 0,
+  "missed_uniform_subtree_witnesses": 0,
+  "per_circuit": [
+    {
+      "angle_k": 0,
+      "legacy_AND_nodes": 3974,
+      "corrected_AND_nodes": 3974,
+      "predicted_reduction": 0
+    },
+    {
+      "angle_k": 1,
+      "legacy_AND_nodes": 3974,
+      "corrected_AND_nodes": 3974,
+      "predicted_reduction": 0
+    },
+    {
+      "angle_k": 2,
+      "legacy_AND_nodes": 3974,
+      "corrected_AND_nodes": 3974,
+      "predicted_reduction": 0
+    },
+    {
+      "angle_k": 3,
+      "legacy_AND_nodes": 3974,
+      "corrected_AND_nodes": 3974,
+      "predicted_reduction": 0
+    },
+    {
+      "angle_k": 4,
+      "legacy_AND_nodes": 3974,
+      "corrected_AND_nodes": 3974,
+      "predicted_reduction": 0
+    },
+    {
+      "angle_k": 5,
+      "legacy_AND_nodes": 3974,
+      "corrected_AND_nodes": 3974,
+      "predicted_reduction": 0
+    },
+    {
+      "angle_k": 6,
+      "legacy_AND_nodes": 3974,
+      "corrected_AND_nodes": 3974,
+      "predicted_reduction": 0
+    },
+    {
+      "angle_k": 7,
+      "legacy_AND_nodes": 3974,
+      "corrected_AND_nodes": 3974,
+      "predicted_reduction": 0
+    },
+    {
+      "angle_k": 8,
+      "legacy_AND_nodes": 3974,
+      "corrected_AND_nodes": 3974,
+      "predicted_reduction": 0
+    },
+    {
+      "angle_k": 9,
+      "legacy_AND_nodes": 3974,
+      "corrected_AND_nodes": 3974,
+      "predicted_reduction": 0
+    }
+  ],
+  "interpretation": "Even though the scalar comparison is too narrow in the reference implementation, this baseline table has no whole-vector uniform subtree witnesses that it misses. No Toffoli reduction is obtained by correcting that predicate for this source."
+}
