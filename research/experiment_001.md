@@ -105,10 +105,22 @@ Short smoke test, **not** full benchmark verification:
 
 ~~~bash
 python verifiers/invsqrt/verify_submission_invsqrt.py \
-  sample_submission/invsqrt.kmb --max-x 16 --shots-per-x 2 --max-workers 1
+  sample_submission/invsqrt.kmb --max-x 16 --shots-per-x 2 --batch-size 16 --max-workers 1
 python verifiers/invsqrt/verify_submission_invsqrt.py \
-  /tmp/invsqrt_optimized.kmb --max-x 16 --shots-per-x 2 --max-workers 1
+  /tmp/invsqrt_optimized.kmb --max-x 16 --shots-per-x 2 --batch-size 16 --max-workers 1
 ~~~
+
+The original failed at the verifier's argument-validation gate when run
+without `--batch-size 16`: 16 inputs times 2 shots = 32 shots, not divisible
+by the default batch size of 256. This flag corrects the smoke-test settings;
+no verifier pass is claimed yet.
+
+Local WSL CPython 3.13/Kickmix conversion of the submitted Invsqrt baseline
+reported 62,160 operations, 260 qubits, and 7,735 static Toffoli-like gates.
+The conservative optimizer identified two pairs and omitted four X gates,
+leaving 62,156 operations, 260 qubits and 7,735 static Toffoli-like gates.
+No Toffoli improvement was observed in this test. Both `.kmb` conversions
+succeeded; functional verification is still pending.
 
 Both runs must pass. To compare the same stochastic trajectories during
 diagnostics, use an identical explicit --seed for both. Without --seed,
