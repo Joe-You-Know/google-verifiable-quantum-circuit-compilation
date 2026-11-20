@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - 'scripts/probe_dqi014_field_division.py'
+      - 'scripts/verify_dqi014b_source_shear.py'
       - '.github/workflows/dqi014_field_division.yml'
   workflow_dispatch:
 
@@ -24,7 +25,13 @@ jobs:
       - name: Probe untouched Kickmix GF division with inverse scaffolds
         run: |
           PYTHONPATH="$PWD/kickmix:$PWD/verifiers:$PWD" python scripts/probe_dqi014_field_division.py | tee /tmp/dqi014_field_scaffold.jsonl
+      - name: Test source-preserving polynomial quotient shear (original paper Thm 4.1)
+        run: |
+          PYTHONPATH="$PWD/kickmix:$PWD/verifiers:$PWD" python scripts/verify_dqi014b_source_shear.py \
+            --degree 4 12 --cases 500 --report /tmp/dqi014b_source_qr.json
       - uses: actions/upload-artifact@v4
         with:
           name: dqi014_field_scaffold
-          path: /tmp/dqi014_field_scaffold.jsonl
+          path: |
+            /tmp/dqi014_field_scaffold.jsonl
+            /tmp/dqi014b_source_qr.json
