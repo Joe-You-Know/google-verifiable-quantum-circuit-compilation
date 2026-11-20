@@ -95,3 +95,57 @@ tests, and optional Windows Qiskit comparison runner.
 
 No cryptographic or Kaggle benefit is claimed without a newly
 compiled circuit, blind information test, and resource measurements.
+
+
+## DQI-first correction: Experiment 016 actual coherent quotient ROM
+
+**2026-11-20:** The intended cross-application was a lower-qubit
+**DQI** circuit, not an effort to optimize QDay for its own sake.
+The QDay host-built ROM was therefore transferred to DQI's *quantum*
+controlled quotient division and actually compiled with Kickmix.
+
+For every nonzero denominator value d, the quotient update
+target XOR=control*(numerator/d) is a linear GF2 transform of the
+numerator. The construction computes the predicate [denominator=d]
+under the original quantum control, applies its precomputed linear
+map through controlled Toffolis, and uncomputes the predicate.
+Denominator=0 gives no update. This preserves all inputs, controls,
+target XOR behavior and scratch cleanup.
+
+Original-source vs QDay-ROM measurements (independent Kickmix
+simulator, GitHub CI run 44840542001):
+
+| width | mode | Q | static Toffoli | simulator tests |
+|---:|---|---:|---:|---:|
+| 4 | native scaffold | 25 | 31 | 1536 PASS |
+| 4 | QDay denominator ROM | 18 | 278 | 1536 PASS |
+| 6 | native scaffold | 43 | 90 | 512 PASS |
+| 6 | QDay denominator ROM | 26 | 2034 | 512 PASS |
+
+Thus the method truly reduces **isolated gadget** Q while retaining
+reversible quotient behavior. The Toffoli burden, however, is too
+large for an attractive Q^2*T improvement at full field width.
+
+Exactly, each nonzero denominator d produces a constant GF2 linear
+numerator map. For each numerator bit j, the image of its basis
+vector under inverse(d) runs through all nonzero output words as d
+runs through nonzero field elements. Across all d, each target bit
+appears 2^(b-1) times; b sources times b targets gives
+b^2*2^(b-1) controlled XOR terms.
+
+At b=12, direct expansion gives 294,912 such terms per quotient
+before address equality comparisons. The existing b=12 native
+controlled quotient gadget costs only 390 static Toffolis, with
+109 total gadget qubits. A 12-bit full ROM has not been compiled.
+
+The transfer therefore succeeds on *correctness and isolated qubit
+compression*, but fails as an immediate efficient Toffoli design.
+Next research should factor the 12-bit field into smaller coherent
+subfield operations or prove that some EEA source denominator
+values are unreachable; never assume that simply from tiny-curve
+public ROM tables.
+
+Source and exact reproducible checks:
+scripts/bench_dqi016_qday_rom_quotient.py;
+research/experiment_016_qday_rom_dqi_ci_results.json.
+Whole DQI verifier has NOT run against a replacement.
