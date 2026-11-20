@@ -90,3 +90,19 @@ Compare the output with research/experiment_001_invsqrt_smoke.json.
 A passing 32-shot smoke test is necessary but insufficient for full
 competition acceptance. Scored resource improvement must be separately
 observed rather than inferred from instruction count.
+
+
+### Reproducing the archive audit
+
+Extract the user-supplied ThemBones archive to any private local directory.
+Then run from the repo root:
+
+~~~bash
+python scripts/audit_reversible_segments.py \
+  /path/to/archive/chem/loaders_kmx --samples 8 --seed 20261120
+~~~
+
+Expected structural audit: 15 files, 51 changed reversible segments, 408
+independent randomized basis comparisons, all PASS. This command does
+**not** require Kickmix to be installed because it evaluates only runs of
+X/CX/CCX gates separated by preserved instruction barriers.
