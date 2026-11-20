@@ -24,7 +24,7 @@ jobs:
       - name: Exhaustive reference-model checks and candidate builds
         run: |
           PYTHONPATH="$PWD/kickmix:$PWD/verifiers" python scripts/sweep_invsqrt_precision.py \
-            --levels 1 --pairwise --full --chunk 32768 \
+            --levels 1 --combination-order 5 --full --chunk 32768 \
             --output-dir /tmp/vqcc_precision_full \
             --report /tmp/vqcc_precision_full.json
       - name: Independent supplied Kickmix verifier (32-shot smoke)
