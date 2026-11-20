@@ -3,12 +3,15 @@
 **Date:** 2026-11-20.  
 **Competition:** https://www.kaggle.com/competitions/google-verifiable-quantum-circuit-compilation
 
-**Status:** prepared for packaging and submission by the user, **not submitted**
-by GitHub or ChatGPT. No Kaggle score, receipt or leaderboard placement is claimed.
+**Status:** user reported an initial Kaggle rejection due to the uploaded
+ZIP filename, which had been generated as `vqcc_experiment003.zip`.
+The user renamed it to `submission.zip`; a subsequent accepted upload or
+Kaggle score has **not** yet been confirmed in the current conversation.
+No Kaggle score, receipt or leaderboard placement is claimed.
 
 ## Submission contract
 
-The competition requires exactly one ZIP archive containing:
+The user's Kaggle submission attempt established that the **outer archive filename must be exactly `submission.zip`**. Our earlier packager incorrectly permitted other ZIP filenames; the issue is corrected, with a regression test. The competition ZIP contains:
 
 - invsqrt.kmb — our best Experiment 003 precision candidate;
 - dqi.kmb — the local, large DQI sample from the competition;
@@ -45,30 +48,32 @@ python scripts/package_vqcc_submission.py \
   --invsqrt /tmp/vqcc_best003/delta_bits_and_product_bits_and_result_bits_minus_1.kmb \
   --dqi sample_submission/dqi.kmb \
   --chemistry sample_submission/dfthcsos \
-  --output submissions/vqcc_experiment003.zip \
+  --output submissions/submission.zip \
   --report submissions/vqcc_experiment003.audit.json
 
-python -m zipfile -l submissions/vqcc_experiment003.zip
+python -m zipfile -l submissions/submission.zip
 ~~~ 
 
 The ZIP will appear on Windows at:
 D:\google-verifiable-quantum-circuit-compilation\submissions\vqcc_experiment003.zip
 
-For Kaggle CLI (once the competition rules are accepted and your own
-Kaggle account credentials configured locally):
+If your existing ZIP was already built and renamed, **do not rebuild** it.
+Verify in Windows PowerShell with
+`Test-Path .\\submissions\\submission.zip`, and use the file you renamed.
 
-~~~bash
-python -m pip install kaggle
-kaggle competitions submit \
-  -c google-verifiable-quantum-circuit-compilation \
-  -f submissions/vqcc_experiment003.zip \
-  -m "Exp003 Invsqrt precision optimization; baseline DQI and chemistry"
-kaggle competitions submissions -c google-verifiable-quantum-circuit-compilation
+For the already-installed Kaggle CLI in **Windows PowerShell**, submit as
+**one line** (no Bash backslashes):
+
+~~~powershell
+kaggle competitions submit google-verifiable-quantum-circuit-compilation -f ".\\submissions\\submission.zip" -m "Experiment 003: optimized Invsqrt, baseline DQI and chemistry"
+kaggle competitions submissions google-verifiable-quantum-circuit-compilation
 ~~~
 
 Alternatively use the competition's Submit page in the Kaggle website
-to upload that exact ZIP. Never send credentials to ChatGPT or commit
-them into the repository.
+to upload `submission.zip`. Never send credentials to ChatGPT or commit
+them into the repository. If uploading fails, preserve the exact Kaggle
+rejection message. Rename only changes the outer file path: it does
+not alter the ZIP's internal member names or their contents.
 
 ## Validation distinction
 
