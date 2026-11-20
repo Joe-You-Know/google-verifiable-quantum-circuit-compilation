@@ -78,12 +78,39 @@ class AllocatorLedger:
         self.release_counts = Counter()
         self.max_explicit_live = 0
         self.max_explicit_slot_id = -1
+        self.unobserved_native_releases = 0
 
     def __getattr__(self, name):
         return getattr(self.inner, name)
 
     def mark(self, name):
         return LabeledMark(self, name, self.inner.mark(name))
+
+    def _register_native_returns(self, returned, name):
+        # Some Kickmix helpers allocate their source-visible result
+        # registers internally and return handles for subsequent source
+        # release. Adopt those newly visible handles as separate occurrences.
+        for index, item in enumerate(returned):
+            previously_unknown = [q for q in handles(item)
+                                  if isinstance(q, km.q)
+                                  and int(q.id) not in self.live]
+            if previously_unknown:
+                self._register(km.array(previously_unknown),
+                               "native_returned_scaffold",
+                               f"{name}[{index}]")
+        return returned
+
+    def init_gf2_div_with_scaffold(self, *args, **kwargs):
+        return self._register_native_returns(
+            self.inner.init_gf2_div_with_scaffold(*args, **kwargs),
+            "init_gf2_div_with_scaffold",
+        )
+
+    def init_gf2_inverse_with_scaffold(self, *args, **kwargs):
+        return self._register_native_returns(
+            self.inner.init_gf2_inverse_with_scaffold(*args, **kwargs),
+            "init_gf2_inverse_with_scaffold",
+        )
 
     def _register(self, value, kind: str, label: str):
         qs = handles(value)
@@ -135,14 +162,23 @@ class AllocatorLedger:
         for q in quantum:
             index = int(q.id)
             if index not in self.live:
-                raise AssertionError(f"source-tracked qubit {index} freed without known allocation")
-            released.append(self.live[index])
+                # The original native C++ helper may have allocated this
+                # returned or ephemeral scaffold without crossing our
+                # Python allocation wrapper. Its *release* is witnessed,
+                # but its birth is not: preserve the absence of evidence
+                # instead of inventing a precise source allocation event.
+                released.append(None)
+            else:
+                released.append(self.live[index])
             physical_ids.append(index)
         # Native builder may reject an invalid release. Do not mutate ledger
         # until it has accepted it.
         self.inner.free(register)
         for index in physical_ids:
-            del self.live[index]
+            if index in self.live:
+                del self.live[index]
+            else:
+                self.unobserved_native_releases += 1
         self.release_counts["quantum"] += len(quantum)
         self.release_counts["classical"] += len(classical)
         if quantum:
@@ -213,6 +249,7 @@ def audit_instance(n: int, m: int, degree: int):
         "quantum_occurrences_released": ledger.release_counts["quantum"],
         "distinct_slots_used_for_explicit_sources": len(ledger.generations),
         "physical_slots_with_multiple_source_occurrences": len(reused),
+        "native_helper_qubits_released_without_observed_birth": ledger.unobserved_native_releases,
         "largest_source_occurrence_generation": max(ledger.generations.values(), default=0),
         "explicit_source_stage_allocation_counts": dict(by_source_stage),
         "explicit_events": ledger.events,
