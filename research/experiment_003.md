@@ -195,3 +195,23 @@ measurement seeds; investigate bit-width dependence and compensated
 rounding without weakening the source-ledger or published accuracy
 contract. Do not merge the draft branch into main as an accepted
 competition improvement before appropriate verifier evidence.
+
+
+## Targeted Kickmix source-input challenge — PASS
+
+On 2026-11-20 the separate GitHub Actions run 44813583491 compiled
+the best candidate independently and tested 83 distinct difficult x
+values, 64 simulator shots per value (5,312 shots total).
+
+Included the model's worst x=2,684,414 and its neighbors, the
+reference's worst x=2,588,411, another reduced-precision boundary
+x=284,670, the first 16 positive inputs and power-of-two boundaries.
+
+**PASS**, zero register-restoration, scratch or phase failures.
+Worst Kickmix phase error / tolerance = 0.8469246188549967
+at x=2,684,414; SHA-256 of generated best .kmb:
+9816fbfb5544949fb2c448410daf8144b825e45d0105cb118aac75c1a8c910e9.
+
+Structured receipt: research/experiment_003_targeted_ci_results.json.
+The targeted audit shares the source official reference phase
+calculation but is not the complete official grader.
