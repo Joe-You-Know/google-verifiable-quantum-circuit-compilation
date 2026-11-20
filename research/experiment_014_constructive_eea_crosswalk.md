@@ -115,3 +115,52 @@ has not been run on a replacement.
 
 No claim about speedup, field inversion removal or Kaggle score
 improvement is made before this is demonstrated.
+
+
+## Experiment 015 controlled inverse-product falsification (completed)
+
+A fourth native quotient gadget variant was compiled and measured
+without changing the original DQI decoder. It constructs the field
+inverse and retained chain, then accumulates numerator*inverse
+**under the original quantum control** directly into q_i before
+uncomputing the inverse and chain:
+
+    inverse, chain = builder.init_gf2_inverse_with_scaffold(
+        denominator, field=gf)
+    builder.ixor_gf2_mul(numerator, inverse,
+        target=accumulator, field=gf, control=control)
+    builder.del_gf2_inverse_with_scaffold(
+        denominator, target=inverse, scaffold=chain, field=gf)
+    builder.free(chain + inverse)
+
+GitHub CI run 44837641112 PASS, source script
+scripts/bench_dqi015_quotient_modes.py.
+
+| degree | gadget mode | conditional | qubits | static Toffoli | ops |
+|---:|---|---|---:|---:|---:|
+| 4 | held quotient plus scaffold | YES | 25 | 31 | 461 |
+| 4 | recomputed division | YES | 25 | 49 | 793 |
+| 4 | controlled inverse product | YES | 25 | 31 | 459 |
+| 4 | unconditional direct quotient XOR | NO | 21 | 27 | 410 |
+| 12 | held quotient plus scaffold | YES | 109 | 390 | 6252 |
+| 12 | recomputed division | YES | 109 | 705 | 11621 |
+| 12 | controlled inverse product | YES | 109 | 390 | 6250 |
+| 12 | unconditional direct quotient XOR | NO | 97 | 378 | 5949 |
+
+The proposed controlled inverse-product variant **did not reduce Q**.
+The native implementation allocates enough additional workspace that
+the 12-bit result-register omission does not reduce its peak.
+The unconditional direct quotient XOR saves 12 qubits in the isolated
+gadget but **is not source-equivalent** because it lacks the quantum
+condition and cannot be accepted as a DQI replacement.
+
+Conclusion: a source law's exact quotient identity does not by itself
+remove the physical inverse and control implementation obligation.
+A genuine reduction now requires modifying/lowering the native
+division construction or deriving a quantum-controlled QR update that
+shares its temporary workspace with existing inputs and proves
+cleanup. Such a design must first be falsified at small GF degrees
+with complete basis-state tests and then checked by the official DQI
+phase verifier.
+
+No benchmark Q reduction or competition gain has been demonstrated.
