@@ -1,0 +1,27 @@
+{
+  "experiment": "001",
+  "source": "User-supplied third-party ThemBones generator archive (archive (2).zip), chem/loaders_kmx/",
+  "verification": "local structural proof and Python truth tables only; official Kickmix verifier not run",
+  "method": "conservative-causal-frontier-v1",
+  "circuits": [
+    {"name": "angle_k_0.kmx",  "cx_removed": 140, "ccx_removed": 0},
+    {"name": "angle_k_1.kmx",  "cx_removed": 276, "ccx_removed": 0},
+    {"name": "angle_k_2.kmx",  "cx_removed": 160, "ccx_removed": 0},
+    {"name": "angle_k_3.kmx",  "cx_removed": 132, "ccx_removed": 0},
+    {"name": "angle_k_4.kmx",  "cx_removed": 156, "ccx_removed": 0},
+    {"name": "angle_k_5.kmx",  "cx_removed": 338, "ccx_removed": 0},
+    {"name": "angle_k_6.kmx",  "cx_removed": 130, "ccx_removed": 0},
+    {"name": "angle_k_7.kmx",  "cx_removed": 306, "ccx_removed": 0},
+    {"name": "angle_k_8.kmx",  "cx_removed": 132, "ccx_removed": 0},
+    {"name": "angle_k_9.kmx",  "cx_removed": 150, "ccx_removed": 0},
+    {"name": "angle_k_10.kmx", "cx_removed": 116, "ccx_removed": 0},
+    {"name": "angle_k_11.kmx", "cx_removed": 216, "ccx_removed": 0},
+    {"name": "angle_k_12.kmx", "cx_removed": 116, "ccx_removed": 0},
+    {"name": "angle_k_13.kmx", "cx_removed": 128, "ccx_removed": 0},
+    {"name": "angle_k_14.kmx", "cx_removed": 116, "ccx_removed": 0}
+  ],
+  "total_cx_removed": 2612,
+  "total_ccx_removed": 0,
+  "total_pairs_removed": 1306,
+  "official_score_delta": null
+}
