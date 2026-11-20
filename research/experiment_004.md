@@ -102,3 +102,37 @@ Kaggle submission.
   from the same CI run.
 - No numerical chemistry candidate has been reported as PASS yet.
 - No official dfthcsos verification has been reported as PASS yet.
+
+
+## Automated stage-B circuit verification
+
+Once the numeric screen has built candidate folders, use the unmodified
+chemistry verifier to compare the original and **every** built candidate
+without silently ignoring failed candidates:
+
+~~~bash
+python scripts/verify_chem_precision_candidates.py \
+  --baseline sample_submission/dfthcsos \
+  --candidates /tmp/vqcc_chem004_candidates \
+  --shots-per-address 64 \
+  --report /tmp/vqcc_chem004_verified.json
+~~~
+
+Every source address is tested with 64 simulator shots, including
+original-word recovery, register cleanup, phase correctness, chemical
+accuracy and scored resources. The JSON keeps explicit failure reasons
+and chooses the minimum passing score; it does not create or upload a
+Kaggle ZIP, nor does it overwrite the already-grading submission.
+
+## Experiment 006 negative-control audit
+
+The shipped QROM builder also has an overly restrictive early-exit
+predicate: it compares a subtree with one scalar instead of the entire
+row vector. A corrected vector-uniform predicate is exact in principle,
+but the 2026-11-20 10-circuit CI scan showed **zero** missed uniform
+subtrees in this particular baseline, and **zero** predicted Toffoli
+savings. All ten families retained 3974 needed AND nodes each.
+
+Evidence: research/experiment_006_preflight.json; CI run 44827749977.
+Do not spend additional runs on that exact predicate unless new source
+tables exhibit the missing equality witnesses.
