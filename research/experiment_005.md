@@ -75,3 +75,56 @@ independently checked full DQI instance. Avoid treating low-confidence
 shot tests as an official score: the default confidence requirement is
 extremely strict at 2**(-128), and small sample sizes can fail the
 confidence bound even for zero observed errors.
+
+
+## Constructive square-factor accounting: independently indexed rows
+
+**2026-11-20 correction:** The numerical scoring factor Q^2 should be
+retained as distinguishable source stages, rather than reduced to a
+label before analyzing individual qubit nonconstruction obligations.
+
+At stage i the newly constructed square shell consists of:
+- i-1 cells with first index i and second index smaller than i;
+- i-1 cells with second index i and first index smaller than i;
+- one diagonal corner (i,i).
+
+This stage contains exactly 2*i-1 distinct cells. There are never two
+copies of (i,i), and every earlier cell retains its own pair identity.
+Thus, with independent occurrence witnesses,
+
+    Q^2 = sum_{i=1}^Q ((i-1) + (i-1) + 1)
+        = sum_{i=1}^Q (2*i-1).
+
+The written expression sum_{i=1}^Q (2*Q-1) is not the same:
+the latter equals Q*(2*Q-1). The term 2*Q-1 is the *last*
+stage's contribution and hence the terminal one-qubit marginal
+when Q changes from Q to Q-1 and the whole square is reindexed.
+
+For benchmark Q=1893:
+- scored quadratic factor = 3,583,449;
+- terminal stage increment = 3,785;
+- rescored factor at Q=1892 = 3,579,664;
+- change for k removed qubits after a valid recompilation:
+  sum_{i=Q-k+1}^{Q}(2*i-1) = k*(2*Q-k).
+
+scripts/constructive_qubit_square.py emits all 1,893 separate stage
+records, each retaining distinct row/column/corner sources. Its
+independent tests check all ordered cell identities at small Q,
+source occurrence counts and the exact 1893-qubit ledger.
+
+**Boundary:** This is an indexed derivation of the *unchanged official
+score*. It does NOT mean the existing static circuit can have an
+arbitrary stage removed without preserving the actual quantum
+construction, scratch cleanup and phase. The stage index is an
+accounting occurrence, not a measured mapping onto named physical
+qubits; that association must be added from the original circuit
+allocator before attributing a particular causal dependency.
+
+### Actual reference census (user WSL, 2026-11-20)
+
+The earlier placeholder statement that DQI profiling was pending
+is superseded by the recorded original 886,118,180-byte baseline:
+Q=1893, classical bits=49,154, operations=86,051,014,
+static Toffoli-like=5,725,461, reaction depth=170,757,
+register contract PASS. The original DQI shot verifier remains NOT RUN.
+Source: research/experiment_005_wsl_static_results.json.
