@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - 'scripts/profile_dqi_source_allocations.py'
+      - 'research/test_dqi011_lifetime.py'
       - '.github/workflows/dqi011_allocation_ledger.yml'
   workflow_dispatch:
 
@@ -24,6 +25,8 @@ jobs:
       - name: Syntax and tracked source allocator witness
         run: |
           python -m py_compile scripts/profile_dqi_source_allocations.py
+          PYTHONPATH="$PWD/kickmix:$PWD/verifiers:$PWD" python -m unittest discover \
+            -s research -p "test_dqi011*.py" -v
           PYTHONPATH="$PWD/kickmix:$PWD/verifiers:$PWD" python scripts/profile_dqi_source_allocations.py \
             --n 6 --m 15 --degree 6 \
             --report /tmp/dqi011_source_small.json
