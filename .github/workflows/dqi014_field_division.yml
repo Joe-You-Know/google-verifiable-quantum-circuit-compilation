@@ -1,0 +1,30 @@
+name: DQI GF quotient scaffold source audit
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/probe_dqi014_field_division.py'
+      - '.github/workflows/dqi014_field_division.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  field-division-probe:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Install numerical dependencies
+        run: python -m pip install numpy scipy
+      - name: Probe untouched Kickmix GF division with inverse scaffolds
+        run: |
+          PYTHONPATH="$PWD/kickmix:$PWD/verifiers:$PWD" python scripts/probe_dqi014_field_division.py | tee /tmp/dqi014_field_scaffold.jsonl
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dqi014_field_scaffold
+          path: /tmp/dqi014_field_scaffold.jsonl
