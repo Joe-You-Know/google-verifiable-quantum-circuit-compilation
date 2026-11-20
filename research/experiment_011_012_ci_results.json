@@ -1,0 +1,47 @@
+{
+  "experiment": "011-012",
+  "date": "2026-11-20",
+  "source": "GitHub Actions original-source Kickmix builder audit",
+  "ci_run": "https://github.com/Joe-You-Know/google-verifiable-quantum-circuit-compilation/actions/runs/44833511981",
+  "ci_status": "PASS",
+  "source_decoder": {
+    "n": 6,
+    "m": 15,
+    "degree": 6
+  },
+  "actual_compiled_Q": 180,
+  "named_syndrome_qubits": 36,
+  "non_syndrome_qubits": 144,
+  "static_toffoli_like": 51991,
+  "compiled_operations": 432838,
+  "distinct_temporary_source_allocation_occurrences": 2036,
+  "events": 2836,
+  "named_stage_entries": 632,
+  "physical_slots_with_reused_source_generations": 36,
+  "largest_generation_count_one_slot": 369,
+  "max_explicit_source_live": 177,
+  "known_source_rows": 177,
+  "native_or_unobserved_source_rows": 3,
+  "source_returned_birth_unobserved_releases": 0,
+  "constructive_square": {
+    "Q": 180,
+    "indexed_row_count": 180,
+    "score_factor": 32400,
+    "terminal_one_qubit_marginal": 359
+  },
+  "validity": {
+    "named_syndromes_preserved": true,
+    "tracked_temporaries_released": true,
+    "compiled_Q_taken_from_original_circuit": true,
+    "exact_Q_squared_count": true,
+    "independent_source_allocator_tests": 3,
+    "independent_square_join_tests": 3,
+    "native_helper_use_entirely_observable": false,
+    "physical_qubit_reduction_proven": false,
+    "official_DQI_phase_verifier_run": false
+  },
+  "correction_history": [
+    "max_qubits is a capacity setting and can be infinity, not an observed peak",
+    "Native helper-returned scaffold allocations require distinct source provenance"
+  ]
+}
