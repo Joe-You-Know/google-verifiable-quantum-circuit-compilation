@@ -25,8 +25,17 @@ jobs:
         run: |
           PYTHONPATH="$PWD/kickmix:$PWD/verifiers:$PWD" python scripts/bench_dqi_position_scaling.py \
             --n 6 --degree 6 --positions 15 31 63 \
-            --report /tmp/dqi008.json
+            --report /tmp/dqi008_degree6.json
+          PYTHONPATH="$PWD/kickmix:$PWD/verifiers:$PWD" python scripts/bench_dqi_position_scaling.py \
+            --n 6 --degree 8 --positions 15 31 63 \
+            --report /tmp/dqi008_degree8.json
+          PYTHONPATH="$PWD/kickmix:$PWD/verifiers:$PWD" python scripts/bench_dqi_position_scaling.py \
+            --n 6 --degree 12 --positions 15 31 63 \
+            --report /tmp/dqi008_degree12.json
       - uses: actions/upload-artifact@v4
         with:
           name: dqi008_scaling
-          path: /tmp/dqi008.json
+          path: |
+            /tmp/dqi008_degree6.json
+            /tmp/dqi008_degree8.json
+            /tmp/dqi008_degree12.json
