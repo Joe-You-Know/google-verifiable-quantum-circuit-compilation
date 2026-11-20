@@ -1,0 +1,66 @@
+{
+  "experiment": "016",
+  "date": "2026-11-20",
+  "source": "Original QDay public precomputed ROM constructor adapted to an exact coherent denominator-indexed GF(2^b) quotient controlled XOR",
+  "CI": "https://github.com/Joe-You-Know/google-verifiable-quantum-circuit-compilation/actions/runs/44840542001",
+  "CI_status": "PASS",
+  "result_records": [
+    {
+      "degree": 4,
+      "mode": "native_held_scaffold",
+      "num_qubits": 25,
+      "extra_qubits": 12,
+      "static_toffoli_like": 31,
+      "num_ops": 461,
+      "basis_cases": 1536,
+      "simulator": "PASS",
+      "inputs_control_preserved": true,
+      "workspace_clean": true
+    },
+    {
+      "degree": 4,
+      "mode": "qday_denominator_rom",
+      "num_qubits": 18,
+      "extra_qubits": 5,
+      "static_toffoli_like": 278,
+      "num_ops": 1006,
+      "source_xor_terms": 128,
+      "basis_cases": 1536,
+      "simulator": "PASS",
+      "inputs_control_preserved": true,
+      "workspace_clean": true
+    },
+    {
+      "degree": 6,
+      "mode": "native_held_scaffold",
+      "num_qubits": 43,
+      "extra_qubits": 24,
+      "static_toffoli_like": 90,
+      "num_ops": 1199,
+      "basis_cases": 512,
+      "simulator": "PASS",
+      "inputs_control_preserved": true,
+      "workspace_clean": true
+    },
+    {
+      "degree": 6,
+      "mode": "qday_denominator_rom",
+      "num_qubits": 26,
+      "extra_qubits": 7,
+      "static_toffoli_like": 2034,
+      "num_ops": 6582,
+      "source_xor_terms": 1152,
+      "basis_cases": 512,
+      "simulator": "PASS",
+      "inputs_control_preserved": true,
+      "workspace_clean": true
+    }
+  ],
+  "derived": "For each nonzero denominator d, division by d is a GF(2)-linear map of the numerator's b input bits. For fixed input basis bit j, multiplication by inverse(d) permutes all nonzero GF(2^b) output values as d ranges over field nonzero elements. Each output bit occurs in precisely 2^(b-1) of them, yielding b^2*2^(b-1) controlled bitwise XOR terms in direct ROM expansion.",
+  "degree12_full_table_controlled_XOR_terms": 294912,
+  "degree12_remaining_equality_control_overhead": "not counted",
+  "baseline_degree12_native_held_scaffold_toffoli": 390,
+  "full_n70_syndrome_EEA_quotient_call_occurrences": 888,
+  "conclusion": "A direct QDay-style coherent ROM can lower Q for the isolated quotient on small fields while preserving the control and cleaning workspace, but Toffoli growth is too large for practical DQI Q^2*T. Investigate subfield/tower decomposition, source-constrained denominator classes or compact algebraic inversion, and compare complete circuit with official DQI verifier.",
+  "scope": "No degree12 ROM compiled or quantum-DQI score verified; asymptotic term count is source ROM construction lower-level count, not reported per-shot gate score."
+}
