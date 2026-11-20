@@ -1,0 +1,357 @@
+{
+  "date": "2026-11-20",
+  "status": "Research ledger; no revised Kaggle submission",
+  "sources": {
+    "chem007": "https://github.com/Joe-You-Know/google-verifiable-quantum-circuit-compilation/actions/runs/44829470926",
+    "dqi008": "https://github.com/Joe-You-Know/google-verifiable-quantum-circuit-compilation/actions/runs/44829983645",
+    "dqi009": "https://github.com/Joe-You-Know/google-verifiable-quantum-circuit-compilation/actions/runs/44830078401",
+    "dqi010": "https://github.com/Joe-You-Know/google-verifiable-quantum-circuit-compilation/actions/runs/44830497018"
+  },
+  "chemistry_007": {
+    "source_rows": 3976,
+    "source_bits": 12,
+    "target_bits": 11,
+    "source_vector_loss_before": 0.02967386568139805,
+    "source_vector_loss_after": 0.02966185227963427,
+    "relative_reduction": 0.00040484788509742575,
+    "status": "source-vector projection PASS, chemical metrics NOT_RUN"
+  },
+  "dqi_008": {
+    "source_circuit_costs": [
+      {
+        "CCX": 42019,
+        "CSWAP": 9972,
+        "degree": 6,
+        "m": 15,
+        "n": 6,
+        "num_bits": 98,
+        "num_ops": 432838,
+        "num_qubits": 180,
+        "reaction_depth": 3142,
+        "static_toffoli_like": 51991
+      },
+      {
+        "CCX": 43315,
+        "CSWAP": 9972,
+        "degree": 6,
+        "m": 31,
+        "n": 6,
+        "num_bits": 194,
+        "num_ops": 452430,
+        "num_qubits": 180,
+        "reaction_depth": 3366,
+        "static_toffoli_like": 53287
+      },
+      {
+        "CCX": 45907,
+        "CSWAP": 9972,
+        "degree": 6,
+        "m": 63,
+        "n": 6,
+        "num_bits": 386,
+        "num_ops": 491635,
+        "num_qubits": 180,
+        "reaction_depth": 3814,
+        "static_toffoli_like": 55879
+      },
+      {
+        "CCX": 53692,
+        "CSWAP": 13096,
+        "degree": 8,
+        "m": 15,
+        "n": 6,
+        "num_bits": 130,
+        "num_ops": 712637,
+        "num_qubits": 231,
+        "reaction_depth": 3377,
+        "static_toffoli_like": 66788
+      },
+      {
+        "CCX": 55804,
+        "CSWAP": 13096,
+        "degree": 8,
+        "m": 31,
+        "n": 6,
+        "num_bits": 258,
+        "num_ops": 753211,
+        "num_qubits": 231,
+        "reaction_depth": 3681,
+        "static_toffoli_like": 68900
+      },
+      {
+        "CCX": 60028,
+        "CSWAP": 13096,
+        "degree": 8,
+        "m": 63,
+        "n": 6,
+        "num_bits": 514,
+        "num_ops": 834356,
+        "num_qubits": 231,
+        "reaction_depth": 4289,
+        "static_toffoli_like": 73124
+      },
+      {
+        "CCX": 108577,
+        "CSWAP": 19344,
+        "degree": 12,
+        "m": 15,
+        "n": 6,
+        "num_bits": 194,
+        "num_ops": 1462907,
+        "num_qubits": 339,
+        "reaction_depth": 3808,
+        "static_toffoli_like": 127921
+      },
+      {
+        "CCX": 114193,
+        "CSWAP": 19344,
+        "degree": 12,
+        "m": 31,
+        "n": 6,
+        "num_bits": 386,
+        "num_ops": 1559864,
+        "num_qubits": 339,
+        "reaction_depth": 4256,
+        "static_toffoli_like": 133537
+      },
+      {
+        "CCX": 125425,
+        "CSWAP": 19344,
+        "degree": 12,
+        "m": 63,
+        "n": 6,
+        "num_bits": 770,
+        "num_ops": 1753736,
+        "num_qubits": 339,
+        "reaction_depth": 5152,
+        "static_toffoli_like": 144769
+      },
+      {
+        "CCX": 141425,
+        "CSWAP": 28536,
+        "degree": 12,
+        "m": 15,
+        "n": 8,
+        "num_bits": 194,
+        "num_ops": 1884027,
+        "num_qubits": 388,
+        "reaction_depth": 4655,
+        "static_toffoli_like": 169961
+      },
+      {
+        "CCX": 147041,
+        "CSWAP": 28536,
+        "degree": 12,
+        "m": 31,
+        "n": 8,
+        "num_bits": 386,
+        "num_ops": 1982484,
+        "num_qubits": 388,
+        "reaction_depth": 5103,
+        "static_toffoli_like": 175577
+      },
+      {
+        "CCX": 158273,
+        "CSWAP": 28536,
+        "degree": 12,
+        "m": 63,
+        "n": 8,
+        "num_bits": 770,
+        "num_ops": 2179356,
+        "num_qubits": 388,
+        "reaction_depth": 5999,
+        "static_toffoli_like": 186809
+      },
+      {
+        "CCX": 217557,
+        "CSWAP": 51912,
+        "degree": 12,
+        "m": 15,
+        "n": 12,
+        "num_bits": 194,
+        "num_ops": 2858163,
+        "num_qubits": 484,
+        "reaction_depth": 6303,
+        "static_toffoli_like": 269469
+      },
+      {
+        "CCX": 223173,
+        "CSWAP": 51912,
+        "degree": 12,
+        "m": 31,
+        "n": 12,
+        "num_bits": 386,
+        "num_ops": 2960009,
+        "num_qubits": 484,
+        "reaction_depth": 6751,
+        "static_toffoli_like": 275085
+      },
+      {
+        "CCX": 234405,
+        "CSWAP": 51912,
+        "degree": 12,
+        "m": 63,
+        "n": 12,
+        "num_bits": 770,
+        "num_ops": 3163643,
+        "num_qubits": 484,
+        "reaction_depth": 7647,
+        "static_toffoli_like": 286317
+      }
+    ],
+    "observed_per_position_toffoli": {
+      "degree6": 81,
+      "degree8": 132,
+      "degree12": 351
+    },
+    "same_degree12_slope_for_syndrome_counts": [
+      6,
+      8,
+      12
+    ],
+    "full_benchmark_slope_validation": "NOT_RUN"
+  },
+  "dqi_009": {
+    "gadgets": [
+      {
+        "CCX": 63,
+        "CCZ": 0,
+        "CSWAP": 0,
+        "degree": 6,
+        "gadget": "inverse_scaffold_round_trip",
+        "num_ops": 943,
+        "num_qubits": 24,
+        "toffoli_like": 63
+      },
+      {
+        "CCX": 0,
+        "CCZ": 0,
+        "CSWAP": 0,
+        "degree": 6,
+        "gadget": "gf2_masked_product_phase",
+        "num_ops": 62,
+        "num_qubits": 12,
+        "toffoli_like": 0
+      },
+      {
+        "CCX": 12,
+        "CCZ": 0,
+        "CSWAP": 0,
+        "degree": 6,
+        "gadget": "zero_detect_round_trip",
+        "num_ops": 74,
+        "num_qubits": 13,
+        "toffoli_like": 12
+      },
+      {
+        "CCX": 6,
+        "CCZ": 0,
+        "CSWAP": 0,
+        "degree": 6,
+        "gadget": "masked_located_and_round_trip",
+        "num_ops": 24,
+        "num_qubits": 13,
+        "toffoli_like": 6
+      },
+      {
+        "CCX": 108,
+        "CCZ": 0,
+        "CSWAP": 0,
+        "degree": 8,
+        "gadget": "inverse_scaffold_round_trip",
+        "num_ops": 2103,
+        "num_qubits": 40,
+        "toffoli_like": 108
+      },
+      {
+        "CCX": 0,
+        "CCZ": 0,
+        "CSWAP": 0,
+        "degree": 8,
+        "gadget": "gf2_masked_product_phase",
+        "num_ops": 128,
+        "num_qubits": 16,
+        "toffoli_like": 0
+      },
+      {
+        "CCX": 16,
+        "CCZ": 0,
+        "CSWAP": 0,
+        "degree": 8,
+        "gadget": "zero_detect_round_trip",
+        "num_ops": 98,
+        "num_qubits": 17,
+        "toffoli_like": 16
+      },
+      {
+        "CCX": 8,
+        "CCZ": 0,
+        "CSWAP": 0,
+        "degree": 8,
+        "gadget": "masked_located_and_round_trip",
+        "num_ops": 32,
+        "num_qubits": 17,
+        "toffoli_like": 8
+      },
+      {
+        "CCX": 315,
+        "CCZ": 0,
+        "CSWAP": 0,
+        "degree": 12,
+        "gadget": "inverse_scaffold_round_trip",
+        "num_ops": 5368,
+        "num_qubits": 72,
+        "toffoli_like": 315
+      },
+      {
+        "CCX": 0,
+        "CCZ": 0,
+        "CSWAP": 0,
+        "degree": 12,
+        "gadget": "gf2_masked_product_phase",
+        "num_ops": 260,
+        "num_qubits": 24,
+        "toffoli_like": 0
+      },
+      {
+        "CCX": 24,
+        "CCZ": 0,
+        "CSWAP": 0,
+        "degree": 12,
+        "gadget": "zero_detect_round_trip",
+        "num_ops": 146,
+        "num_qubits": 25,
+        "toffoli_like": 24
+      },
+      {
+        "CCX": 12,
+        "CCZ": 0,
+        "CSWAP": 0,
+        "degree": 12,
+        "gadget": "masked_located_and_round_trip",
+        "num_ops": 48,
+        "num_qubits": 25,
+        "toffoli_like": 12
+      }
+    ],
+    "degree12_summed_per_position_toffoli": 351,
+    "inverse_scaffold_per_position": 315
+  },
+  "dqi_010": {
+    "field_degree": 4,
+    "random_cases": 1000,
+    "additional_exhaustive_degree3_single_error_cases": 392,
+    "additional_random_degree4_double_error_cases": 150,
+    "trace_dual_checks": 256,
+    "ci_test_log": [
+      "2026-11-20T22:38:00.1614433Z Ran 4 tests in 0.195s",
+      "2026-11-20T22:38:00.1614669Z OK",
+      "2026-11-20T22:38:00.9632081Z   \"cases\": 1000,",
+      "2026-11-20T22:38:00.9632323Z   \"weight_counts\": {",
+      "2026-11-20T22:38:00.9633803Z   \"result\": \"PASS\","
+    ],
+    "algebra": "PASS",
+    "compiled_reversible_circuit": "NOT_RUN",
+    "Toffoli_savings": "NOT_ESTABLISHED"
+  }
+}
