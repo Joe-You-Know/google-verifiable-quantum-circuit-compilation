@@ -14,6 +14,7 @@ decoder, or the grader. It does not prove safe qubit omission.
 from __future__ import annotations
 
 import argparse
+import math
 from collections import Counter, defaultdict
 from contextlib import AbstractContextManager
 import json
@@ -34,7 +35,8 @@ def handles(value):
 
 def allocator_value(builder, name: str):
     value = getattr(builder, name)
-    return int(value() if callable(value) else value)
+    result = value() if callable(value) else value
+    return None if isinstance(result, float) and math.isinf(result) else int(result)
 
 
 class LabeledMark(AbstractContextManager):
@@ -75,6 +77,7 @@ class AllocatorLedger:
         self.allocation_counts = Counter()
         self.release_counts = Counter()
         self.max_explicit_live = 0
+        self.max_explicit_slot_id = -1
 
     def __getattr__(self, name):
         return getattr(self.inner, name)
@@ -90,6 +93,7 @@ class AllocatorLedger:
             if not isinstance(q, km.q):
                 raise ValueError(f"{kind}: non-qubit registered in quantum ledger")
             physical_id = int(q.id)
+            self.max_explicit_slot_id = max(self.max_explicit_slot_id, physical_id)
             if physical_id in self.live:
                 raise AssertionError(f"physical qubit {physical_id} allocated twice without release")
             self.generations[physical_id] += 1
@@ -175,8 +179,11 @@ def audit_instance(n: int, m: int, degree: int):
     static = circuit.operation_statistics()
     peak = int(circuit.num_qubits)
     allocator_peak = allocator_value(ledger.inner, "max_qubits")
-    if peak != allocator_peak:
-        raise AssertionError(f"allocator peak {allocator_peak} != compiled qubits {peak}")
+    if peak <= ledger.max_explicit_slot_id:
+        raise AssertionError(
+            f"compiled qubit count {peak} does not cover "
+            f"source qubit slot {ledger.max_explicit_slot_id}"
+        )
     expected_live_ids = {int(q.id) for register in syndromes for q in register}
     if set(ledger.live) != expected_live_ids:
         raise AssertionError("source quantum ledger did not end with exactly the named syndrome registers")
@@ -199,7 +206,8 @@ def audit_instance(n: int, m: int, degree: int):
         "named_syndrome_qubits": n * degree,
         "non_syndrome_peak_slots": max_non_input,
         "max_explicit_live": ledger.max_explicit_live,
-        "allocator_max_qubits": allocator_peak,
+        "configured_allocator_qubit_cap": allocator_peak,
+        "highest_explicit_source_slot_id": ledger.max_explicit_slot_id,
         "named_qubits_created": ledger.allocation_counts["named_input"],
         "temporary_occurrences_created": ledger.allocation_counts["temporary"],
         "quantum_occurrences_released": ledger.release_counts["quantum"],
@@ -211,11 +219,14 @@ def audit_instance(n: int, m: int, degree: int):
         "mark_entries": ledger.mark_entries,
         "mark_exits": ledger.stage_exits,
         "verified": {
-            "compiled_allocator_peak_matches_circuit": True,
+            "compiled_qubits_cover_explicit_source_slots": True,
             "named_syndrome_registers_retained": True,
             "all_tracked_temporaries_released": True,
         },
         "source_limit": (
+            "The builder.max_qubits property is a capacity limit, often infinity, "
+            "not the observed high-water count. The compiled num_qubits "
+            "is authoritative for the scored Q. "
             "Native builder helper methods may allocate/release additional "
             "scratch qubits without Python proxy visibility. Source "
             "allocations are not a complete physical qubit-use history."
