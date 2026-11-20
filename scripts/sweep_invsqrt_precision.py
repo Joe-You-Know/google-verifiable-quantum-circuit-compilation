@@ -91,7 +91,8 @@ def full_domain(precision: Precision, chunk: int) -> dict:
     }
 
 
-def candidate_precisions(levels: tuple[int, ...], *, pairwise: bool = False):
+def candidate_precisions(levels: tuple[int, ...], *, pairwise: bool = False,
+                         combination_order: int = 1):
     baseline = Precision()
     yield "baseline", baseline
     for field in FIELDS:
@@ -101,13 +102,13 @@ def candidate_precisions(levels: tuple[int, ...], *, pairwise: bool = False):
             new_value = getattr(baseline, field) - reduction
             if new_value > 0:
                 yield f"{field}_minus_{reduction}", replace(baseline, **{field: new_value})
-    if pairwise:
-        from itertools import combinations
-        for first, second in combinations(FIELDS, 2):
-            yield f"{first}_and_{second}_minus_1", replace(
-                baseline,
-                **{first: getattr(baseline, first) - 1,
-                   second: getattr(baseline, second) - 1},
+    from itertools import combinations
+    max_order = max(combination_order, 2 if pairwise else 1)
+    for order in range(2, max_order + 1):
+        for chosen in combinations(FIELDS, order):
+            replacements = {field: getattr(baseline, field) - 1 for field in chosen}
+            yield "_and_".join(chosen) + "_minus_1", replace(
+                baseline, **replacements,
             )
 
 
@@ -116,6 +117,8 @@ def main() -> None:
     p.add_argument("--levels", nargs="+", type=int, default=[1], help="bit reductions per field (default: 1)")
     p.add_argument("--full", action="store_true", help="exhaustively check all 3,133,452 x values for screen PASS candidates")
     p.add_argument("--pairwise", action="store_true", help="also test every pair of one-bit reductions")
+    p.add_argument("--combination-order", type=int, choices=(1, 2, 3, 4, 5), default=1,
+                   help="exhaustive combinations of one-bit width reductions up to this order")
     p.add_argument("--chunk", type=int, default=32768, help="full-check chunk size, default 32768")
     p.add_argument("--output-dir", type=Path, default=Path("/tmp/vqcc_precision_003"))
     p.add_argument("--report", type=Path, default=Path("/tmp/vqcc_precision_003.json"))
@@ -140,10 +143,12 @@ def main() -> None:
         "preliminary_sample_size": len(xs),
         "full_scan_requested": args.full,
         "pairwise": args.pairwise,
+        "combination_order": args.combination_order,
         "verification": "reference numerical model only; official Kickmix verifier NOT run",
         "candidates": [],
     }
-    for name, prec in candidate_precisions(tuple(args.levels), pairwise=args.pairwise):
+    for name, prec in candidate_precisions(tuple(args.levels), pairwise=args.pairwise,
+                                           combination_order=args.combination_order):
         result = {"name": name, "precision": asdict(prec), "sample": screen(prec, xs)}
         if result["sample"]["status"] == "PASS":
             if args.full:
