@@ -1,0 +1,24 @@
+﻿# Original competition datasets
+/data/
+
+# Large competition files retained locally
+/sample_submission/dqi.kmb
+/verifiers/dfthcsos/FeMoCo76o113e.fcidump
+
+# Python environments and caches
+.venv/
+__pycache__/
+.pytest_cache/
+*.pyc
+
+# Compiler and runtime artifacts
+build/
+*.obj
+*.o
+
+# Local credentials
+.env
+kaggle.json
+
+# Temporary benchmark outputs
+benchmark_tmp/
