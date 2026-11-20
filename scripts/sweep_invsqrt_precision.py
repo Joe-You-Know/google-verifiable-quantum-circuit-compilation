@@ -123,6 +123,7 @@ def main() -> None:
     p.add_argument("--output-dir", type=Path, default=Path("/tmp/vqcc_precision_003"))
     p.add_argument("--report", type=Path, default=Path("/tmp/vqcc_precision_003.json"))
     p.add_argument("--no-circuits", action="store_true", help="numeric screen only; do not build/write Kickmix circuits")
+    p.add_argument("--only", action="append", help="test only the named candidate; repeatable")
     args = p.parse_args()
     if args.chunk < 1:
         p.error("--chunk must be positive")
@@ -144,11 +145,17 @@ def main() -> None:
         "full_scan_requested": args.full,
         "pairwise": args.pairwise,
         "combination_order": args.combination_order,
+        "only": args.only,
         "verification": "reference numerical model only; official Kickmix verifier NOT run",
         "candidates": [],
     }
+    requested = set(args.only or [])
+    tested_names = set()
     for name, prec in candidate_precisions(tuple(args.levels), pairwise=args.pairwise,
                                            combination_order=args.combination_order):
+        if requested and name not in requested:
+            continue
+        tested_names.add(name)
         result = {"name": name, "precision": asdict(prec), "sample": screen(prec, xs)}
         if result["sample"]["status"] == "PASS":
             if args.full:
@@ -170,6 +177,9 @@ def main() -> None:
                     result["build_error"] = str(ex)
         provenance["candidates"].append(result)
         print(json.dumps(result, sort_keys=True), flush=True)
+    unknown = requested - tested_names
+    if unknown:
+        p.error(f"unknown candidate names: {sorted(unknown)}")
     args.report.parent.mkdir(parents=True, exist_ok=True)
     args.report.write_text(json.dumps(provenance, indent=2) + "\n", encoding="utf-8")
     print(f"Saved screening receipt: {args.report}")
