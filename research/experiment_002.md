@@ -106,3 +106,29 @@ Expected structural audit: 15 files, 51 changed reversible segments, 408
 independent randomized basis comparisons, all PASS. This command does
 **not** require Kickmix to be installed because it evaluates only runs of
 X/CX/CCX gates separated by preserved instruction barriers.
+
+
+## Invsqrt source-circuit verification (user WSL, 2026-11-20)
+
+After fetching this branch, the local CPython 3.13 environment passed all
+13 structural tests. The v2 optimizer processed the actual converted
+Invsqrt reference circuit and removed **four X gates in two pairs**.
+Both output .kmx text SHA-256 and output Kickmix .kmb SHA-256 match the
+Experiment 001 optimized files, i.e., v2 introduced no additional changes.
+
+The user's official supplied verifier output reports **PASS** with
+16 x inputs, two shots each, explicit seed 20261120, batch size 16,
+one worker, total 32 shots. Reported metrics:
+- operations 62,156 (reference 62,160)
+- Toffoli count 7,735 (unchanged)
+- qubits 260 (unchanged)
+- reaction depth 4,005 (unchanged)
+- score 2,064,361.8235632381 (unchanged)
+- optimized .kmb SHA-256 c56be5aea2d9ef05dc74f3019971b73fe23535f895897e21726765223d7d28e3.
+
+For full numeric settings and original circuit SHA, see
+research/experiment_001_invsqrt_smoke.json. This is a **short smoke test**,
+not full-domain verification or evidence of scoring improvement.
+
+The broader chemistry-archive structural omissions also remain outside the
+official score until independently tested with full verifier settings.
