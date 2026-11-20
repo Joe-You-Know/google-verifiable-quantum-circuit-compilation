@@ -1,0 +1,38 @@
+{
+  "experiment": "007",
+  "date": "2026-11-20",
+  "source": "User WSL run of scripts/chem007_vector_projection.py and scripts/chem007_evaluate_metrics.py",
+  "joint_projection_method": "source-relative 12-to-11-bit Givens vector-angle reverse projection, two passes",
+  "source_rows": 3976,
+  "angles_per_row": 75,
+  "independent": {
+    "status": "FAIL",
+    "error_1": 0.07690909892185493,
+    "error_2": 0.029723819285085353,
+    "Lambda": 308.4721229215311,
+    "E_SOS": -22144.255010432727,
+    "E_gap": 3.9816604327279492,
+    "lambda_eff": 49.40251889398914
+  },
+  "joint": {
+    "status": "FAIL",
+    "error_1": 0.08331625362213337,
+    "error_2": 0.031288233214112435,
+    "Lambda": 308.4451052538798,
+    "E_SOS": -22144.227992765074,
+    "E_gap": 3.954642765074823,
+    "lambda_eff": 49.233537435681356
+  },
+  "limits": {
+    "error_1_max": 0.02,
+    "error_2_max": 0.02
+  },
+  "reconstruction_loss_initial": 0.02967386568139805,
+  "reconstruction_loss_after": 0.029661852279634277,
+  "relative_vector_error_reduction": 0.0004048478850972037,
+  "candidate_word_sha256": "fe173b1144e2c2dca3fa2d5c006a076fa6477045f88c3f7a63fdf69392f0d641",
+  "source_npz_sha256": "14d5cc25eb3bf82a9ccb87c811db28d127bef6d28697dd190dc1e875de3bfe69",
+  "built": false,
+  "official_kickmix_verifier": "NOT_RUN",
+  "correction": "The joint projection improved its own vector-distance objective, but worsened both chemical reconstruction error_1 and error_2. This disproves the assumption that reducing source-vector L2 distance necessarily improves chemical accuracy."
+}
