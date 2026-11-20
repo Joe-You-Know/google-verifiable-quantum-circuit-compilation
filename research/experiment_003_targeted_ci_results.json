@@ -1,0 +1,27 @@
+{
+  "experiment": "003_targeted",
+  "date": "2026-11-20",
+  "run_url": "https://github.com/Joe-You-Know/google-verifiable-quantum-circuit-compilation/actions/runs/44813583491",
+  "job_id": 136556076198,
+  "independent_research_targeted_simulation": true,
+  "unmodified_reference_phase_and_register_routines": true,
+  "full_official_benchmark_run": false,
+  "candidate": "delta_bits_and_product_bits_and_result_bits_minus_1",
+  "candidate_precision": {
+    "delta_bits": 13,
+    "coef_bits": 17,
+    "square_bits": 28,
+    "product_bits": 27,
+    "result_bits": 28
+  },
+  "kmb_sha256": "9816fbfb5544949fb2c448410daf8144b825e45d0105cb118aac75c1a8c910e9",
+  "scope": "first 16 x; neighborhoods radius 2 around x=2684414, x=2588411, x=284670; dyadic boundaries within domain",
+  "tested_input_count": 83,
+  "shots_per_input": 64,
+  "shots_evaluated": 5312,
+  "seed": 20261120,
+  "worst_error_over_tolerance": 0.8469246188549967,
+  "worst_x": 2684414,
+  "failures": [],
+  "status": "PASS"
+}
