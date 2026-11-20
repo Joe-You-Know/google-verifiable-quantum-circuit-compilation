@@ -30,7 +30,7 @@ class PackageTests(unittest.TestCase):
                 archive.writestr(f"{name}.npy", b"placeholder")
 
     def test_exact_archive_members_and_report(self):
-        output = self.root / "submissions" / "one.zip"
+        output = self.root / "submissions" / "submission.zip"
         report = self.root / "submissions" / "audit.json"
         receipt = package(self.invsqrt, self.dqi, self.chem, output, report)
         expected = {
@@ -45,11 +45,19 @@ class PackageTests(unittest.TestCase):
         self.assertEqual(json.loads(report.read_text())["status"], "PACKAGED_ONLY")
 
     def test_refuse_overwrite(self):
-        out = self.root / "one.zip"
+        out = self.root / "submission.zip"
         report = self.root / "one.json"
         package(self.invsqrt, self.dqi, self.chem, out, report)
         with self.assertRaises(FileExistsError):
             package(self.invsqrt, self.dqi, self.chem, out, report)
+
+    def test_reject_noncanonical_upload_filename(self):
+        with self.assertRaisesRegex(ValueError, "submission.zip"):
+            package(
+                self.invsqrt, self.dqi, self.chem,
+                self.root / "vqcc_experiment003.zip",
+                self.root / "audit.json",
+            )
 
     def test_missing_dqi(self):
         self.dqi.unlink()
