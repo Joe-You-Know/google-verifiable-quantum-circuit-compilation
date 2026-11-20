@@ -3,11 +3,12 @@
 **Date:** 2026-11-20.  
 **Competition:** https://www.kaggle.com/competitions/google-verifiable-quantum-circuit-compilation
 
-**Status:** user reported an initial Kaggle rejection due to the uploaded
-ZIP filename, which had been generated as `vqcc_experiment003.zip`.
-The user renamed it to `submission.zip`; a subsequent accepted upload or
-Kaggle score has **not** yet been confirmed in the current conversation.
-No Kaggle score, receipt or leaderboard placement is claimed.
+**Status (2026-11-20):** Kaggle accepted the user's renamed archive
+`submission.zip` and its submission is **GRADING**. This is a user-reported
+status, not independently retrieved from Kaggle. An initial upload using
+the name `vqcc_experiment003.zip` was rejected; renaming it resolved the
+upload blocker. **Final evaluation, score, ranking, and all three task
+results are pending**. Submission identifier has not yet been supplied.
 
 ## Submission contract
 
