@@ -16,6 +16,6 @@ jobs:
         with:
           python-version: '3.12'
       - name: Syntax check
-        run: python -m py_compile tools/causal_frontier_kmx.py scripts/convert_kickmix.py
+        run: python -m py_compile tools/causal_frontier_kmx.py tools/causal_commuting_frontier_kmx.py scripts/convert_kickmix.py
       - name: Independent classical truth-table tests
         run: python -m unittest discover -s tests -v
