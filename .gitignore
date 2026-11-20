@@ -22,3 +22,6 @@ kaggle.json
 
 # Temporary benchmark outputs
 benchmark_tmp/
+
+# Local Kaggle submission archives and audits
+/submissions/
