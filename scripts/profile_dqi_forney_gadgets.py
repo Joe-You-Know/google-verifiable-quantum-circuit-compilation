@@ -32,6 +32,11 @@ def build_gadget(degree: int, name: str):
         v = b.create_quantum_register(degree, "inverse")
         m = b.create_classical_register(degree, "mbuc_mask")
         b.gf2_phase_by_product(u, v, mask=m, field=gf)
+    elif name == "gf2_variable_accumulate_mul":
+        u = b.create_quantum_register(degree, "numerator")
+        v = b.create_quantum_register(degree, "denominator")
+        target = b.create_quantum_register(degree, "accumulator")
+        b.ixor_gf2_mul(u, v, target=target, field=gf)
     elif name == "zero_detect_round_trip":
         src = b.create_quantum_register(degree, "sigma")
         target = b.alloc_qubits(1)[0]
@@ -71,6 +76,7 @@ def main():
     names = (
         "inverse_scaffold_round_trip", "gf2_masked_product_phase",
         "zero_detect_round_trip", "masked_located_and_round_trip",
+        "gf2_variable_accumulate_mul",
     )
     records = []
     for degree in args.degrees:
