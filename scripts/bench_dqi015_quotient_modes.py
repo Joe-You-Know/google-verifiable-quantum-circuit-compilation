@@ -8,7 +8,7 @@ drop-in replacement while source control is required.
 
 - held_scaffold: original reference's MBUC-friendly quotient producer;
 - recomputed_division: quotient obtained without retained inverse scaffold;
-- unconditional_direct_xor: direct quotient XOR with no conditional control.
+- controlled_inverse_product: retain inverse scaffold but XOR numerator*inverse directly\n  into q_i under the original control, omitting a separate quotient-result register;\n- unconditional_direct_xor: direct quotient XOR with no conditional control.
 
 Original paper correspondence: Euclidean source-preserving quotient
 shear. This script does not prove equivalent whole DQI circuits, merely
@@ -40,6 +40,12 @@ def build(degree, pattern):
         b.gf2_iadd(ratio,target=target,field=gf,control=control)
         b.del_gf2_div(numerator,denominator,target=ratio,field=gf)
         b.free(ratio)
+    elif pattern=="controlled_inverse_product":
+        inverse,chain=b.init_gf2_inverse_with_scaffold(denominator,field=gf)
+        b.ixor_gf2_mul(numerator,inverse,target=target,field=gf,control=control)
+        b.del_gf2_inverse_with_scaffold(
+            denominator,target=inverse,scaffold=chain,field=gf)
+        b.free(chain+inverse)
     elif pattern=="unconditional_direct_xor":
         b.ixor_gf2_div(numerator,denominator,target=target,field=gf)
     else:
@@ -70,7 +76,7 @@ def main():
         p.error("refusing to overwrite report")
     rows=[]
     for degree in args.degree:
-        for method in ("held_scaffold","recomputed_division","unconditional_direct_xor"):
+        for method in ("held_scaffold","recomputed_division","controlled_inverse_product","unconditional_direct_xor"):
             row=build(degree,method)
             rows.append(row)
             print(json.dumps(row,sort_keys=True),flush=True)
