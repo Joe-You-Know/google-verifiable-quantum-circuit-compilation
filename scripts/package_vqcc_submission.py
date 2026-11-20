@@ -5,7 +5,7 @@ The ZIP includes the requested Invsqrt circuit and existing DQI/chemistry
 baseline files, never the raw competition datasets. Source files are not
 modified. Uses fresh output paths and a separate JSON provenance record.
 
-IMPORTANT: Package integrity does not imply that every task passes the
+Kaggle requires the output filename to be exactly submission.zip.\n\nIMPORTANT: Package integrity does not imply that every task passes the
 competition's official full verifier. Submit and inspect Kaggle's evaluation.
 """
 
@@ -78,6 +78,11 @@ def source_entries(invsqrt: Path, dqi: Path, chemistry: Path) -> list[tuple[Path
 
 
 def package(invsqrt: Path, dqi: Path, chemistry: Path, output: Path, report: Path) -> dict:
+    # Competition-specific upload rule, corrected from a user-observed rejection.
+    if output.name != "submission.zip":
+        raise ValueError(
+            f"Kaggle expects the archive to be named exactly submission.zip, got {output.name!r}"
+        )
     if output.resolve() == report.resolve():
         raise ValueError("ZIP output and audit report paths must differ")
     if output.exists() or report.exists():
@@ -139,12 +144,12 @@ def main() -> None:
                    default=Path("sample_submission/dfthcsos"),
                    help="Directory containing angle_k_* circuits and submission.npz")
     p.add_argument("--output", type=Path, required=True,
-                   help="New submission ZIP; e.g. /mnt/d/.../submission_003.zip")
+                   help="New ZIP; final filename must be exactly submission.zip")
     p.add_argument("--report", type=Path, required=True,
                    help="New JSON receipt alongside ZIP (NOT included inside ZIP)")
     args = p.parse_args()
-    if args.output.suffix.lower() != ".zip":
-        p.error("output must be a .zip")
+    if args.output.name != "submission.zip":
+        p.error("Kaggle requires the filename submission.zip exactly")
     try:
         receipt = package(args.invsqrt, args.dqi, args.chemistry,
                           args.output, args.report)
