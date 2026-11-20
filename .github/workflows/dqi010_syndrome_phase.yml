@@ -1,0 +1,37 @@
+name: DQI locator-relative direct phase identity
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/dqi010_syndrome_phase_qr.py'
+      - 'research/test_dqi010_syndrome_phase_qr.py'
+      - '.github/workflows/dqi010_syndrome_phase.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-toy-algebra:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Dependencies
+        run: python -m pip install numpy scipy
+      - name: Independent GF2 trace and polynomial QR tests
+        run: |
+          PYTHONPATH="$PWD/kickmix:$PWD/verifiers:$PWD" python -m unittest \
+            discover -s research -p 'test_dqi010*.py' -v
+      - name: Seeded sparse-weight phase equality across toy GF(16)
+        run: |
+          PYTHONPATH="$PWD/kickmix:$PWD/verifiers:$PWD" python scripts/dqi010_syndrome_phase_qr.py \
+            --degree 4 --cases 1000 --max-weight 3 \
+            --report /tmp/dqi010_toy.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dqi010_phase_identity
+          path: /tmp/dqi010_toy.json
