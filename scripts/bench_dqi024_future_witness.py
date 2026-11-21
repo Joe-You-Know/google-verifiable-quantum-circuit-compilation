@@ -93,11 +93,12 @@ def recovered_value(gf,case,C_out,F_out):
     return f1^int(gf.mul(relation,inv))
 
 
-def native_check(degree,roundtrip,cases,seed):
+def native_check(degree,roundtrip,cases,seed,witness_source):
     gf=km.GF2Field(degree)
     circuit,regs=build_dynamic_quantum_steps(
         degree=degree,steps=2,roundtrip=roundtrip,
-        recover_first=True)
+        recover_first=("syndrome0" if witness_source=="syndrome0"
+                       else True))
     named=[q for reg in [*regs["C"],*regs["S"],regs["W"]]
              for q in reg]
     named.extend(q for group in regs["K"] for reg in group for q in reg)
@@ -107,6 +108,7 @@ def native_check(degree,roundtrip,cases,seed):
                       if i not in nameds])
     r={
        "degree":degree,"roundtrip":roundtrip,
+       "witness_source":witness_source,
        "Q":circuit.num_qubits,
        "T_static":int(circuit.operation_statistics().num_toffoli_like),
        "operations":len(circuit),
@@ -200,14 +202,26 @@ def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument("--degree",type=int,choices=(4,12),default=4)
     p.add_argument("--cases",type=int,default=128)
+    p.add_argument("--witness-source",choices=("external","syndrome0"),
+                   default="external")
     p.add_argument("--seed",type=int,default=20261121)
     p.add_argument("--out",type=Path,default=Path("/tmp/dqi024_recovery.json"))
     a=p.parse_args()
     gf=km.GF2Field(a.degree)
     cases,tally=make_cases(gf,a.cases,a.seed)
+    if a.witness_source=="syndrome0":
+        # Prepare a constrained source family. This is an explicit INPUT
+        # promise for this experiment, not a generic DQI guarantee.
+        for case in cases:
+            case["W"]=case["S"][0]
+            if "wrong_witness" in case["witness_label"]:
+                case["C"][1]=case["W"]^1
+            else:
+                case["C"][1]=case["W"]
     results=[]
     for roundtrip in (False,True):
-        result=native_check(a.degree,roundtrip,cases,a.seed)
+        result=native_check(a.degree,roundtrip,cases,a.seed,
+                            a.witness_source)
         results.append(result)
         print("RECOVERY_NATIVE",json.dumps(result),flush=True)
         gc.collect()
@@ -218,6 +232,7 @@ def main():
     r={
         "experiment":"024b","status":"PASS","field_degree":a.degree,
         "input_witness_conditions":tally,
+        "witness_source":a.witness_source,
         "native_recovery":results,
         "law":"W+C2[1]+z2*F2*K2[1]=z1*F1*K1[1]",
         "branch_status":{
@@ -230,7 +245,10 @@ def main():
                "residual source mismatch; do not free"
         },
         "witness_originally_retained":True,
-        "physical_extra_W_qubits":a.degree,
+        "physical_extra_W_qubits":(
+            0 if a.witness_source=="syndrome0" else a.degree),
+        "source_promise_C_initial_1_equals_S0":(
+            a.witness_source=="syndrome0"),
         "end_to_end_ancilla_savings":"NOT_DEMONSTRATED",
         "full_DQI":"NOT_BUILT",
     }
