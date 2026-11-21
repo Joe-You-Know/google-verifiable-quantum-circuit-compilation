@@ -1,0 +1,59 @@
+{
+  "experiment": "020",
+  "event": "Local full-width DQI phase verifier and ZIP receipt",
+  "date_local": "2026-11-20",
+  "provenance": "User-pasted WSL stdout; Kaggle server-side verification has not been reported",
+  "verifier": {
+    "status": "PASS",
+    "m": 4095,
+    "n": 70,
+    "degree": 12,
+    "r": 2016,
+    "verified_shots": 102400,
+    "value_errors": 0,
+    "phase_errors": 0,
+    "empirical_error_rate": 0,
+    "effective_error_rate": 0.0008660587301657926,
+    "log2_delta": -128,
+    "repetition_factor": 1.1912604648115832,
+    "mean_error_weight": 31.046737331746634,
+    "toffoli_count": 5618551.922958984,
+    "max_toffoli_count": 5618901,
+    "reaction_depth": 170744,
+    "num_ops": 83791054,
+    "num_qubits": 1876,
+    "num_bits": 49154,
+    "score": 23555742358022.918,
+    "circuit_sha256": "a0775475ebbb5d6d6c634d06ed83a07311c9bb1239b9f9e80fb076daa03148ba"
+  },
+  "package": {
+    "status": "PACKAGED_ONLY",
+    "zip_path": "submissions/experiment020/submission.zip",
+    "zip_size_bytes": 72569254,
+    "zip_sha256": "335df7a3e823fea7fa262f8f7da0446288e5582c40910c699a36ce075930b64f",
+    "audit_path": "submissions/experiment020/audit.json",
+    "entry_count": 13,
+    "entries": [
+      "invsqrt.kmb",
+      "dqi.kmb",
+      "dfthcsos/submission.npz",
+      "dfthcsos/angle_k_0.kmb",
+      "dfthcsos/angle_k_1.kmb",
+      "dfthcsos/angle_k_2.kmb",
+      "dfthcsos/angle_k_3.kmb",
+      "dfthcsos/angle_k_4.kmb",
+      "dfthcsos/angle_k_5.kmb",
+      "dfthcsos/angle_k_6.kmb",
+      "dfthcsos/angle_k_7.kmb",
+      "dfthcsos/angle_k_8.kmb",
+      "dfthcsos/angle_k_9.kmb"
+    ]
+  },
+  "status_scope": {
+    "local_full_DQI_verifier": "PASS_USER_REPORTED",
+    "archive_structure": "PASS_USER_REPORTED",
+    "Kaggle_server_grading": "NOT_REPORTED",
+    "Kaggle_leaderboard": "UNKNOWN",
+    "chemistry_and_invsqrt_validation": "NOT_ESTABLISHED_BY_THIS_RUN"
+  }
+}
