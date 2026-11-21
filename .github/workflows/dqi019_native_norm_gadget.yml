@@ -1,0 +1,33 @@
+name: DQI Experiment 019 standalone native quotient comparison
+
+on:
+  pull_request:
+    paths:
+      - 'research/experiment_019_native_gadget.lzma.b64'
+      - 'scripts/bench_dqi019_native_norm_gadget.py'
+      - '.github/workflows/dqi019_native_norm_gadget.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  controlled-quotient-audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Install simulator dependencies
+        run: python -m pip install numpy scipy
+      - name: Native Kickmix compile, count and independent basis simulation
+        run: |
+          PYTHONPATH="$PWD/kickmix:$PWD/verifiers:$PWD" python scripts/bench_dqi019_native_norm_gadget.py \
+            --outdir /tmp/vqcc_dqi019_native
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: dqi019_native_norm_gadget
+          path: /tmp/vqcc_dqi019_native/
