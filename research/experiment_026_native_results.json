@@ -159,7 +159,24 @@
     "small_T_reduction": 23720,
     "ops_reduction": 180527,
     "original_source_K_histories": 0,
-    "retained_F_histories": 0
+    "retained_F_histories": 0,
+    "independent_holdout": {
+      "run": "https://github.com/Joe-You-Know/google-verifiable-quantum-circuit-compilation/actions/runs/44945868608",
+      "seed": 20261122,
+      "verified_shots": 8192,
+      "log2_delta": -32,
+      "status": "PASS",
+      "value_errors": 0,
+      "phase_errors": 0,
+      "Q": 284,
+      "static_T": 87633,
+      "mean_T": 87633,
+      "ops": 965066,
+      "reaction_depth": 317,
+      "score": 9717213330.2116,
+      "circuit_sha256": "7bab9a078230a88dc4a2e8d55af0f61a98e97f5a70dcc64d8e7fde81d7d1c9f8",
+      "meaning": "Separate first-party valid-error holdout; same exact circuit hash at stricter confidence."
+    }
   },
   "scope": {
     "complete_small_DQI": "PROVED_BY_NATIVE_SUPPLIED_VERIFIER_512_SAMPLES",
