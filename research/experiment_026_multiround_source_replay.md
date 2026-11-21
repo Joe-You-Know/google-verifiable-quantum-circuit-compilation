@@ -74,3 +74,53 @@ Derive a reversible coherent degree selector: for each d=0..t, construct a candi
 For t=35 (n=70), factorial-size direct determinant expansion is not computationally practical; before a serious full-DQI replacement, the source-column producer must be replaced by an efficient, source-preserving quotient/remainder elimination network or checkpointed constructive recursion. The measured low-t Q/T savings are a proof of carrier reuse, not evidence that the current determinant implementation beats the full 1,860-Q Experiment 023 baseline.
 
 **Verification boundary:** The present native experiments solve and uncompute up to four genuine finite-field syndrome constraints, with no retained K history and a measured 12/24-Q space saving in GF12 small locators. No new full Reed–Solomon decoder or Kaggle score has been produced.
+
+
+## Later evidence A — coherent rank-adaptive locator, including singular lower-degree sources
+
+**Native CI PASS (2026-11-21):**
+https://github.com/Joe-You-Know/google-verifiable-quantum-circuit-compilation/actions/runs/44945454180
+
+An earlier all-or-nothing degree-t Hankel chart left shorter valid locator sources unresolved. In a separate independent circuit, every candidate degree d=0..3 is generated **from original S only**, checked against all available recurrence equations, and selected only if it is the *smallest witnessed-valid* degree. A degree-0 locator is authorized if and only if all original syndrome words are zero; singular degree-3 alone is not interpreted as zero error. No K polynomial, candidate locator or quotient history is retained after selection.
+
+The circuit has two coherent versions: a quantum-output probe and a phase-only version which uses the locator then exactly uncomputes it.
+
+| Field | Original sample cases | Probe Q/T | Exact phase+reverse Q/T | Source/phase/workspace errors |
+|---|---:|---:|---:|---:|
+| GF(2^4), 64 arbitrary | 64 | 88 / 8,287 | 88 / 10,168 | **0** |
+| GF(2^12), 64 arbitrary + 128 valid first-party | 192 | 284 / 55,489 | 284 / 68,568 | **0** |
+
+At GF(2^12), every one of the **128 valid-error first-party source samples** was resolved, and every source locator agreed with our independent original Berlekamp–Massey recurrence. The 64 additional arbitrary-source samples included 8 truly unresolved degree-0..3 cases, which remain explicitly flagged as unresolved. Across all 192 samples the witnessed degree distribution was {0:16, 1:38, 2:56, 3:74, unresolved:8}. This is a source and quantum-locator result, not yet a complete DQI decoder.
+
+## Later evidence B — complete small DQI quantum phase (first-party verifier PASS)
+
+**GitHub Actions native supplied DQI verifier PASS (2026-11-21):**
+https://github.com/Joe-You-Know/google-verifiable-quantum-circuit-compilation/actions/runs/44945612261
+
+Our **independent** source-only rank-adaptive locator was connected to an original-source evaluator Ω, codeword-position root tests, derivative, and Forney phase transfer. On the original GF(2^12) n=6,m=15 benchmark, source inputs and classical error masks had exactly the names and widths the first-party DQI verifier requires. It ran **512 first-party DQI shots at log2_delta = −16**, and produced:
+
+| Verifier result | Experiment 026 complete small decoder |
+|---|---:|
+| Status | **PASS** |
+| Q | **284** |
+| Static Toffoli-like | **87,633** |
+| Mean Toffoli-like | **87,633.0** |
+| Native operations | **965,066** |
+| Reaction depth | 317 |
+| Verified shots | 512 |
+| Value errors | **0** |
+| Phase errors | **0** |
+| Local development score | 21,096,773,742.425747 |
+| Circuit SHA-256 | 7bab9a078230a88dc4a2e8d55af0f61a98e97f5a70dcc64d8e7fde81d7d1c9f8 |
+
+The independently checked Experiment 023 n6/m15 small control was Q306, static Toffoli-like 111,353 and 1,145,593 native operations, also with zero errors on its 512-shot small phase screen. **At these same dimensions**, the new source-only complete decoder uses 22 fewer Q, 23,720 fewer static T and 180,527 fewer native operations. The static Q-squared-T resource cost is approximately **32.2109% lower**. This is a *small fixture comparison*, not a public Kaggle score or a full n70/m4095 advantage.
+
+The full small source program does not retain a polynomial K_j history or a field quotient tape. It produces rank-adaptive locator coefficients, uses them to compute Ω(z)/Λ'(z) at witnessed roots z=α^(−position), kicks back parity under the supplied classical error mask, and exactly uncomputes all source-derived work. The incomplete or singular denominator branch is gated off rather than supplying a fictitious field inverse.
+
+### Scope and remaining engineering gap
+
+**Demonstrated**: a native, coherent, variable-degree, complete DQI decoder on the six-syndrome, fifteen-position GF(2^12) problem; actual measured Q/T/ops reduction relative to the independently tested Experiment 023 small reference; first-party 512-shot phase verification with zero phase/value errors; no K/F history tape.
+
+**Not demonstrated**: a replacement for the complete 70-syndrome / 4,095-position benchmark, its 102,400-shot −128-confidence verifier, or any Kaggle score for this experiment. The determinant/candidate enumeration in the current native construction is practical only at these small degrees. In particular, directly expanding a degree-35 Hankel determinant using all permutations is computationally infeasible. The next source-preserving construction must implement Hankel/subresultant elimination with *polynomial* instruction complexity, while retaining the identity and lifetime proof that generated and uncomputed K_j can be recovered from the original S without a growing checkpoint tape. Avoid reintroducing 35 full polynomial checkpoint registers under a different name.
+
+**Machine ledger:** research/experiment_026_native_results.json.
