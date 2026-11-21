@@ -124,3 +124,17 @@ The full small source program does not retain a polynomial K_j history or a fiel
 **Not demonstrated**: a replacement for the complete 70-syndrome / 4,095-position benchmark, its 102,400-shot −128-confidence verifier, or any Kaggle score for this experiment. The determinant/candidate enumeration in the current native construction is practical only at these small degrees. In particular, directly expanding a degree-35 Hankel determinant using all permutations is computationally infeasible. The next source-preserving construction must implement Hankel/subresultant elimination with *polynomial* instruction complexity, while retaining the identity and lifetime proof that generated and uncomputed K_j can be recovered from the original S without a growing checkpoint tape. Avoid reintroducing 35 full polynomial checkpoint registers under a different name.
 
 **Machine ledger:** research/experiment_026_native_results.json.
+
+
+## Later evidence C — independent 8,192-shot DQI holdout
+
+**2026-11-21; first-party 8,192-shot native verifier PASS:**
+https://github.com/Joe-You-Know/google-verifiable-quantum-circuit-compilation/actions/runs/44945868608
+
+The same complete independent small n6/m15/GF(2^12) source-only decoder was tested on a separate seed (20261122) and a stricter confidence setting log2_delta=−32, with **8,192 verified shots, zero value errors and zero phase errors**. Its circuit SHA-256 remained exactly
+
+    7bab9a078230a88dc4a2e8d55af0f61a98e97f5a70dcc64d8e7fde81d7d1c9f8
+
+with Q284, static/mean Toffoli-like 87,633, 965,066 native operations and reaction depth 317. The local verifier score was 9,717,213,330.2116 at this new confidence setting. This confidence-dependent score is **not** a Kaggle three-task score and should not be compared to the earlier 512-shot development score without preserving the different confidence specification.
+
+The independently observed zero-error holdout improves the empirical evidence, but does not close the remaining algorithmic scaling barrier. The degree-35 determinant source generator currently requires a different polynomial-time method; no full-size DQI decoder or leaderboard result is claimed.
