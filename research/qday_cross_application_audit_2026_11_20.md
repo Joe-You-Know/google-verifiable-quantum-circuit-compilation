@@ -149,3 +149,58 @@ Source and exact reproducible checks:
 scripts/bench_dqi016_qday_rom_quotient.py;
 research/experiment_016_qday_rom_dqi_ci_results.json.
 Whole DQI verifier has NOT run against a replacement.
+
+
+## DQI Experiment 017–018: small-source lookup through field norm
+
+The first DQI-targeted ROM implementation at degree 4 and 6 really
+reduced gadget qubits, preserved source/control/clean-up, but multiplied
+Toffoli cost. For width 12, full denominator expansion would have
+294,912 controlled numerator-bit/XOR terms PER quotient. This rules out
+the raw full-size ROM as a cost-efficient candidate.
+
+**New factored construction:** GF(2^12) has a unique GF(2^6)
+subfield. For denominator B, let C=B^64 and N=B*C. N is fixed under
+64th powering and therefore lies in that 64-element subfield.
+For B!=0,
+
+    B^-1 = C * (N^-1),  and  A/B = A*C*(N^-1).
+
+The zero-denominator branch is retained explicitly (no quotient
+constructed). The inverse of the norm can be represented by a
+**63-nonzero-value lookup** instead of 4095 nonzero 12-bit values.
+
+Experiment 017 exhaustively checked all 4096 denominators and 16384
+quotient cases in the original Kickmix GF4096 field; PASS. It built an
+injective six-bit source basis with original 12-bit representatives:
+1, 70, 130, 270, 548, 1068. The six-bit norm mapping has 34 linear
+bit incidences and 66 nonzero quadratic source monomials (193 total
+quadratic output incidences).
+
+Experiment 018 **actually compiled** the reversible 12-to-6-bit norm
+gate in Kickmix and checked 4608 basis-state simulator samples per
+variant, including all 4096 original denominators. Both implementations
+preserved source inputs and had clean temporary workspace:
+
+| norm construction | Q | extra scratch beyond 12+6 | static Toffoli | operations |
+|---|---:|---:|---:|---:|
+| direct quadratic CCX | 18 | 0 | 193 | 227 |
+| shared AND across norm-output bits | 19 | 1 | 127 | 349 |
+
+The 127-Toffoli norm is a **real circuit-level positive result**, not a
+claim that the *whole quotient* is cheaper. It still needs a coherent
+6-bit norm inversion, source-basis conversion back into GF4096,
+controlled numerator product, and exact reverse cleanup. Whether these
+together reduce the DQI reference's 72 quotient/scaffold workspace
+qubits and preserve/better its 390-Toffoli native quotient gadget is
+pending, as is the official DQI phase verifier.
+
+Sources:
+- scripts/dqi017_norm_subfield_quotient.py
+- scripts/dqi018_build_norm_circuit.py
+- research/experiments_016_018_dqi_qday_transfer_results.json
+- CI 44840911212 and 44841059754.
+
+This construction applies QDay **to DQI** by moving the lookup to a
+smaller exact source carrier; it does not claim any optimization of
+the QDay experiment or scalable ECC quantum recovery.
