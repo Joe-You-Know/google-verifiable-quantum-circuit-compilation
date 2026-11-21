@@ -54,6 +54,11 @@ def make_cases(gf,n,seed):
         else:
             b=discrepancy_value(
                 gf,case["K"][0],case["S"],0)
+            if not b:
+                # S[3] was sampled nonzero: toggling K0 creates
+                # an independently witnessed nonzero source denominator.
+                case["K"][0][0]^=1
+                b=discrepancy_value(gf,case["K"][0],case["S"],0)
             assert b
             case["B"][0]=b
         correct_w=int(case["C"][1])
