@@ -92,3 +92,74 @@ Before implementing another full decoder:
 4. Preserve the first-party Kaggle accepted Experiment 020 submission. A 512-shot development pass, a static native build and a predicted public score are not a completed official-confidence result.
 
 All reported source evidence remains chronological; no corrections or failed modes are silently erased.
+
+
+## 6. Later evidence: full local official-confidence DQI PASS
+
+**Verified native GitHub Actions run (2026-11-21):**
+https://github.com/Joe-You-Know/google-verifiable-quantum-circuit-compilation/actions/runs/44933734979
+
+The first-party DQI verifier API ran n70, m4095, degree12, **102,400 shots at log2_delta −128**, max_workers=1, using the native **all-five 7-bit** source candidate. Output:
+
+| Exact full-confidence field | Observed |
+|---|---:|
+| Status | **PASS** |
+| Physical Q | **1,860** |
+| Mean Toffoli-like T | **5,601,918.613564453** |
+| Static Toffoli-like T | **5,602,269** |
+| Native circuit operations | **85,255,780** |
+| Verified shots | **102,400** |
+| Value errors | **0** |
+| Phase errors | **0** |
+| Effective error-rate bound | 0.0008660587301657926 |
+| Repetition factor | 1.1912604648115832 |
+| Reaction depth | 169,921 |
+| DQI score (lower cost is better) | **23,087,101,495,484.246** |
+| Circuit SHA-256 | 754f9d3a46f08b7105b5e3a0bcb9ecf549307c237fb88406be27be27d6858c9e |
+
+The user's Experiment 020 officially tested local DQI cost was
+23,555,742,358,022.918. The new full-confidence cost is **1.9894973%
+lower** (ratio prior/new 1.02029882). If the other two benchmark costs
+remain identical, a *model projection* based on the previous Kaggle
+public score 1.03006 is approximately **1.03698**. This is NOT a Kaggle
+server result; no new submission has been made.
+
+The older pending status in section 2 is retained in chronological order,
+and is superseded by this completed source-verifier receipt.
+
+## 7. Later evidence: actual reversible quotient-carrier native construction
+
+**Independent native test (2026-11-21):**
+https://github.com/Joe-You-Know/google-verifiable-quantum-circuit-compilation/actions/runs/44934219307
+
+A fixed-source four-coefficient GF(2^12) recurrence shear was compiled
+into a native Kickmix quantum circuit. The polynomial coefficients
+occupy 48 qubits, with a separate 12-qubit carrier F. The source
+discrepancy weights and shifted carrier K were fixed witnesses in this
+isolated experiment; both can change in the eventual decoder, but that
+larger case has NOT been implemented.
+
+The forward map is the invertible carrier lift
+    F_new = F_old + D(C_old)/b
+    C_new = C_old + F_new K.
+
+The inverse maps exactly back to the independent incoming C,F. The
+native builder used **60 named qubits and zero additional scratch**:
+
+| Native construction | Q | Static Toffolis | Operations | Basis cases | Errors |
+|---|---:|---:|---:|---:|---:|
+| Forward source-conserving lift | 60 | 0 | 104 | 8,192 | **0** |
+| Forward and exact inverse | 60 | 0 | 208 | 8,192 | **0** |
+
+All 4,096 previously colliding normalized field states remained
+distinct in the joint (C_new,F_new) output. This is a demonstrated
+reversible **one-step, fixed-denominator** quantum construction.
+The zero-Toffoli count is special to the linear fixed-source case.
+No result for dynamic quantum denominators, multiple recurrence
+steps, complete DQI, or a 900-qubit implementation is claimed.
+
+**Next mathematically decisive obligation:** determine whether a
+future retained syndrome/locator relationship recovers the old F carrier
+without retaining an ever-growing history. Without such a witness,
+source-distinguishable absence and nonzero-correction histories must
+remain separate; collapsing them would be nonunitary.
