@@ -43,6 +43,26 @@ def hankel_matrix(S, t):
             for i in range(t)]
 
 
+def xor_source_product(builder, A, B, target, gf):
+    """Source-occurrence-preserving field product.
+
+    A Hankel source may occupy two matrix cells simultaneously.
+    If they are the SAME quantum producer, their product is a square,
+    not a two-input multiplication. In characteristic two this is the
+    linear Frobenius map with one original-source input bit per term.
+    """
+    source_a=tuple(int(q.id) for q in A)
+    source_b=tuple(int(q.id) for q in B)
+    if source_a==source_b:
+        for source_bit in range(gf.degree):
+            square=int(gf.mul(1<<source_bit,1<<source_bit))
+            for target_bit in range(gf.degree):
+                if (square>>target_bit)&1:
+                    builder.cx(A[source_bit],target[target_bit])
+    else:
+        builder.ixor_gf2_mul(A,B,target=target,field=gf)
+
+
 def xor_field_determinant(builder, M, target, gf):
     """Reversible field determinant source production for 0<=size<=4.
 
@@ -60,34 +80,32 @@ def xor_field_determinant(builder, M, target, gf):
         return
     for ordering in permutations(range(n)):
         if n==2:
-            builder.ixor_gf2_mul(M[0][ordering[0]],M[1][ordering[1]],
-                                target=target,field=gf)
+            xor_source_product(builder,M[0][ordering[0]],
+                               M[1][ordering[1]],target,gf)
             continue
         scratch=[]
         first=builder.alloc_qubits(gf.degree)
-        builder.ixor_gf2_mul(M[0][ordering[0]],M[1][ordering[1]],
-                            target=first,field=gf)
+        xor_source_product(builder,M[0][ordering[0]],
+                           M[1][ordering[1]],first,gf)
         scratch.append(first)
         for i in range(2,n):
             if i==n-1:
-                builder.ixor_gf2_mul(
-                    scratch[-1],M[i][ordering[i]],
-                    target=target,field=gf)
+                xor_source_product(
+                    builder,scratch[-1],M[i][ordering[i]],target,gf)
             else:
                 tmp=builder.alloc_qubits(gf.degree)
-                builder.ixor_gf2_mul(
-                    scratch[-1],M[i][ordering[i]],
-                    target=tmp,field=gf)
+                xor_source_product(
+                    builder,scratch[-1],M[i][ordering[i]],tmp,gf)
                 scratch.append(tmp)
         for i in range(len(scratch)-1,-1,-1):
             if i==0:
-                builder.ixor_gf2_mul(
-                    M[0][ordering[0]],M[1][ordering[1]],
-                    target=scratch[i],field=gf)
+                xor_source_product(
+                    builder,M[0][ordering[0]],M[1][ordering[1]],
+                    scratch[i],gf)
             else:
-                builder.ixor_gf2_mul(
-                    scratch[i-1],M[i+1][ordering[i+1]],
-                    target=scratch[i],field=gf)
+                xor_source_product(
+                    builder,scratch[i-1],M[i+1][ordering[i+1]],
+                    scratch[i],gf)
             builder.free(scratch[i])
 
 
