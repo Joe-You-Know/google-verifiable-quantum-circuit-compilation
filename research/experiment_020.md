@@ -173,3 +173,36 @@ Machine-readable user-result receipt:
 Experiment 020 archive has been supplied. This local DQI score is not a
 three-task competition leaderboard score. Official results for the bundled
 Invsqrt and chemistry assets are not established by this DQI verification.
+
+## Addendum — Kaggle scored public leaderboard submissions COMPLETE
+
+**New observed evidence (user-pasted Windows Kaggle CLI table, 2026-11-21):**
+Both Experiment 003 and Experiment 020 submitted `submission.zip` files with
+server-side `SubmissionStatus.COMPLETE` and nonempty public scores.
+
+| Experiment | Submission ref | Kaggle timestamp (as emitted) | Status | Public score |
+|---|---:|---|---|---:|
+| 003 — optimized Invsqrt, baseline DQI + chemistry | 58637336 | 2026-11-20 22:02:32.790000 | COMPLETE | 1.01749 |
+| 020 — norm-inverse DQI | 58651355 | 2026-11-21 05:06:42.373000 | COMPLETE | **1.03006** |
+
+Kaggle specifies a **higher-is-better** three-task geometric-mean
+improvement score. Experiment 020's public score is +0.01257 absolute,
+approximately **+1.23539% relative** to Experiment 003. If the Invsqrt and
+chemistry assets are held unchanged as in the separate packaging receipt,
+the implied improvement in *DQI cost* is approximately **3.61646% cost
+reduction**: the cost ratio derived from rounded leaderboard scores is
+`(1.03006/1.01749)^3 = 1.03752153`. It closely agrees with the
+independently compiled static DQI cost ratio
+`(1893/1876)^2 * (5725461/5618901) = 1.03751561`.
+The latter static calculation is not a substitute for the scored per-shot
+DQI metric, but supplies an independent cross-check.
+
+**Interpretation:** the complete Kaggle evaluation empirically confirms a
+higher aggregate public score with the integrated quotient change. Unlike
+prior phases, this is a true Kaggle public leaderboard result (as reported by
+the user's authenticated CLI). The table did not supply any private score,
+per-task score breakdown, rank or award status. Do not invent them or infer
+competitive standing from these two results alone.
+
+Machine-readable receipt:
+`research/experiment_020_kaggle_public_scores.json`.
