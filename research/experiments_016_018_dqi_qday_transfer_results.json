@@ -1,0 +1,81 @@
+{
+  "date": "2026-11-20",
+  "research_goal": "Use QDay precomputed source ROM approach to reduce coherent DQI GF2^12 controlled quotient Q and T, not optimize QDay itself",
+  "experiment016": {
+    "CI": "https://github.com/Joe-You-Know/google-verifiable-quantum-circuit-compilation/actions/runs/44840542001",
+    "source": "scripts/bench_dqi016_qday_rom_quotient.py",
+    "status": "PASS",
+    "degree4": {
+      "native": {
+        "Q": 25,
+        "Tstatic": 31,
+        "ops": 461
+      },
+      "rom": {
+        "Q": 18,
+        "Tstatic": 278,
+        "ops": 1006
+      },
+      "samples_per_mode": 1536
+    },
+    "degree6": {
+      "native": {
+        "Q": 43,
+        "Tstatic": 90,
+        "ops": 1199
+      },
+      "rom": {
+        "Q": 26,
+        "Tstatic": 2034,
+        "ops": 6582
+      },
+      "samples_per_mode": 512
+    },
+    "direct_ROM_12bit_controlled_xor_terms": 294912,
+    "conclusion": "Exact reversible lower-Q coherent quotient demonstrated on small GF fields, but flat table dramatic Toffoli increase and not viable as 12-bit native replacement"
+  },
+  "experiment017": {
+    "CI": "https://github.com/Joe-You-Know/google-verifiable-quantum-circuit-compilation/actions/runs/44840911212",
+    "source": "scripts/dqi017_norm_subfield_quotient.py",
+    "status": "PASS",
+    "identity": "For B≠0 in GF(2^12), C=B^64, N=B*C∈GF(2^6), B^(-1)=C*N^(-1), with zero input handled explicitly",
+    "denominators_checked": 4096,
+    "quotients_checked": 16384,
+    "subfield_size": 64,
+    "nonzero_lookup_size": 63,
+    "subfield_Gf4096_basis": [
+      1,
+      70,
+      130,
+      270,
+      548,
+      1068
+    ],
+    "quadratic_norm_source_pairs": 66,
+    "quad_monomial_to_output_incidence": 193
+  },
+  "experiment018": {
+    "CI": "https://github.com/Joe-You-Know/google-verifiable-quantum-circuit-compilation/actions/runs/44841059754",
+    "source": "scripts/dqi018_build_norm_circuit.py",
+    "status": "PASS",
+    "simulated_cases_per_variant": 4608,
+    "direct": {
+      "Q": 18,
+      "source_Q": 12,
+      "norm_output_Q": 6,
+      "extra_Q": 0,
+      "Tstatic": 193,
+      "ops": 227
+    },
+    "shared": {
+      "Q": 19,
+      "source_Q": 12,
+      "norm_output_Q": 6,
+      "extra_Q": 1,
+      "Tstatic": 127,
+      "ops": 349
+    },
+    "scope": "Reversible norm stage only. No six-bit inverse lookup or full coherent DQI quotient compiled, no DQI verifier passed, no net scored speedup."
+  },
+  "next": "Build 6-bit inverse lookup (or native field inversion with source-verified basis), reconstruct GF4096 division via norm and conjugate, test zero denominator/quantum control and uncompute, compare against 12-bit native gadget Q109/Tstatic390, then whole DQI Q=1893 official sampled score."
+}
