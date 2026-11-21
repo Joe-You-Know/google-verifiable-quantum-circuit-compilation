@@ -25,7 +25,7 @@ jobs:
         run: |
           PYTHONPATH="$PWD/kickmix:$PWD/verifiers:$PWD/scripts:$PWD" \
           python scripts/bench_dqi025_internal_witness.py \
-            --degree 4 --cases 128 --workspace-words 12 \
+            --degree 4 --cases 2048 --workspace-words 12 \
             --out /tmp/dqi025_gf4.json
       - uses: actions/upload-artifact@v4
         if: always()
@@ -46,7 +46,7 @@ jobs:
         run: |
           PYTHONPATH="$PWD/kickmix:$PWD/verifiers:$PWD/scripts:$PWD" \
           python scripts/bench_dqi025_internal_witness.py \
-            --degree 12 --cases 128 --workspace-words 12 \
+            --degree 12 --cases 1024 --workspace-words 12 \
             --out /tmp/dqi025_gf12.json
       - uses: actions/upload-artifact@v4
         if: always()
