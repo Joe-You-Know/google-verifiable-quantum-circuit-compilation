@@ -126,6 +126,9 @@ def future_source_workspace(builder,S,K,field,*,word_count=12):
     with builder.mark("future_workspace"):
         words=[builder.alloc_qubits(field.degree)
                for _ in range(word_count)]
+        first_word_ids=(
+            tuple(int(q.id) for q in words[0]) if words else ()
+        )
         for j in range(word_count):
             source_row, column = divmod(j,4)
             s=S[source_row]
@@ -138,6 +141,7 @@ def future_source_workspace(builder,S,K,field,*,word_count=12):
             builder.ixor_gf2_mul(s,k,target=words[j],field=field)
         for item in reversed(words):
             builder.free(item)
+        return first_word_ids
 
 
 def build_internal_witness_circuit(*,degree=12,release_first=True,
@@ -184,7 +188,7 @@ def build_internal_witness_circuit(*,degree=12,release_first=True,
     if release_first:
         builder.free(F[0])
     with builder.mark("derived_future_workspace"):
-        future_source_workspace(
+        first_future_ids=future_source_workspace(
             builder,S,K,gf,word_count=workspace_words)
     if release_first:
         F[0]=builder.alloc_qubits(degree)
@@ -215,6 +219,9 @@ def build_internal_witness_circuit(*,degree=12,release_first=True,
                     "reallocated_f1_physical_ids":reconstructed_f1_ids,
                     "physical_F1_ids_reused":(
                         original_f1_ids==reconstructed_f1_ids),
+                    "first_future_word_ids":first_future_ids,
+                    "released_F1_slot_reused_by_future_word":(
+                        original_f1_ids==first_future_ids),
                     "field_degree":degree,
                     "release_first":release_first,
                     "workspace_words":workspace_words}
