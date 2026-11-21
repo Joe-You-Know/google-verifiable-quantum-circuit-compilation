@@ -1,0 +1,31 @@
+name: DQI reversible six-bit norm from twelve-bit denominator
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/dqi018_build_norm_circuit.py'
+      - '.github/workflows/dqi018_norm_circuit.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  norm-circuit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Dependencies
+        run: python -m pip install numpy scipy
+      - name: Simulate every GF4096 denominator with reversible norm construction
+        run: |
+          PYTHONPATH="$PWD/kickmix:$PWD/verifiers:$PWD" python scripts/dqi018_build_norm_circuit.py \
+            --report /tmp/dqi018_reversible_norm.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dqi018_reversible_norm
+          path: /tmp/dqi018_reversible_norm.json
