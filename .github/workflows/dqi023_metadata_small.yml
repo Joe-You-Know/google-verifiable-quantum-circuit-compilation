@@ -1,0 +1,36 @@
+name: DQI Experiment 023 typed metadata-width falsification
+
+on:
+  pull_request:
+    paths:
+      - 'research/dqi023_metadata_width.py'
+      - 'scripts/bench_dqi023_metadata.py'
+      - '.github/workflows/dqi023_metadata_small.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  source-metadata-small:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Install dependencies
+        run: python -m pip install numpy scipy
+      - name: Exact small baseline and independently narrowed source-width options
+        run: |
+          PYTHONPATH="$PWD/kickmix:$PWD/verifiers:$PWD/scripts:$PWD" \
+          python scripts/bench_dqi023_metadata.py \
+            --n 6 --m 15 --degree 12 --shots 512 \
+            --out /tmp/dqi023_metadata_small.json
+      - name: Upload candidate records
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: dqi023_metadata_small
+          path: /tmp/dqi023_metadata_small.json

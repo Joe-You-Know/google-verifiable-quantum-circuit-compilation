@@ -1,0 +1,43 @@
+name: DQI Experiment 023b causal syndrome recurrence tests
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/audit_dqi023_recurrence.py'
+      - '.github/workflows/dqi023_recurrence.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  independent-recurrence:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Dependencies
+        run: python -m pip install numpy scipy
+      - name: Small source-syndrome recurrence and exact phase witnesses
+        run: |
+          PYTHONPATH="$PWD/kickmix:$PWD/verifiers:$PWD/scripts:$PWD" \
+          python scripts/audit_dqi023_recurrence.py \
+            --n 6 --m 15 --shots 128 \
+            --out /tmp/dqi023_recurrence_small.json
+      - name: Full-dimension source-syndrome recurrence witnesses
+        run: |
+          PYTHONPATH="$PWD/kickmix:$PWD/verifiers:$PWD/scripts:$PWD" \
+          python scripts/audit_dqi023_recurrence.py \
+            --n 70 --m 4095 --shots 64 \
+            --out /tmp/dqi023_recurrence_full.json
+      - name: Upload witnessed recurrence packets
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: dqi023_causal_recurrence
+          path: |
+            /tmp/dqi023_recurrence_small.json
+            /tmp/dqi023_recurrence_full.json
