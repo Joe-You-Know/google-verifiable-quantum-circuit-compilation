@@ -1,7 +1,7 @@
 # Experiment 020 — controlled six-bit norm quotient inside synchronized EEA
 
 **Research date:** 2026-11-20 (CI completed 2026-11-21 UTC).  
-**Status:** smaller DQI circuit full sampled phase audit PASS; full-width 70×70 native static resource audit PASS. Full 4095-position DQI verifier NOT RUN.
+**Status:** smaller DQI circuit sampled phase audit PASS; both 70×70 and 70×4095 native static resource audits PASS. Full 4095-position DQI **phase verifier NOT RUN**.
 
 ## Constructive source continuity
 
@@ -73,7 +73,7 @@ standalone 81-qubit gadget.
 
 ## Boundaries
 
-1. A full `m=4095` compiled candidate was not yet measured.
+1. The full `m=4095` compiled candidate **has now been measured** in the same native Kickmix comparison. See the dated addendum below; this earlier unmeasured boundary was closed.
 2. The official 70-syndrome 4095-position sampled phase verifier with
    `log2_delta=-128` has **not run** on this candidate.
 3. The official DQI score uses mean per-shot Toffoli-like operation count and
@@ -95,7 +95,31 @@ python3 scripts/bench_dqi020_integrated_norm.py \
   --outdir /tmp/vqcc_dqi020_fullwidth
 ~~~
 
-The next research obligation is a full 4095-position build followed by
-actual official phase sampling, with exact qubit, mean Toffoli and phase error
-receipts. Until then, only the standalone, small-phase and full-width static
-claims above are demonstrated.
+The next research obligation is the **official full 4095-position phase verifier**, including measured mean Toffoli and error receipts at the stipulated confidence. The full static build now passes (addendum below).
+
+## Addendum — 4095-position competition-width static Kickmix compilation
+
+**New evidence, 2026-11-20 / 2026-11-21 UTC:**  
+https://github.com/Joe-You-Know/google-verifiable-quantum-circuit-compilation/actions/runs/44844416271
+
+After the first 70×70 report, the exact **n=70, m=4095, GF(2^12)**
+competition-dimension source was compiled independently for the original and
+the feature-flagged norm-inverse version, with native Kickmix
+`operation_statistics` on both. The separate compilation conclusively resolves
+the previously pending **static full-width** measurement:
+
+| Native static measurement | Original reference | Norm-inverse EEA | Difference |
+|---|---:|---:|---:|
+| Physical Q | 1,893 | **1,876** | **-17** |
+| Static Toffoli-like T | 5,725,461 | **5,618,901** | **-106,560** |
+| Circuit ops | 86,051,014 | **83,791,054** | **-2,259,960** |
+
+Unlike the earlier 70×70 test, this is not an extrapolation: both 4095-position
+circuits were built and counted by Kickmix itself. The additional 4025 positions
+contribute the same 1,412,775 static Toffoli-like gates in both variants.
+The candidate still improves the EEA by precisely 106,560 static gates.
+
+**Still not established:** official 4095-position phase correctness across the
+required 102,400 shots, confidence parameter `log2_delta=-128`, candidate
+per-shot Toffoli mean and scored DQI confidence factor. No official Kaggle
+submission has been made; all integration exists only on the experiment branch.
