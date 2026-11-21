@@ -89,11 +89,13 @@ class SerialForneyDecoder(Experiment020Decoder):
         step_multipliers = [
             (k, gf.pow(primitive, k))
             for k in range(1, t + 1)
-        ] + [
-            (k, gf.pow(primitive, (m - 2 - k) % block_length))
-            for k in omega_indices
-            if (m - 2 - k) % block_length != 0
         ]
+        for k in omega_indices:
+            source_offset = m - 2 - k
+            source_quotient, source_remainder = divmod(source_offset, block_length)
+            assert source_offset == source_quotient * block_length + source_remainder
+            if source_remainder != 0:
+                step_multipliers.append((k, gf.pow(primitive, source_remainder)))
 
         sum_pairs = (
             [(reg_b[k], omega) for k in range(m // 2 + 1, m // 2 + t)]
