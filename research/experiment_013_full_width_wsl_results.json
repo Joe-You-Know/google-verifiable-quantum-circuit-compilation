@@ -1,0 +1,39 @@
+{
+  "experiment": "013",
+  "date": "2026-11-20",
+  "origin": "user WSL source allocation replay, complete console summary",
+  "source_ledger_path": "/tmp/vqcc_dqi011_n70_m70.json",
+  "receipt_path": "/tmp/vqcc_dqi013_peak_n70_m70.json",
+  "n": 70,
+  "m": 70,
+  "degree": 12,
+  "compiled_physical_Q": 1893,
+  "compiled_Q_squared": 3583449,
+  "observed_peak_equals_compiled_Q": true,
+  "unobserved_peak_qubit_gap": 0,
+  "first_peak_event_index": 299,
+  "last_peak_event_index": 68060,
+  "peak_event_count": 888,
+  "first_peak_trigger_kind": "native_returned_scaffold",
+  "first_peak_trigger_stage": "forward_eea/eea_step/multiply_and_add_or_sub/quotient_div",
+  "first_peak_root_or_named_count": 1803,
+  "first_peak_other_workspace_count": 90,
+  "first_peak_source_producer_counts": {
+    "named_input": 840,
+    "native_returned_scaffold": 72,
+    "temporary": 981
+  },
+  "first_peak_workspace_stage_counts": {
+    "forward_eea/eea_step": 6,
+    "forward_eea/eea_step/multiply_and_add_or_sub": 12,
+    "forward_eea/eea_step/multiply_and_add_or_sub/quotient_div": 72
+  },
+  "last_observed_source_live_count": 840,
+  "source_occurrence_births_replayed": 109738,
+  "source_release_without_birth_count": 0,
+  "source_root_temporary_allocation_occurrences": 963,
+  "phase_verification": "NOT_RUN",
+  "qubit_savings": "NONE_ESTABLISHED",
+  "source_read": "verifiers/dqi/dqi_reference_circuit.py",
+  "interpretation": "The 72 source-visible native returned quotient scaffold+ratio allocations reach Q=1893 on first observed peak; this does not prove their qubits can be removed or shortened."
+}

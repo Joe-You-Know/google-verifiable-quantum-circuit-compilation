@@ -1,0 +1,33 @@
+name: DQI QDay-ROM coherent quotient comparison
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/bench_dqi016_qday_rom_quotient.py'
+      - '.github/workflows/dqi016_qday_rom_quotient.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-rom:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Dependencies
+        run: python -m pip install numpy scipy
+      - name: Exact GF4 and GF64 QROM versus native controlled division
+        run: |
+          PYTHONPATH="$PWD/kickmix:$PWD/verifiers:$PWD" python -m py_compile scripts/bench_dqi016_qday_rom_quotient.py
+          PYTHONPATH="$PWD/kickmix:$PWD/verifiers:$PWD" python scripts/bench_dqi016_qday_rom_quotient.py \
+            --degrees 4 6 --verification-cases 512 --exhaustive-up-to 4 \
+            --report /tmp/dqi016_qday_rom_comparison.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dqi016_qday_rom_comparison
+          path: /tmp/dqi016_qday_rom_comparison.json

@@ -1,0 +1,89 @@
+{
+  "experiment": "004",
+  "date": "2026-11-20",
+  "origin": "User WSL complete terminal output; unmodified dfthcsos accuracy routines",
+  "criteria": {
+    "error_1_at_most": 0.02,
+    "error_2_at_most": 0.02
+  },
+  "precision_candidates": [
+    {
+      "brot": 11,
+      "rounding": "nearest_even",
+      "J": 9,
+      "qubit_upper_bound": 122,
+      "error_1": 0.07690909892185493,
+      "error_2": 0.029723819285085353,
+      "lambda_eff": 49.40251889398914,
+      "passes_accuracy": false,
+      "built": false
+    },
+    {
+      "brot": 11,
+      "rounding": "floor",
+      "J": 9,
+      "qubit_upper_bound": 122,
+      "error_1": 0.2197181793787843,
+      "error_2": 0.051106736462422295,
+      "lambda_eff": 50.40210538857142,
+      "passes_accuracy": false,
+      "built": false
+    },
+    {
+      "brot": 10,
+      "rounding": "nearest_even",
+      "J": 10,
+      "qubit_upper_bound": 123,
+      "error_1": 0.13349327912871045,
+      "error_2": 0.04382064053778086,
+      "lambda_eff": 49.60959863667228,
+      "passes_accuracy": false,
+      "built": false
+    },
+    {
+      "brot": 10,
+      "rounding": "floor",
+      "J": 10,
+      "qubit_upper_bound": 123,
+      "error_1": 0.7006060750590438,
+      "error_2": 0.13918330125335052,
+      "lambda_eff": 56.67143389927811,
+      "passes_accuracy": false,
+      "built": false
+    },
+    {
+      "brot": 9,
+      "rounding": "nearest_even",
+      "J": 11,
+      "qubit_upper_bound": 122,
+      "error_1": 0.2620814130611864,
+      "error_2": 0.07871072285175378,
+      "lambda_eff": 50.767579159842924,
+      "passes_accuracy": false,
+      "built": false
+    },
+    {
+      "brot": 9,
+      "rounding": "floor",
+      "J": 11,
+      "qubit_upper_bound": 122,
+      "error_1": 1.7069853306389395,
+      "error_2": 0.31870618537383527,
+      "lambda_eff": 73.88774876065933,
+      "passes_accuracy": false,
+      "built": false
+    }
+  ],
+  "official_reference": {
+    "status": "PASS",
+    "score": 3355599588.3155365,
+    "Toffoli_count": 93237,
+    "num_qubits": 730,
+    "brot": 12,
+    "J": 8,
+    "num_circuits": 10,
+    "verified_shots": 254464,
+    "submission_sha256": "276d464ff14da828b6b33e8487d99975494cbdf0c3cb2bd37dd3c3ddc4002695"
+  },
+  "note": "No reduced-bit candidate built; no reduced-bit Kickmix verifier results."
+}

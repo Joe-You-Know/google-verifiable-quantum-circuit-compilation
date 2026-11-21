@@ -1,0 +1,32 @@
+name: Chemistry exact uniform-subtree QROM preflight
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/audit_chem_uniform_subtrees.py'
+      - '.github/workflows/chem006_uniform_preflight.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  subtree-audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Dependencies
+        run: python -m pip install numpy scipy
+      - name: Compare QROM decision-tree witnesses
+        run: |
+          PYTHONPATH="$PWD/kickmix:$PWD/verifiers" python scripts/audit_chem_uniform_subtrees.py \
+            --source sample_submission/dfthcsos/submission.npz \
+            --J 8 --report /tmp/chem006_preflight.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: chem006_preflight
+          path: /tmp/chem006_preflight.json

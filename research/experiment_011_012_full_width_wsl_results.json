@@ -1,0 +1,57 @@
+{
+  "experiment": "011-012_WSL_benchmark_width",
+  "date": "2026-11-20",
+  "provenance": "User-pasted original WSL output from scripts/profile_dqi_source_allocations.py --n 70 --m 70 --degree 12 and scripts/join_dqi_square_source.py",
+  "scope": "source allocation census and static resources; not DQI phase verification or Q reduction",
+  "n": 70,
+  "degree": 12,
+  "short_positions": {
+    "m": 70,
+    "num_qubits": 1893,
+    "num_ops": 39245008,
+    "static_toffoli_like": 4312686,
+    "named_syndrome_qubits": 840,
+    "root_temporary_allocation_qubits": 963,
+    "max_explicit_live": 1893,
+    "peak_extra_work_qubits": 90,
+    "distinct_explicit_source_slots": 1893,
+    "highest_explicit_slot_id": 1892,
+    "temporary_allocation_occurrences": 41602,
+    "physical_slots_reused": 90,
+    "largest_source_generation": 28114,
+    "source_events": 68290,
+    "stage_entries": 4655,
+    "native_helper_releases_without_known_birth": 0,
+    "source_all_tracked_temporaries_released": true,
+    "registers_preserved": true
+  },
+  "full_reference": {
+    "m": 4095,
+    "file_sha256": "959471d05a26373b4f14ca0cae2d8639ea25f18170d9f6532139aa51ccc04995",
+    "num_qubits": 1893,
+    "num_ops": 86051014,
+    "static_toffoli_like": 5725461,
+    "official_shot_verifier": "NOT_RUN"
+  },
+  "reconciled": {
+    "extra_positions": 4025,
+    "extra_static_toffolis": 1412775,
+    "observed_toffolis_per_extra_position": 351,
+    "expected_toffolis_per_extra_position_from_gadget_audit": 351,
+    "per_position_static_gadget_parts": {
+      "inverse_scaffold": 315,
+      "zero_detector": 24,
+      "located_AND": 12
+    },
+    "source_Q_identical_between_70_and_4095_positions": true,
+    "confirmed_full_benchmark_static_count_difference": true,
+    "qubit_score_factor": 3583449,
+    "marginal_qubit_score_factor_change_if_1892_compiled": 3785,
+    "physical_qubit_omission": "NOT ESTABLISHED"
+  },
+  "source_ledger_files_on_user_WSL": [
+    "/tmp/vqcc_dqi011_n70_m70.json",
+    "/tmp/vqcc_dqi012_n70_m70.json"
+  ],
+  "next": "Use scripts/audit_dqi_peak_overlap.py on /tmp/vqcc_dqi011_n70_m70.json to identify source stage and live occurrences at first exact 1893 qubit peak. Verify any causal qubit omission through rebuilt circuits."
+}

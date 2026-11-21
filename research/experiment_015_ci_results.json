@@ -1,0 +1,75 @@
+{
+  "experiment": "015",
+  "date": "2026-11-20",
+  "evidence": "GitHub Actions 44837641112, standalone native Kickmix GF quotient gadget builds",
+  "ci": "https://github.com/Joe-You-Know/google-verifiable-quantum-circuit-compilation/actions/runs/44837641112",
+  "results": [
+    {
+      "degree": 4,
+      "pattern": "held_scaffold",
+      "conditional": true,
+      "num_qubits": 25,
+      "toffoli": 31,
+      "ops": 461
+    },
+    {
+      "degree": 4,
+      "pattern": "recomputed_division",
+      "conditional": true,
+      "num_qubits": 25,
+      "toffoli": 49,
+      "ops": 793
+    },
+    {
+      "degree": 4,
+      "pattern": "controlled_inverse_product",
+      "conditional": true,
+      "num_qubits": 25,
+      "toffoli": 31,
+      "ops": 459
+    },
+    {
+      "degree": 4,
+      "pattern": "unconditional_direct_xor",
+      "conditional": false,
+      "num_qubits": 21,
+      "toffoli": 27,
+      "ops": 410
+    },
+    {
+      "degree": 12,
+      "pattern": "held_scaffold",
+      "conditional": true,
+      "num_qubits": 109,
+      "toffoli": 390,
+      "ops": 6252
+    },
+    {
+      "degree": 12,
+      "pattern": "recomputed_division",
+      "conditional": true,
+      "num_qubits": 109,
+      "toffoli": 705,
+      "ops": 11621
+    },
+    {
+      "degree": 12,
+      "pattern": "controlled_inverse_product",
+      "conditional": true,
+      "num_qubits": 109,
+      "toffoli": 390,
+      "ops": 6250
+    },
+    {
+      "degree": 12,
+      "pattern": "unconditional_direct_xor",
+      "conditional": false,
+      "num_qubits": 97,
+      "toffoli": 378,
+      "ops": 5949
+    }
+  ],
+  "conclusion": "Native controlled inverse-product has same 12-bit gadget Q=109 and T=390 as held quotient scaffold. Recomputed version Q unchanged T705. Unconditional direct quotient XOR Q97 and T378 but does not implement original control. Zero verified DQI qubit saving.",
+  "phase_verifier": "NOT_RUN",
+  "next": "Inspect native GF controlled multiply scratch provenance and construct a true lower-Q controlled inverse-free quotient shear before actual source replacement."
+}

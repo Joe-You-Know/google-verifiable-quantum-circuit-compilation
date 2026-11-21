@@ -1,0 +1,49 @@
+name: DQI source resource scaling audit
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/bench_dqi_position_scaling.py'
+      - '.github/workflows/dqi008_position_scaling.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  dqi-audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Dependencies
+        run: python -m pip install numpy scipy
+      - name: Measure fixed-source circuit cost across 15, 31, 63 positions
+        run: |
+          PYTHONPATH="$PWD/kickmix:$PWD/verifiers:$PWD" python scripts/bench_dqi_position_scaling.py \
+            --n 6 --degree 6 --positions 15 31 63 \
+            --report /tmp/dqi008_degree6.json
+          PYTHONPATH="$PWD/kickmix:$PWD/verifiers:$PWD" python scripts/bench_dqi_position_scaling.py \
+            --n 6 --degree 8 --positions 15 31 63 \
+            --report /tmp/dqi008_degree8.json
+          PYTHONPATH="$PWD/kickmix:$PWD/verifiers:$PWD" python scripts/bench_dqi_position_scaling.py \
+            --n 6 --degree 12 --positions 15 31 63 \
+            --report /tmp/dqi008_degree12.json
+          PYTHONPATH="$PWD/kickmix:$PWD/verifiers:$PWD" python scripts/bench_dqi_position_scaling.py \
+            --n 8 --degree 12 --positions 15 31 63 \
+            --report /tmp/dqi008_degree12_n8.json
+          PYTHONPATH="$PWD/kickmix:$PWD/verifiers:$PWD" python scripts/bench_dqi_position_scaling.py \
+            --n 12 --degree 12 --positions 15 31 63 \
+            --report /tmp/dqi008_degree12_n12.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dqi008_scaling
+          path: |
+            /tmp/dqi008_degree6.json
+            /tmp/dqi008_degree8.json
+            /tmp/dqi008_degree12.json
+            /tmp/dqi008_degree12_n8.json
+            /tmp/dqi008_degree12_n12.json

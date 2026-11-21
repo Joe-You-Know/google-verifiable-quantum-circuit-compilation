@@ -1,0 +1,26 @@
+name: Kickmix qubit identity probe
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/probe_dqi_qubit_api.py'
+      - '.github/workflows/dqi011_qubit_identity.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  qubit-handle-probe:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Dependencies
+        run: python -m pip install numpy scipy
+      - name: Examine actual named and temporary handles
+        run: |
+          PYTHONPATH="$PWD/kickmix:$PWD/verifiers:$PWD" python scripts/probe_dqi_qubit_api.py

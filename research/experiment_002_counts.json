@@ -1,0 +1,115 @@
+{
+  "experiment": "002",
+  "date": "2026-11-20",
+  "source": "user-uploaded third-party ThemBones milestone archive (archive (2).zip); chem/loaders_kmx/",
+  "method": "commuting-target-control-frontier-v2",
+  "data_are_official_sample": false,
+  "verified_by_official_kickmix": false,
+  "validation": {
+    "independent_basis_state_tests_small_circuits": 3200,
+    "tests_passed": 5,
+    "archive_changed_segments": 51,
+    "archive_randomized_segment_checks": 408,
+    "random_checks_passed": true,
+    "full_circuit_verification": false
+  },
+  "removed_gates": {
+    "CX": 118820,
+    "X": 18,
+    "CCX": 0
+  },
+  "removed_pairs": 59419,
+  "official_score_delta": null,
+  "circuits": [
+    {
+      "name": "angle_k_0.kmx",
+      "CX_removed": 6396,
+      "X_removed": 0,
+      "CCX_removed": 0
+    },
+    {
+      "name": "angle_k_1.kmx",
+      "CX_removed": 6804,
+      "X_removed": 0,
+      "CCX_removed": 0
+    },
+    {
+      "name": "angle_k_2.kmx",
+      "CX_removed": 9970,
+      "X_removed": 0,
+      "CCX_removed": 0
+    },
+    {
+      "name": "angle_k_3.kmx",
+      "CX_removed": 7628,
+      "X_removed": 0,
+      "CCX_removed": 0
+    },
+    {
+      "name": "angle_k_4.kmx",
+      "CX_removed": 9382,
+      "X_removed": 0,
+      "CCX_removed": 0
+    },
+    {
+      "name": "angle_k_5.kmx",
+      "CX_removed": 6678,
+      "X_removed": 2,
+      "CCX_removed": 0
+    },
+    {
+      "name": "angle_k_6.kmx",
+      "CX_removed": 8504,
+      "X_removed": 0,
+      "CCX_removed": 0
+    },
+    {
+      "name": "angle_k_7.kmx",
+      "CX_removed": 6342,
+      "X_removed": 10,
+      "CCX_removed": 0
+    },
+    {
+      "name": "angle_k_8.kmx",
+      "CX_removed": 8416,
+      "X_removed": 0,
+      "CCX_removed": 0
+    },
+    {
+      "name": "angle_k_9.kmx",
+      "CX_removed": 8648,
+      "X_removed": 0,
+      "CCX_removed": 0
+    },
+    {
+      "name": "angle_k_10.kmx",
+      "CX_removed": 8196,
+      "X_removed": 0,
+      "CCX_removed": 0
+    },
+    {
+      "name": "angle_k_11.kmx",
+      "CX_removed": 6920,
+      "X_removed": 6,
+      "CCX_removed": 0
+    },
+    {
+      "name": "angle_k_12.kmx",
+      "CX_removed": 7752,
+      "X_removed": 0,
+      "CCX_removed": 0
+    },
+    {
+      "name": "angle_k_13.kmx",
+      "CX_removed": 8386,
+      "X_removed": 0,
+      "CCX_removed": 0
+    },
+    {
+      "name": "angle_k_14.kmx",
+      "CX_removed": 8798,
+      "X_removed": 0,
+      "CCX_removed": 0
+    }
+  ]
+}

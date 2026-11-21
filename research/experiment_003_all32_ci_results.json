@@ -1,0 +1,1006 @@
+{
+  "experiment": "003_all32",
+  "date": "2026-11-20",
+  "source": "unmodified reference numerical model and unmodified official Kickmix verifier executed in GitHub Actions on CPython 3.13",
+  "source_workflow_url": "https://github.com/Joe-You-Know/google-verifiable-quantum-circuit-compilation/actions/runs/44813235317",
+  "source_job_id": 136554881040,
+  "configurations": 32,
+  "reference_model_domain": [
+    1,
+    3133452
+  ],
+  "full_official_200million_shot_verifier_run": false,
+  "smoke_settings": {
+    "max_x": 16,
+    "shots_per_x": 2,
+    "batch_size": 16,
+    "max_workers": 1,
+    "seed": 20261120
+  },
+  "candidates": [
+    {
+      "circuit_path": "/tmp/vqcc_precision_full/baseline.kmb",
+      "full": {
+        "entire_domain_checked": true,
+        "ratio_to_tolerance": 0.47691161085718864,
+        "status": "PASS",
+        "tested_x": 3133452,
+        "worst_relative_error": 2.8426147154402056e-8,
+        "worst_x": 2588411
+      },
+      "name": "baseline",
+      "num_operations": 62160,
+      "num_qubits": 260,
+      "precision": {
+        "coef_bits": 17,
+        "delta_bits": 14,
+        "product_bits": 28,
+        "result_bits": 29,
+        "square_bits": 28
+      },
+      "sample": {
+        "ratio_to_tolerance": 0.3858909097672392,
+        "status": "PASS",
+        "tested_x": 6313,
+        "worst_relative_error": 2.300089059872861e-8,
+        "worst_x": 2941
+      },
+      "static_qubit_toffoli_proxy": 2011100,
+      "static_toffoli_like": 7735,
+      "official_32_shot": {
+        "candidate": "baseline",
+        "full_domain_checked": true,
+        "full_domain_status": "PASS",
+        "num_qubits": 260,
+        "precision": {
+          "coef_bits": 17,
+          "delta_bits": 14,
+          "product_bits": 28,
+          "result_bits": 29,
+          "square_bits": 28
+        },
+        "sample_status": "PASS",
+        "smoke_circuit_sha256": "e2bf8eb64350a4460a271fc7f1d591ef125b1e276377e9a0f64b96ab3ca321e1",
+        "smoke_error": null,
+        "smoke_exit_code": 0,
+        "smoke_num_qubits": 260,
+        "smoke_score": 2064361.8235632381,
+        "smoke_status": "PASS",
+        "smoke_toffoli_count": 7735,
+        "static_toffoli_like": 7735
+      }
+    },
+    {
+      "circuit_path": "/tmp/vqcc_precision_full/delta_bits_minus_1.kmb",
+      "full": {
+        "entire_domain_checked": true,
+        "ratio_to_tolerance": 0.6017734009411408,
+        "status": "PASS",
+        "tested_x": 3133452,
+        "worst_relative_error": 3.586848979837542e-8,
+        "worst_x": 284670
+      },
+      "name": "delta_bits_minus_1",
+      "num_operations": 60972,
+      "num_qubits": 260,
+      "precision": {
+        "coef_bits": 17,
+        "delta_bits": 13,
+        "product_bits": 28,
+        "result_bits": 29,
+        "square_bits": 28
+      },
+      "sample": {
+        "ratio_to_tolerance": 0.46379835806207587,
+        "status": "PASS",
+        "tested_x": 6313,
+        "worst_relative_error": 2.764453637969946e-8,
+        "worst_x": 3012552
+      },
+      "static_qubit_toffoli_proxy": 1981460,
+      "static_toffoli_like": 7621,
+      "official_32_shot": {
+        "candidate": "delta_bits_minus_1",
+        "full_domain_checked": true,
+        "full_domain_status": "PASS",
+        "num_qubits": 260,
+        "precision": {
+          "coef_bits": 17,
+          "delta_bits": 13,
+          "product_bits": 28,
+          "result_bits": 29,
+          "square_bits": 28
+        },
+        "sample_status": "PASS",
+        "smoke_circuit_sha256": "49ed832b785bd0c51cdd5e451d00afec6567869efe03e82fd807dd326581edc9",
+        "smoke_error": null,
+        "smoke_exit_code": 0,
+        "smoke_num_qubits": 260,
+        "smoke_score": 2034721.8235632381,
+        "smoke_status": "PASS",
+        "smoke_toffoli_count": 7621,
+        "static_toffoli_like": 7621
+      }
+    },
+    {
+      "name": "coef_bits_minus_1",
+      "precision": {
+        "coef_bits": 16,
+        "delta_bits": 14,
+        "product_bits": 28,
+        "result_bits": 29,
+        "square_bits": 28
+      },
+      "sample": {
+        "ratio_to_tolerance": 1.2454436787284549,
+        "status": "FAIL",
+        "tested_x": 6313,
+        "worst_relative_error": 7.423422805836528e-8,
+        "worst_x": 3010256
+      },
+      "official_32_shot": null
+    },
+    {
+      "circuit_path": "/tmp/vqcc_precision_full/square_bits_minus_1.kmb",
+      "full": {
+        "entire_domain_checked": true,
+        "ratio_to_tolerance": 0.8824236208072741,
+        "status": "PASS",
+        "tested_x": 3133452,
+        "worst_relative_error": 5.259654645963157e-8,
+        "worst_x": 1046655
+      },
+      "name": "square_bits_minus_1",
+      "num_operations": 61386,
+      "num_qubits": 259,
+      "precision": {
+        "coef_bits": 17,
+        "delta_bits": 14,
+        "product_bits": 28,
+        "result_bits": 29,
+        "square_bits": 27
+      },
+      "sample": {
+        "ratio_to_tolerance": 0.6947843154383894,
+        "status": "PASS",
+        "tested_x": 6313,
+        "worst_relative_error": 4.1412372317218147e-8,
+        "worst_x": 63300
+      },
+      "static_qubit_toffoli_proxy": 1984717,
+      "static_toffoli_like": 7663,
+      "official_32_shot": {
+        "candidate": "square_bits_minus_1",
+        "full_domain_checked": true,
+        "full_domain_status": "PASS",
+        "num_qubits": 259,
+        "precision": {
+          "coef_bits": 17,
+          "delta_bits": 14,
+          "product_bits": 28,
+          "result_bits": 29,
+          "square_bits": 27
+        },
+        "sample_status": "PASS",
+        "smoke_circuit_sha256": "4e650b8f16abf2fea708e6361ded1958714e17daf8a30426468e4cbab3e4ae75",
+        "smoke_error": null,
+        "smoke_exit_code": 0,
+        "smoke_num_qubits": 259,
+        "smoke_score": 2037278.2791986344,
+        "smoke_status": "PASS",
+        "smoke_toffoli_count": 7663,
+        "static_toffoli_like": 7663
+      }
+    },
+    {
+      "circuit_path": "/tmp/vqcc_precision_full/product_bits_minus_1.kmb",
+      "full": {
+        "entire_domain_checked": true,
+        "ratio_to_tolerance": 0.9201565464119904,
+        "status": "PASS",
+        "tested_x": 3133452,
+        "worst_relative_error": 5.4845604086636925e-8,
+        "worst_x": 2588415
+      },
+      "name": "product_bits_minus_1",
+      "num_operations": 61438,
+      "num_qubits": 258,
+      "precision": {
+        "coef_bits": 17,
+        "delta_bits": 14,
+        "product_bits": 27,
+        "result_bits": 29,
+        "square_bits": 28
+      },
+      "sample": {
+        "ratio_to_tolerance": 0.6986661567326249,
+        "status": "PASS",
+        "tested_x": 6313,
+        "worst_relative_error": 4.16437480886355e-8,
+        "worst_x": 1572862
+      },
+      "static_qubit_toffoli_proxy": 1972410,
+      "static_toffoli_like": 7645,
+      "official_32_shot": {
+        "candidate": "product_bits_minus_1",
+        "full_domain_checked": true,
+        "full_domain_status": "PASS",
+        "num_qubits": 258,
+        "precision": {
+          "coef_bits": 17,
+          "delta_bits": 14,
+          "product_bits": 27,
+          "result_bits": 29,
+          "square_bits": 28
+        },
+        "sample_status": "PASS",
+        "smoke_circuit_sha256": "561687a62b2b562bf72477ef11cedee81e99199e15bf10347490d0258e47352a",
+        "smoke_error": null,
+        "smoke_exit_code": 0,
+        "smoke_num_qubits": 258,
+        "smoke_score": 2024749.8215010941,
+        "smoke_status": "PASS",
+        "smoke_toffoli_count": 7645,
+        "static_toffoli_like": 7645
+      }
+    },
+    {
+      "circuit_path": "/tmp/vqcc_precision_full/result_bits_minus_1.kmb",
+      "full": {
+        "entire_domain_checked": true,
+        "ratio_to_tolerance": 0.6557011753328107,
+        "status": "PASS",
+        "tested_x": 3133452,
+        "worst_relative_error": 3.908283563451831e-8,
+        "worst_x": 2995755
+      },
+      "name": "result_bits_minus_1",
+      "num_operations": 61595,
+      "num_qubits": 259,
+      "precision": {
+        "coef_bits": 17,
+        "delta_bits": 14,
+        "product_bits": 28,
+        "result_bits": 28,
+        "square_bits": 28
+      },
+      "sample": {
+        "ratio_to_tolerance": 0.5447707558175078,
+        "status": "PASS",
+        "tested_x": 6313,
+        "worst_relative_error": 3.247086738452362e-8,
+        "worst_x": 2941
+      },
+      "static_qubit_toffoli_proxy": 1980573,
+      "static_toffoli_like": 7647,
+      "official_32_shot": {
+        "candidate": "result_bits_minus_1",
+        "full_domain_checked": true,
+        "full_domain_status": "PASS",
+        "num_qubits": 259,
+        "precision": {
+          "coef_bits": 17,
+          "delta_bits": 14,
+          "product_bits": 28,
+          "result_bits": 28,
+          "square_bits": 28
+        },
+        "sample_status": "PASS",
+        "smoke_circuit_sha256": "d827017573926c2f068158c6e22bb65e5d7a4c042c480450e60e5297a029df62",
+        "smoke_error": null,
+        "smoke_exit_code": 0,
+        "smoke_num_qubits": 259,
+        "smoke_score": 2032829.5863123147,
+        "smoke_status": "PASS",
+        "smoke_toffoli_count": 7647,
+        "static_toffoli_like": 7647
+      }
+    },
+    {
+      "name": "delta_bits_and_coef_bits_minus_1",
+      "precision": {
+        "coef_bits": 16,
+        "delta_bits": 13,
+        "product_bits": 28,
+        "result_bits": 29,
+        "square_bits": 28
+      },
+      "sample": {
+        "ratio_to_tolerance": 1.2454436787284549,
+        "status": "FAIL",
+        "tested_x": 6313,
+        "worst_relative_error": 7.423422805836528e-8,
+        "worst_x": 3010256
+      },
+      "official_32_shot": null
+    },
+    {
+      "circuit_path": "/tmp/vqcc_precision_full/delta_bits_and_square_bits_minus_1.kmb",
+      "full": {
+        "entire_domain_checked": true,
+        "ratio_to_tolerance": 0.8824236208072741,
+        "status": "PASS",
+        "tested_x": 3133452,
+        "worst_relative_error": 5.259654645963157e-8,
+        "worst_x": 1046655
+      },
+      "name": "delta_bits_and_square_bits_minus_1",
+      "num_operations": 60198,
+      "num_qubits": 259,
+      "precision": {
+        "coef_bits": 17,
+        "delta_bits": 13,
+        "product_bits": 28,
+        "result_bits": 29,
+        "square_bits": 27
+      },
+      "sample": {
+        "ratio_to_tolerance": 0.6947843154383894,
+        "status": "PASS",
+        "tested_x": 6313,
+        "worst_relative_error": 4.1412372317218147e-8,
+        "worst_x": 63300
+      },
+      "static_qubit_toffoli_proxy": 1955191,
+      "static_toffoli_like": 7549,
+      "official_32_shot": {
+        "candidate": "delta_bits_and_square_bits_minus_1",
+        "full_domain_checked": true,
+        "full_domain_status": "PASS",
+        "num_qubits": 259,
+        "precision": {
+          "coef_bits": 17,
+          "delta_bits": 13,
+          "product_bits": 28,
+          "result_bits": 29,
+          "square_bits": 27
+        },
+        "sample_status": "PASS",
+        "smoke_circuit_sha256": "e8c461d398038346a4beea41ef84d97dc717a8a2a9d088a5120de9e26c7d893a",
+        "smoke_error": null,
+        "smoke_exit_code": 0,
+        "smoke_num_qubits": 259,
+        "smoke_score": 2007752.2791986344,
+        "smoke_status": "PASS",
+        "smoke_toffoli_count": 7549,
+        "static_toffoli_like": 7549
+      }
+    },
+    {
+      "circuit_path": "/tmp/vqcc_precision_full/delta_bits_and_product_bits_minus_1.kmb",
+      "full": {
+        "entire_domain_checked": true,
+        "ratio_to_tolerance": 0.8969251722743483,
+        "status": "PASS",
+        "tested_x": 3133452,
+        "worst_relative_error": 5.346090628351857e-8,
+        "worst_x": 2684414
+      },
+      "name": "delta_bits_and_product_bits_minus_1",
+      "num_operations": 60250,
+      "num_qubits": 258,
+      "precision": {
+        "coef_bits": 17,
+        "delta_bits": 13,
+        "product_bits": 27,
+        "result_bits": 29,
+        "square_bits": 28
+      },
+      "sample": {
+        "ratio_to_tolerance": 0.6675249530043886,
+        "status": "PASS",
+        "tested_x": 6313,
+        "worst_relative_error": 3.9787587702535905e-8,
+        "worst_x": 775903
+      },
+      "static_qubit_toffoli_proxy": 1942998,
+      "static_toffoli_like": 7531,
+      "official_32_shot": {
+        "candidate": "delta_bits_and_product_bits_minus_1",
+        "full_domain_checked": true,
+        "full_domain_status": "PASS",
+        "num_qubits": 258,
+        "precision": {
+          "coef_bits": 17,
+          "delta_bits": 13,
+          "product_bits": 27,
+          "result_bits": 29,
+          "square_bits": 28
+        },
+        "sample_status": "PASS",
+        "smoke_circuit_sha256": "45d871fb6f5455f4133c617c8a139f01dffcdc0ac846dc7fdc1b46d3c754401e",
+        "smoke_error": null,
+        "smoke_exit_code": 0,
+        "smoke_num_qubits": 258,
+        "smoke_score": 1995337.8215010941,
+        "smoke_status": "PASS",
+        "smoke_toffoli_count": 7531,
+        "static_toffoli_like": 7531
+      }
+    },
+    {
+      "circuit_path": "/tmp/vqcc_precision_full/delta_bits_and_result_bits_minus_1.kmb",
+      "full": {
+        "entire_domain_checked": true,
+        "ratio_to_tolerance": 0.7324434962011557,
+        "status": "PASS",
+        "tested_x": 3133452,
+        "worst_relative_error": 4.3657034409115057e-8,
+        "worst_x": 748950
+      },
+      "name": "delta_bits_and_result_bits_minus_1",
+      "num_operations": 60407,
+      "num_qubits": 259,
+      "precision": {
+        "coef_bits": 17,
+        "delta_bits": 13,
+        "product_bits": 28,
+        "result_bits": 28,
+        "square_bits": 28
+      },
+      "sample": {
+        "ratio_to_tolerance": 0.5962195064108906,
+        "status": "PASS",
+        "tested_x": 6313,
+        "worst_relative_error": 3.553745188777987e-8,
+        "worst_x": 3012552
+      },
+      "static_qubit_toffoli_proxy": 1951047,
+      "static_toffoli_like": 7533,
+      "official_32_shot": {
+        "candidate": "delta_bits_and_result_bits_minus_1",
+        "full_domain_checked": true,
+        "full_domain_status": "PASS",
+        "num_qubits": 259,
+        "precision": {
+          "coef_bits": 17,
+          "delta_bits": 13,
+          "product_bits": 28,
+          "result_bits": 28,
+          "square_bits": 28
+        },
+        "sample_status": "PASS",
+        "smoke_circuit_sha256": "de1d9c0cb7c059227f20b89f54172ee9bbd08818240320b6a1cbd296b64bb022",
+        "smoke_error": null,
+        "smoke_exit_code": 0,
+        "smoke_num_qubits": 259,
+        "smoke_score": 2003303.5863123147,
+        "smoke_status": "PASS",
+        "smoke_toffoli_count": 7533,
+        "static_toffoli_like": 7533
+      }
+    },
+    {
+      "name": "coef_bits_and_square_bits_minus_1",
+      "precision": {
+        "coef_bits": 16,
+        "delta_bits": 14,
+        "product_bits": 28,
+        "result_bits": 29,
+        "square_bits": 27
+      },
+      "sample": {
+        "ratio_to_tolerance": 1.2454436787284549,
+        "status": "FAIL",
+        "tested_x": 6313,
+        "worst_relative_error": 7.423422805836528e-8,
+        "worst_x": 3010256
+      },
+      "official_32_shot": null
+    },
+    {
+      "name": "coef_bits_and_product_bits_minus_1",
+      "precision": {
+        "coef_bits": 16,
+        "delta_bits": 14,
+        "product_bits": 27,
+        "result_bits": 29,
+        "square_bits": 28
+      },
+      "sample": {
+        "ratio_to_tolerance": 1.086598866683663,
+        "status": "FAIL",
+        "tested_x": 6313,
+        "worst_relative_error": 6.476633946202177e-8,
+        "worst_x": 3010256
+      },
+      "official_32_shot": null
+    },
+    {
+      "name": "coef_bits_and_result_bits_minus_1",
+      "precision": {
+        "coef_bits": 16,
+        "delta_bits": 14,
+        "product_bits": 28,
+        "result_bits": 28,
+        "square_bits": 28
+      },
+      "sample": {
+        "ratio_to_tolerance": 1.3248660847508507,
+        "status": "FAIL",
+        "tested_x": 6313,
+        "worst_relative_error": 7.896817235653702e-8,
+        "worst_x": 3010256
+      },
+      "official_32_shot": null
+    },
+    {
+      "name": "square_bits_and_product_bits_minus_1",
+      "precision": {
+        "coef_bits": 17,
+        "delta_bits": 14,
+        "product_bits": 27,
+        "result_bits": 29,
+        "square_bits": 27
+      },
+      "sample": {
+        "ratio_to_tolerance": 1.0069558916830144,
+        "status": "FAIL",
+        "tested_x": 6313,
+        "worst_relative_error": 6.001924822825279e-8,
+        "worst_x": 3133367
+      },
+      "official_32_shot": null
+    },
+    {
+      "circuit_path": "/tmp/vqcc_precision_full/square_bits_and_result_bits_minus_1.kmb",
+      "full": {
+        "entire_domain_checked": true,
+        "ratio_to_tolerance": 0.7887595355664121,
+        "status": "PASS",
+        "tested_x": 3133452,
+        "worst_relative_error": 4.701373193063808e-8,
+        "worst_x": 1046655
+      },
+      "name": "square_bits_and_result_bits_minus_1",
+      "num_operations": 60821,
+      "num_qubits": 258,
+      "precision": {
+        "coef_bits": 17,
+        "delta_bits": 14,
+        "product_bits": 28,
+        "result_bits": 28,
+        "square_bits": 27
+      },
+      "sample": {
+        "ratio_to_tolerance": 0.6224328137050893,
+        "status": "PASS",
+        "tested_x": 6313,
+        "worst_relative_error": 3.709988675743874e-8,
+        "worst_x": 3133365
+      },
+      "static_qubit_toffoli_proxy": 1954350,
+      "static_toffoli_like": 7575,
+      "official_32_shot": {
+        "candidate": "square_bits_and_result_bits_minus_1",
+        "full_domain_checked": true,
+        "full_domain_status": "PASS",
+        "num_qubits": 258,
+        "precision": {
+          "coef_bits": 17,
+          "delta_bits": 14,
+          "product_bits": 28,
+          "result_bits": 28,
+          "square_bits": 27
+        },
+        "sample_status": "PASS",
+        "smoke_circuit_sha256": "9acc2f4bef6278a0fb6ff2d43e8cd541f814f8ae01e573819cba2e779e0b56c8",
+        "smoke_error": null,
+        "smoke_exit_code": 0,
+        "smoke_num_qubits": 258,
+        "smoke_score": 2005225.5754515184,
+        "smoke_status": "PASS",
+        "smoke_toffoli_count": 7575,
+        "static_toffoli_like": 7575
+      }
+    },
+    {
+      "circuit_path": "/tmp/vqcc_precision_full/product_bits_and_result_bits_minus_1.kmb",
+      "full": {
+        "entire_domain_checked": true,
+        "ratio_to_tolerance": 0.8710581826717054,
+        "status": "PASS",
+        "tested_x": 3133452,
+        "worst_relative_error": 5.191911355684432e-8,
+        "worst_x": 2588415
+      },
+      "name": "product_bits_and_result_bits_minus_1",
+      "num_operations": 60905,
+      "num_qubits": 256,
+      "precision": {
+        "coef_bits": 17,
+        "delta_bits": 14,
+        "product_bits": 27,
+        "result_bits": 28,
+        "square_bits": 28
+      },
+      "sample": {
+        "ratio_to_tolerance": 0.6221196509376548,
+        "status": "PASS",
+        "tested_x": 6313,
+        "worst_relative_error": 3.708122080192892e-8,
+        "worst_x": 1572862
+      },
+      "static_qubit_toffoli_proxy": 1935616,
+      "static_toffoli_like": 7561,
+      "official_32_shot": {
+        "candidate": "product_bits_and_result_bits_minus_1",
+        "full_domain_checked": true,
+        "full_domain_status": "PASS",
+        "num_qubits": 256,
+        "precision": {
+          "coef_bits": 17,
+          "delta_bits": 14,
+          "product_bits": 27,
+          "result_bits": 28,
+          "square_bits": 28
+        },
+        "sample_status": "PASS",
+        "smoke_circuit_sha256": "daf4bd5f45255dfcceac3b7af4d11b947016d5ab24ff3da554540ba38c7cc3ff",
+        "smoke_error": null,
+        "smoke_exit_code": 0,
+        "smoke_num_qubits": 256,
+        "smoke_score": 1986131.107159091,
+        "smoke_status": "PASS",
+        "smoke_toffoli_count": 7561,
+        "static_toffoli_like": 7561
+      }
+    },
+    {
+      "name": "delta_bits_and_coef_bits_and_square_bits_minus_1",
+      "precision": {
+        "coef_bits": 16,
+        "delta_bits": 13,
+        "product_bits": 28,
+        "result_bits": 29,
+        "square_bits": 27
+      },
+      "sample": {
+        "ratio_to_tolerance": 1.2454436787284549,
+        "status": "FAIL",
+        "tested_x": 6313,
+        "worst_relative_error": 7.423422805836528e-8,
+        "worst_x": 3010256
+      },
+      "official_32_shot": null
+    },
+    {
+      "name": "delta_bits_and_coef_bits_and_product_bits_minus_1",
+      "precision": {
+        "coef_bits": 16,
+        "delta_bits": 13,
+        "product_bits": 27,
+        "result_bits": 29,
+        "square_bits": 28
+      },
+      "sample": {
+        "ratio_to_tolerance": 1.086598866683663,
+        "status": "FAIL",
+        "tested_x": 6313,
+        "worst_relative_error": 6.476633946202177e-8,
+        "worst_x": 3010256
+      },
+      "official_32_shot": null
+    },
+    {
+      "name": "delta_bits_and_coef_bits_and_result_bits_minus_1",
+      "precision": {
+        "coef_bits": 16,
+        "delta_bits": 13,
+        "product_bits": 28,
+        "result_bits": 28,
+        "square_bits": 28
+      },
+      "sample": {
+        "ratio_to_tolerance": 1.3248660847508507,
+        "status": "FAIL",
+        "tested_x": 6313,
+        "worst_relative_error": 7.896817235653702e-8,
+        "worst_x": 3010256
+      },
+      "official_32_shot": null
+    },
+    {
+      "name": "delta_bits_and_square_bits_and_product_bits_minus_1",
+      "precision": {
+        "coef_bits": 17,
+        "delta_bits": 13,
+        "product_bits": 27,
+        "result_bits": 29,
+        "square_bits": 27
+      },
+      "sample": {
+        "ratio_to_tolerance": 1.0069558916830144,
+        "status": "FAIL",
+        "tested_x": 6313,
+        "worst_relative_error": 6.001924822825279e-8,
+        "worst_x": 3133367
+      },
+      "official_32_shot": null
+    },
+    {
+      "circuit_path": "/tmp/vqcc_precision_full/delta_bits_and_square_bits_and_result_bits_minus_1.kmb",
+      "full": {
+        "entire_domain_checked": true,
+        "ratio_to_tolerance": 0.7887595355664121,
+        "status": "PASS",
+        "tested_x": 3133452,
+        "worst_relative_error": 4.701373193063808e-8,
+        "worst_x": 1046655
+      },
+      "name": "delta_bits_and_square_bits_and_result_bits_minus_1",
+      "num_operations": 59633,
+      "num_qubits": 258,
+      "precision": {
+        "coef_bits": 17,
+        "delta_bits": 13,
+        "product_bits": 28,
+        "result_bits": 28,
+        "square_bits": 27
+      },
+      "sample": {
+        "ratio_to_tolerance": 0.6762115285669473,
+        "status": "PASS",
+        "tested_x": 6313,
+        "worst_relative_error": 4.0305347953256805e-8,
+        "worst_x": 3133399
+      },
+      "static_qubit_toffoli_proxy": 1924938,
+      "static_toffoli_like": 7461,
+      "official_32_shot": {
+        "candidate": "delta_bits_and_square_bits_and_result_bits_minus_1",
+        "full_domain_checked": true,
+        "full_domain_status": "PASS",
+        "num_qubits": 258,
+        "precision": {
+          "coef_bits": 17,
+          "delta_bits": 13,
+          "product_bits": 28,
+          "result_bits": 28,
+          "square_bits": 27
+        },
+        "sample_status": "PASS",
+        "smoke_circuit_sha256": "04b0c7bb49ebfc7943c2696d3507c3f763118b70f0fbdc4ef5d41fba0f8eda09",
+        "smoke_error": null,
+        "smoke_exit_code": 0,
+        "smoke_num_qubits": 258,
+        "smoke_score": 1975813.5754515184,
+        "smoke_status": "PASS",
+        "smoke_toffoli_count": 7461,
+        "static_toffoli_like": 7461
+      }
+    },
+    {
+      "circuit_path": "/tmp/vqcc_precision_full/delta_bits_and_product_bits_and_result_bits_minus_1.kmb",
+      "full": {
+        "entire_domain_checked": true,
+        "ratio_to_tolerance": 0.8469246186992744,
+        "status": "PASS",
+        "tested_x": 3133452,
+        "worst_relative_error": 5.04806410491034e-8,
+        "worst_x": 2684414
+      },
+      "name": "delta_bits_and_product_bits_and_result_bits_minus_1",
+      "num_operations": 59717,
+      "num_qubits": 256,
+      "precision": {
+        "coef_bits": 17,
+        "delta_bits": 13,
+        "product_bits": 27,
+        "result_bits": 28,
+        "square_bits": 28
+      },
+      "sample": {
+        "ratio_to_tolerance": 0.5933198556909348,
+        "status": "PASS",
+        "tested_x": 6313,
+        "worst_relative_error": 3.53646192366442e-8,
+        "worst_x": 3133407
+      },
+      "static_qubit_toffoli_proxy": 1906432,
+      "static_toffoli_like": 7447,
+      "official_32_shot": {
+        "candidate": "delta_bits_and_product_bits_and_result_bits_minus_1",
+        "full_domain_checked": true,
+        "full_domain_status": "PASS",
+        "num_qubits": 256,
+        "precision": {
+          "coef_bits": 17,
+          "delta_bits": 13,
+          "product_bits": 27,
+          "result_bits": 28,
+          "square_bits": 28
+        },
+        "sample_status": "PASS",
+        "smoke_circuit_sha256": "9816fbfb5544949fb2c448410daf8144b825e45d0105cb118aac75c1a8c910e9",
+        "smoke_error": null,
+        "smoke_exit_code": 0,
+        "smoke_num_qubits": 256,
+        "smoke_score": 1956947.107159091,
+        "smoke_status": "PASS",
+        "smoke_toffoli_count": 7447,
+        "static_toffoli_like": 7447
+      }
+    },
+    {
+      "name": "coef_bits_and_square_bits_and_product_bits_minus_1",
+      "precision": {
+        "coef_bits": 16,
+        "delta_bits": 14,
+        "product_bits": 27,
+        "result_bits": 29,
+        "square_bits": 27
+      },
+      "sample": {
+        "ratio_to_tolerance": 1.086598866683663,
+        "status": "FAIL",
+        "tested_x": 6313,
+        "worst_relative_error": 6.476633946202177e-8,
+        "worst_x": 3010256
+      },
+      "official_32_shot": null
+    },
+    {
+      "name": "coef_bits_and_square_bits_and_result_bits_minus_1",
+      "precision": {
+        "coef_bits": 16,
+        "delta_bits": 14,
+        "product_bits": 28,
+        "result_bits": 28,
+        "square_bits": 27
+      },
+      "sample": {
+        "ratio_to_tolerance": 1.3248660847508507,
+        "status": "FAIL",
+        "tested_x": 6313,
+        "worst_relative_error": 7.896817235653702e-8,
+        "worst_x": 3010256
+      },
+      "official_32_shot": null
+    },
+    {
+      "name": "coef_bits_and_product_bits_and_result_bits_minus_1",
+      "precision": {
+        "coef_bits": 16,
+        "delta_bits": 14,
+        "product_bits": 27,
+        "result_bits": 28,
+        "square_bits": 28
+      },
+      "sample": {
+        "ratio_to_tolerance": 1.1660212727060588,
+        "status": "FAIL",
+        "tested_x": 6313,
+        "worst_relative_error": 6.950028376019352e-8,
+        "worst_x": 3010256
+      },
+      "official_32_shot": null
+    },
+    {
+      "name": "square_bits_and_product_bits_and_result_bits_minus_1",
+      "precision": {
+        "coef_bits": 17,
+        "delta_bits": 14,
+        "product_bits": 27,
+        "result_bits": 28,
+        "square_bits": 27
+      },
+      "sample": {
+        "ratio_to_tolerance": 1.0069558916830144,
+        "status": "FAIL",
+        "tested_x": 6313,
+        "worst_relative_error": 6.001924822825279e-8,
+        "worst_x": 3133367
+      },
+      "official_32_shot": null
+    },
+    {
+      "name": "delta_bits_and_coef_bits_and_square_bits_and_product_bits_minus_1",
+      "precision": {
+        "coef_bits": 16,
+        "delta_bits": 13,
+        "product_bits": 27,
+        "result_bits": 29,
+        "square_bits": 27
+      },
+      "sample": {
+        "ratio_to_tolerance": 1.086598866683663,
+        "status": "FAIL",
+        "tested_x": 6313,
+        "worst_relative_error": 6.476633946202177e-8,
+        "worst_x": 3010256
+      },
+      "official_32_shot": null
+    },
+    {
+      "name": "delta_bits_and_coef_bits_and_square_bits_and_result_bits_minus_1",
+      "precision": {
+        "coef_bits": 16,
+        "delta_bits": 13,
+        "product_bits": 28,
+        "result_bits": 28,
+        "square_bits": 27
+      },
+      "sample": {
+        "ratio_to_tolerance": 1.3248660847508507,
+        "status": "FAIL",
+        "tested_x": 6313,
+        "worst_relative_error": 7.896817235653702e-8,
+        "worst_x": 3010256
+      },
+      "official_32_shot": null
+    },
+    {
+      "name": "delta_bits_and_coef_bits_and_product_bits_and_result_bits_minus_1",
+      "precision": {
+        "coef_bits": 16,
+        "delta_bits": 13,
+        "product_bits": 27,
+        "result_bits": 28,
+        "square_bits": 28
+      },
+      "sample": {
+        "ratio_to_tolerance": 1.1660212727060588,
+        "status": "FAIL",
+        "tested_x": 6313,
+        "worst_relative_error": 6.950028376019352e-8,
+        "worst_x": 3010256
+      },
+      "official_32_shot": null
+    },
+    {
+      "name": "delta_bits_and_square_bits_and_product_bits_and_result_bits_minus_1",
+      "precision": {
+        "coef_bits": 17,
+        "delta_bits": 13,
+        "product_bits": 27,
+        "result_bits": 28,
+        "square_bits": 27
+      },
+      "sample": {
+        "ratio_to_tolerance": 1.0069558916830144,
+        "status": "FAIL",
+        "tested_x": 6313,
+        "worst_relative_error": 6.001924822825279e-8,
+        "worst_x": 3133367
+      },
+      "official_32_shot": null
+    },
+    {
+      "name": "coef_bits_and_square_bits_and_product_bits_and_result_bits_minus_1",
+      "precision": {
+        "coef_bits": 16,
+        "delta_bits": 14,
+        "product_bits": 27,
+        "result_bits": 28,
+        "square_bits": 27
+      },
+      "sample": {
+        "ratio_to_tolerance": 1.1660212727060588,
+        "status": "FAIL",
+        "tested_x": 6313,
+        "worst_relative_error": 6.950028376019352e-8,
+        "worst_x": 3010256
+      },
+      "official_32_shot": null
+    },
+    {
+      "name": "delta_bits_and_coef_bits_and_square_bits_and_product_bits_and_result_bits_minus_1",
+      "precision": {
+        "coef_bits": 16,
+        "delta_bits": 13,
+        "product_bits": 27,
+        "result_bits": 28,
+        "square_bits": 27
+      },
+      "sample": {
+        "ratio_to_tolerance": 1.1660212727060588,
+        "status": "FAIL",
+        "tested_x": 6313,
+        "worst_relative_error": 6.950028376019352e-8,
+        "worst_x": 3010256
+      },
+      "official_32_shot": null
+    }
+  ]
+}

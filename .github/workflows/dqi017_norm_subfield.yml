@@ -1,0 +1,31 @@
+name: DQI GF4096 norm to 64-state subfield lookup
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/dqi017_norm_subfield_quotient.py'
+      - '.github/workflows/dqi017_norm_subfield.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  source-identity:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Dependencies
+        run: python -m pip install numpy scipy
+      - name: Verify all GF4096 denominator values, subfield basis and quadratic norm
+        run: |
+          PYTHONPATH="$PWD/kickmix:$PWD/verifiers:$PWD" python scripts/dqi017_norm_subfield_quotient.py \
+            --report /tmp/vqcc_dqi017_tower.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vqcc_dqi017_tower
+          path: /tmp/vqcc_dqi017_tower.json
