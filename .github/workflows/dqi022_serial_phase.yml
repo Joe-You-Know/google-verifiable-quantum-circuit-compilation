@@ -1,0 +1,36 @@
+name: DQI Experiment 022b serial Forney phase-carrier falsification
+
+on:
+  pull_request:
+    paths:
+      - 'research/dqi022_serial_forney.py'
+      - 'scripts/bench_dqi022_serial_phase.py'
+      - '.github/workflows/dqi022_serial_phase.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-phase-and-small-dqi:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Dependencies
+        run: python -m pip install numpy scipy
+      - name: GF2 phase equivalence and small DQI phase audit
+        run: |
+          PYTHONPATH="$PWD/kickmix:$PWD/verifiers:$PWD/scripts:$PWD" \
+          python scripts/bench_dqi022_serial_phase.py \
+            --n 6 --m 15 --shots 512 \
+            --out /tmp/dqi022_serial_phase.json
+      - name: Upload independent phase receipts
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: dqi022_serial_phase_falsification
+          path: /tmp/dqi022_serial_phase.json
