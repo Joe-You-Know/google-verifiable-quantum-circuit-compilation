@@ -168,3 +168,31 @@ def build_serial_forney_circuit(m: int, n: int, degree: int):
                             builder, syndromes=syndromes, error_mbuc=masks,
                             n_iters=default_n_iters(n))
     return builder.finish_circuit()
+
+
+# Independent composition of TWO individually audited source consequences:
+# (a) sparse EEA counter control and (b) one-bit serial Forney carrier.
+# Multiple inheritance changes neither original producer method.
+from research.dqi022_sparse_control import SparseControlDecoder
+
+
+class SparseSerialForneyDecoder(SparseControlDecoder, SerialForneyDecoder):
+    """EEA from sparse control class; Forney from serial-phase class."""
+    pass
+
+
+def build_sparse_serial_forney_circuit(m: int, n: int, degree: int):
+    """Construct both independent source reductions in the same DQI circuit."""
+    if degree != 12:
+        raise ValueError("Experiment 020 norm EEA requires GF(2^12)")
+    builder = km.CircuitBuilder()
+    syndromes = [builder.create_quantum_register(degree, name=f'S{i}')
+                 for i in range(n)]
+    masks = [builder.create_classical_register(degree, name=f'E{j}')
+             for j in range(m)]
+    SparseSerialForneyDecoder(
+        n, km.GF2Field(degree), quotient_mode="norm_inverse"
+    ).build_syndrome_decoding_mbuc(
+        builder, syndromes=syndromes, error_mbuc=masks,
+        n_iters=default_n_iters(n))
+    return builder.finish_circuit()
