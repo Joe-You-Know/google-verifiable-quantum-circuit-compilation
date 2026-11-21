@@ -26,7 +26,7 @@ jobs:
         run: |
           PYTHONPATH="$PWD/kickmix:$PWD/verifiers:$PWD/scripts:$PWD" \
           python scripts/verify_dqi022_fullwidth_sample.py \
-            --shots 512 --batch-size 128 --log2-delta -16 \
+            --shots 512 --batch-size 128 --log2-delta -16 --variant combined \
             --out /tmp/dqi022_fullwidth_sample.json
       - name: Upload sampled phase receipt
         uses: actions/upload-artifact@v4
