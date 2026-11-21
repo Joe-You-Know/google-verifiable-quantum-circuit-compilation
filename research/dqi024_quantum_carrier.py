@@ -154,8 +154,10 @@ def build_dynamic_quantum_steps(*, degree=12, steps=1, roundtrip=False,
     F = [b.create_quantum_register(degree, name=f"F{j}")
          for j in range(steps)]
     gf = km.GF2Field(degree)
-    W = (b.create_quantum_register(degree, name="W_initial_coefficient1")
-         if recover_first else None)
+    W = (S[0] if recover_first == "syndrome0"
+         else b.create_quantum_register(
+             degree, name="W_initial_coefficient1") if recover_first
+         else None)
     if recover_first and steps != 2:
         raise ValueError("recovery requires two source-indexed steps")
     for j in range(steps):
