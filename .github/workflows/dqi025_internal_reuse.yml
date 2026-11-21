@@ -1,0 +1,55 @@
+name: Experiment 025 internally derived quantum witnesses and physical qubit reuse
+
+on:
+  pull_request:
+    paths:
+      - 'research/dqi025_internal_witness_reuse.py'
+      - 'scripts/bench_dqi025_internal_witness.py'
+      - '.github/workflows/dqi025_internal_reuse.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  native-gf4:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: python -m pip install numpy scipy
+      - name: Internally constructed witnesses, all slopes, qubit reuse GF4
+        run: |
+          PYTHONPATH="$PWD/kickmix:$PWD/verifiers:$PWD/scripts:$PWD" \
+          python scripts/bench_dqi025_internal_witness.py \
+            --degree 4 --cases 2048 --workspace-words 12 \
+            --out /tmp/dqi025_gf4.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: dqi025_gf4_internal_reuse
+          path: /tmp/dqi025_gf4.json
+
+  native-gf12:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 50
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: python -m pip install numpy scipy
+      - name: Internally constructed witnesses, all slopes, qubit reuse GF12
+        run: |
+          PYTHONPATH="$PWD/kickmix:$PWD/verifiers:$PWD/scripts:$PWD" \
+          python scripts/bench_dqi025_internal_witness.py \
+            --degree 12 --cases 1024 --workspace-words 12 \
+            --out /tmp/dqi025_gf12.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: dqi025_gf12_internal_reuse
+          path: /tmp/dqi025_gf12.json
