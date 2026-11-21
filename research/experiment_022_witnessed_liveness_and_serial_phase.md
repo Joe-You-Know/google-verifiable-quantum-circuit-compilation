@@ -135,3 +135,41 @@ python3 verifiers/dqi/verify_submission_dqi.py \
 ~~~
 
 The new KMB is not a Kaggle submission until this full verification passes, the original Invsqrt and chemistry source artifacts are retained, and a new submission.zip is deliberately constructed with a separate name and audit fingerprint.
+
+
+## 6. Dated completion of full-dimension development phase screen
+
+**Later evidence (2026-11-21):** The combined sparse-control plus
+one-bit-Forney candidate completed the supplied DQI verifier API with the
+actual n=70, m=4095, degree=12 dimensions at 512 shots, fixed seed 20261121
+and development confidence log2_delta=-16.
+
+Native CI (PASS):
+https://github.com/Joe-You-Know/google-verifiable-quantum-circuit-compilation/actions/runs/44928921935
+
+| Exact candidate measurement | Observed |
+|---|---:|
+| Q | **1,865** |
+| Static Toffoli-like T | **5,618,901** |
+| Mean Toffoli-like T / sampled shot | **5,618,550.685546875** |
+| Operations | **85,389,880** |
+| Sampled shots | 512 |
+| Value errors | **0** |
+| Phase errors | **0** |
+| Reaction depth | 170,991 |
+| Native status | **PASS** |
+| Circuit SHA-256 | 4d4fea57925d27c7afb72d13f0e4bb4152209f49c422fc12763bafe068e063bb |
+
+The serial-only 1,866-qubit variant also passed the same full-dimension
+512-shot screen, and the combined result preserved its measured mean T.
+Thus the one-bit EEA-conjunction lifetime change did not add any counted
+Toffoli-like gates in this source construction.
+
+**Do not silently upgrade the confidence claim:** both 512-shot results are
+development samples. Neither result closes the separate original
+102,400-shot, log2_delta=-128 official-confidence obligation for Experiment
+022c. That remains the next step, on the user's own Tower host.
+
+The complete source-preserving machine receipt for all experiments and
+source lifetime summaries is
+research/experiment_022_native_results.json.
