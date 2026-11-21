@@ -55,11 +55,18 @@ def main():
     ap.add_argument("--log2-delta",type=float,default=-16.0)
     ap.add_argument("--seed",type=int,default=20261120)
     ap.add_argument("--compile-only",action="store_true")
+    ap.add_argument("--resource-only",action="store_true",
+                    help="Skip large kmb serialization/hashes, report native Q/T/ops only")
     ap.add_argument("--outdir",type=Path,default=Path("/tmp/vqcc_dqi020"))
     args=ap.parse_args()
     if args.degree!=12:ap.error("candidate is authenticated for degree 12 only")
-    if not (2<=args.n<args.m<=(1<<args.degree)-1):
-        ap.error("require 2<=n<m<=4095 for official verifier")
+    if args.compile_only:
+        if not (2<=args.n<=args.m<=(1<<args.degree)-1):
+            ap.error("compile-only requires 2<=n<=m<=4095")
+    elif not (2<=args.n<args.m<=(1<<args.degree)-1):
+        ap.error("sampled verifier requires 2<=n<m<=4095")
+    if args.resource_only and not args.compile_only:
+        ap.error("--resource-only requires --compile-only")
     if not args.compile_only and (args.shots<1 or args.shots%args.batch_size):
         ap.error("shots must be positive multiple of batch size")
     args.outdir.mkdir(parents=True,exist_ok=True)
@@ -72,10 +79,11 @@ def main():
     }
     original=build_official(args.m,args.n,args.degree)
     result["original"]=metrics(original)
-    result["original"]["circuit_sha256"]=digest(original)
-    original.to_file(str(args.outdir/"original.kmb"),format="kmb")
+    if not args.resource_only:
+        result["original"]["circuit_sha256"]=digest(original)
+        original.to_file(str(args.outdir/"original.kmb"),format="kmb")
     print("ORIGINAL",json.dumps(result["original"]),flush=True)
-    if args.n<=10 and args.m<=20:
+    if args.n<=10 and args.m<=20 and not args.resource_only:
         disabled=build_exp(args.m,args.n,args.degree,quotient_mode="reference")
         check=digest(disabled)==result["original"]["circuit_sha256"]
         result["disabled_mode_byte_exact_reference"]=check
@@ -85,10 +93,15 @@ def main():
         gc.collect()
     else:
         result["disabled_mode_byte_exact_reference"]="NOT_TESTED_AT_THIS_WIDTH"
+    if args.resource_only:
+        # Avoid holding two enormous compiled circuit objects simultaneously.
+        del original
+        gc.collect()
     candidate=build_exp(args.m,args.n,args.degree,quotient_mode="norm_inverse")
     result["candidate"]=metrics(candidate)
-    result["candidate"]["circuit_sha256"]=digest(candidate)
-    candidate.to_file(str(args.outdir/"norm_inverse.kmb"),format="kmb")
+    if not args.resource_only:
+        result["candidate"]["circuit_sha256"]=digest(candidate)
+        candidate.to_file(str(args.outdir/"norm_inverse.kmb"),format="kmb")
     print("CANDIDATE",json.dumps(result["candidate"]),flush=True)
     result["difference"]={key:result["candidate"][key]-result["original"][key]
         for key in ("qubits","static_toffoli_like","total_operations")}
