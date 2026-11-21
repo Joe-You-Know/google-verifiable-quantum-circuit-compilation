@@ -1,0 +1,36 @@
+name: DQI Experiment 022b full 4095-position development phase sample
+
+on:
+  pull_request:
+    paths:
+      - 'research/dqi022_serial_forney.py'
+      - 'scripts/verify_dqi022_fullwidth_sample.py'
+      - '.github/workflows/dqi022_full_phase_sample.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  full-dim-sampled-phase:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Python dependencies
+        run: python -m pip install numpy scipy
+      - name: Native 70x4095 DQI verifier API reduced-shot phase sample
+        run: |
+          PYTHONPATH="$PWD/kickmix:$PWD/verifiers:$PWD/scripts:$PWD" \
+          python scripts/verify_dqi022_fullwidth_sample.py \
+            --shots 512 --batch-size 128 --log2-delta -16 \
+            --out /tmp/dqi022_fullwidth_sample.json
+      - name: Upload sampled phase receipt
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: dqi022_fullwidth_sample_receipt
+          path: /tmp/dqi022_fullwidth_sample.json

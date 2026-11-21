@@ -1,0 +1,46 @@
+name: DQI Experiment 022b full-width serial Forney native resource audit
+
+on:
+  pull_request:
+    paths:
+      - 'research/dqi022_serial_forney.py'
+      - 'scripts/bench_dqi022_liveness_and_sparse.py'
+      - '.github/workflows/dqi022_serial_fullwidth.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  full-width-native:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Python dependencies
+        run: python -m pip install numpy scipy
+      - name: Native 70 syndrome 70-position static compiler and source ledgers
+        run: |
+          PYTHONPATH="$PWD/kickmix:$PWD/verifiers:$PWD/scripts:$PWD" \
+          python scripts/bench_dqi022_liveness_and_sparse.py \
+            --n 70 --m 70 --degree 12 --shots 0 \
+            --modes 020_reference serial_forney \
+            --out /tmp/dqi022_serial_n70_m70.json
+      - name: Native 70 syndrome 4095-position static compiler and source ledgers
+        run: |
+          PYTHONPATH="$PWD/kickmix:$PWD/verifiers:$PWD/scripts:$PWD" \
+          python scripts/bench_dqi022_liveness_and_sparse.py \
+            --n 70 --m 4095 --degree 12 --shots 0 \
+            --modes 020_reference serial_forney \
+            --out /tmp/dqi022_serial_n70_m4095.json
+      - name: Upload full-width liveness receipts
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: dqi022_serial_fullwidth_receipts
+          path: |
+            /tmp/dqi022_serial_n70_m70.json
+            /tmp/dqi022_serial_n70_m4095.json

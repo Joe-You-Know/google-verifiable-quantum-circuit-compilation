@@ -1,0 +1,36 @@
+name: DQI Experiment 022 source identities and sparse controls
+
+on:
+  pull_request:
+    paths:
+      - 'research/dqi022_sparse_control.py'
+      - 'scripts/bench_dqi022_liveness_and_sparse.py'
+      - '.github/workflows/dqi022_source_liveness.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  source-liveness-small:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Python dependencies
+        run: python -m pip install numpy scipy
+      - name: Build independent controls and replay exact source occurrences
+        run: |
+          PYTHONPATH="$PWD/kickmix:$PWD/verifiers:$PWD/scripts:$PWD" \
+          python scripts/bench_dqi022_liveness_and_sparse.py \
+            --n 6 --m 15 --degree 12 --shots 512 \
+            --out /tmp/dqi022_small.json
+      - name: Upload witnessed source ledger
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: dqi022_small_liveness_receipt
+          path: /tmp/dqi022_small.json
