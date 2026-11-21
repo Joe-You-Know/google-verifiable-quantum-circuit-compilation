@@ -1,0 +1,80 @@
+{
+  "experiment": "020",
+  "date": "2026-11-20",
+  "timezone_note": "GitHub CI completed 2026-11-21 UTC",
+  "baseline_branch": "research/vqcc-norm-gadget-019",
+  "feature_branch": "research/vqcc-020-featureflag-integrated-norm",
+  "standalone_precondition": {
+    "run": "https://github.com/Joe-You-Know/google-verifiable-quantum-circuit-compilation/actions/runs/44843260760",
+    "original_Q": 109,
+    "original_Tstatic": 390,
+    "candidate_Q": 81,
+    "candidate_Tstatic": 270,
+    "basis_cases_per_gadget": 9223,
+    "status": "PASS"
+  },
+  "small_fixture": {
+    "n": 6,
+    "m": 15,
+    "degree": 12,
+    "ci": "https://github.com/Joe-You-Know/google-verifiable-quantum-circuit-compilation/actions/runs/44844213654",
+    "original": {
+      "Q": 339,
+      "Tstatic": 127921,
+      "ops": 1462907
+    },
+    "candidate": {
+      "Q": 322,
+      "Tstatic": 113521,
+      "ops": 1157507
+    },
+    "difference": {
+      "Q": -17,
+      "Tstatic": -14400,
+      "ops": -305400
+    },
+    "serialized_disabled_mode_identical_to_official_reference": true,
+    "phase_verifier": "PASS",
+    "phase_verifier_api": "dqi.verify_submission_dqi.verify",
+    "shots": 512,
+    "seed": 20261120,
+    "log2_delta": -16,
+    "matching_test_shots": true,
+    "original_value_errors": 0,
+    "original_phase_errors": 0,
+    "candidate_value_errors": 0,
+    "candidate_phase_errors": 0,
+    "official_default_confidence_used": false
+  },
+  "fullwidth_static": {
+    "n": 70,
+    "m": 70,
+    "degree": 12,
+    "ci": "https://github.com/Joe-You-Know/google-verifiable-quantum-circuit-compilation/actions/runs/44844213620",
+    "original": {
+      "Q": 1893,
+      "Tstatic": 4312686,
+      "ops": 39245008
+    },
+    "candidate": {
+      "Q": 1876,
+      "Tstatic": 4206126,
+      "ops": 36985048
+    },
+    "difference": {
+      "Q": -17,
+      "Tstatic": -106560,
+      "ops": -2259960
+    },
+    "native_Kickmix_compiled": true,
+    "phase_verifier": "NOT_RUN",
+    "reason": "static resource-only 70x70 comparison; not a phase test"
+  },
+  "obligations": {
+    "full_4095_position_compilation": "NOT_RUN",
+    "full_4095_position_official_phase_verifier": "NOT_RUN",
+    "production_decoder_changed": false,
+    "competition_submission": "NOT_MADE"
+  },
+  "next": "Repeat full 70x4095 native compilation and measure scored mean T with the official verifier on sufficient shots; evaluate phase, clean scratch and errors at competition confidence log2_delta=-128."
+}
