@@ -1,0 +1,127 @@
+{
+  "experiment": "025",
+  "date": "2026-11-21",
+  "status": "NATIVE_PASS",
+  "authorship": "Independent source-derived two-step GF2-field recurrence from own Experiment024",
+  "source_contract": {
+    "named_original_sources": "S[0:5], K[0:2][0:4]",
+    "internal_locator": "C_initial[i] constructed from S[i] by native CX, all i=0:3",
+    "internal_denominators": "B_j constructed as D_j(K_j,S), j=0,1",
+    "first_carrier_initial_value": "zero field word",
+    "branch_relations": [
+      "If B1=0, first quotient is withheld and initial F1 remains zero",
+      "If B1!=0, D0(K1,S)!=0, so K1 contains a nonzero coefficient",
+      "Choose first original source index i with K1[i]!=0",
+      "Recovered F1 = (S_i XOR C2_i XOR z2 F2 K2_i)/K1_i"
+    ],
+    "physical_reuse": "Free cleaned F1, allocate 12 field-word future products, uncompute and free them, reallocate F1, reconstruct original quotient and reverse steps",
+    "future_workspace_interpretation": "Source-derived peak-storage stress fixture, not a full DQI decoder"
+  },
+  "strengthening_ci_url": "https://github.com/Joe-You-Know/google-verifiable-quantum-circuit-compilation/actions/runs/44937838399",
+  "controls": [
+    {
+      "field_degree": 4,
+      "cases_per_arm": 2048,
+      "original_source_qubits": 52,
+      "retained_Q": 132,
+      "released_Q": 128,
+      "static_T_both": 1676,
+      "operations_both": 16855,
+      "observed_source_phase_workspace_errors": 0,
+      "selected_slope_counts": {
+        "0": 478,
+        "1": 525,
+        "2": 256,
+        "3": 256,
+        "absent": 533
+      }
+    },
+    {
+      "field_degree": 12,
+      "cases_per_arm": 1024,
+      "original_source_qubits": 156,
+      "retained_Q": 396,
+      "released_Q": 384,
+      "static_T_both": 12304,
+      "operations_both": 149627,
+      "observed_source_phase_workspace_errors": 0,
+      "selected_slope_counts": {
+        "0": 256,
+        "1": 256,
+        "2": 128,
+        "3": 128,
+        "absent": 256
+      }
+    }
+  ],
+  "native_q_saved_at_field_degree_12": 12,
+  "native_extra_toffoli_like_at_degree_12": 0,
+  "native_extra_ops_at_degree_12": 0,
+  "physical_alloc_ids": {
+    "gf12_initial_F1": [
+      228,
+      229,
+      230,
+      231,
+      232,
+      233,
+      234,
+      235,
+      236,
+      237,
+      238,
+      239
+    ],
+    "gf12_first_future_field_word": [
+      239,
+      238,
+      237,
+      236,
+      235,
+      234,
+      233,
+      232,
+      231,
+      230,
+      229,
+      228
+    ],
+    "gf12_reconstructed_F1": [
+      228,
+      229,
+      230,
+      231,
+      232,
+      233,
+      234,
+      235,
+      236,
+      237,
+      238,
+      239
+    ],
+    "freed_F1_reused_by_future_word": true,
+    "original_vs_reconstructed_source_occurrence": "distinct despite reusing same physical IDs"
+  },
+  "input_branch_cases_per_field": [
+    "K1 entirely zero; B1 absent",
+    "sole K1 nonzero coefficient at original index 0",
+    "sole K1 nonzero coefficient at original index 1",
+    "sole K1 nonzero coefficient at original index 2",
+    "sole K1 nonzero coefficient at original index 3",
+    "nonzero K1 but B1 absent",
+    "B1 nonzero but B2 absent",
+    "independent random original quantum sources"
+  ],
+  "proof_scope": "Field algebra for arbitrary original S,K computational basis states; native sample verification of gate execution; not exhaustive simulation of all quantum superpositions",
+  "resource_scope": "Isolated two-step future-workspace fixture, NOT a full DQI circuit",
+  "full_DQI_implementation": "NOT_BUILT",
+  "DQI_023_baseline_Q": 1860,
+  "new_kaggle_submitted": false,
+  "paper": {
+    "latex_sha256": "25f1c8e79cb02c3776e7e18f1e250291da92f3d63e8628cdf3851b9e721f1b69",
+    "pdf_sha256": "87d809fdf9e1f3754942aba8cfa4e9adf021124f9cbee667af5ee2aafa20161f",
+    "latex_pdf_local_artifacts_created": true,
+    "pdf_pages": 3
+  }
+}
