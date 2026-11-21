@@ -221,7 +221,7 @@ def build_internal_witness_circuit(*,degree=12,release_first=True,
                         original_f1_ids==reconstructed_f1_ids),
                     "first_future_word_ids":first_future_ids,
                     "released_F1_slot_reused_by_future_word":(
-                        original_f1_ids==first_future_ids),
+                        set(original_f1_ids)==set(first_future_ids)),
                     "field_degree":degree,
                     "release_first":release_first,
                     "workspace_words":workspace_words}
