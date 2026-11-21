@@ -1,0 +1,48 @@
+{
+  "experiment": "020",
+  "event": "Kaggle public leaderboard score comparison",
+  "source": "User-pasted Windows PowerShell `kaggle competitions submissions google-verifiable-quantum-circuit-compilation` on 2026-11-21",
+  "verification_status": "Kaggle CLI shows COMPLETE for both; not independently fetched via Kaggle authenticated API",
+  "competition": "google-verifiable-quantum-circuit-compilation",
+  "submissions": [
+    {
+      "experiment": "003",
+      "submission_ref": 58637336,
+      "file_name": "submission.zip",
+      "kaggle_submission_timestamp": "2026-11-20 22:02:32.790000",
+      "description": "Experiment 003: optimized Invsqrt, baseline DQI and chemistry",
+      "status": "SubmissionStatus.COMPLETE",
+      "public_score": 1.01749,
+      "private_score": null
+    },
+    {
+      "experiment": "020",
+      "submission_ref": 58651355,
+      "file_name": "submission.zip",
+      "kaggle_submission_timestamp": "2026-11-21 05:06:42.373000",
+      "description": "Experiment 020: verified norm-inverse DQI",
+      "status": "SubmissionStatus.COMPLETE",
+      "public_score": 1.03006,
+      "private_score": null
+    }
+  ],
+  "score_direction": "HIGHER_IS_BETTER",
+  "metric": "geometric mean across three task reference_cost/candidate_cost ratios, per official Kaggle competition evaluation",
+  "absolute_public_score_delta": 0.01256999999999997,
+  "relative_public_score_increase_percent": 1.235392976835148,
+  "inferred_dqi_cost_ratio_if_invsqrt_and_chemistry_unchanged": 1.0375215334988,
+  "inferred_dqi_cost_reduction_percent_if_other_two_unchanged": 3.616458289040736,
+  "corroborating_static_full_width": {
+    "original_physical_qubits": 1893,
+    "candidate_physical_qubits": 1876,
+    "original_static_toffoli_like": 5725461,
+    "candidate_static_toffoli_like": 5618901,
+    "implied_static_dqi_cost_ratio": 1.037515611585387
+  },
+  "related_artifacts": {
+    "local_phase_verifier": "research/experiment_020_local_phase_pass_and_zip_receipt.json",
+    "locally_packaged_zip_sha256": "335df7a3e823fea7fa262f8f7da0446288e5582c40910c699a36ce075930b64f",
+    "local_circuit_sha256": "a0775475ebbb5d6d6c634d06ed83a07311c9bb1239b9f9e80fb076daa03148ba"
+  },
+  "notes": "Public scores rounded to 5 decimals; relative DQI cost inference uses rounded public scores, and assumes reused Invsqrt and chemistry inputs really are unchanged. Private scores were not provided. Kaggle complete and public scores are a user-reported CLI receipt, not a local estimate."
+}

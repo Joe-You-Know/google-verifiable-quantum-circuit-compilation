@@ -1,0 +1,35 @@
+name: DQI Experiment 020 full-width 70x70 native static resource audit
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/bench_dqi020_integrated_norm.py'
+      - 'research/dqi020_experimental_decoder.py'
+      - '.github/workflows/dqi020_fullwidth_static.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  full-width-70x70:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Python dependencies
+        run: python -m pip install numpy scipy
+      - name: Native Kickmix full-width static compilation of original and candidate
+        run: |
+          PYTHONPATH="$PWD/kickmix:$PWD/verifiers:$PWD:$PWD/scripts" \
+          python scripts/bench_dqi020_integrated_norm.py \
+            --n 70 --m 70 --degree 12 --compile-only --resource-only \
+            --outdir /tmp/vqcc_dqi020_fullwidth
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: dqi020_fullwidth_static_receipt
+          path: /tmp/vqcc_dqi020_fullwidth/experiment_020.json
