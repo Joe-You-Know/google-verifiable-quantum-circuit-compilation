@@ -1,0 +1,109 @@
+{
+  "experiment": "023",
+  "date": "2026-11-21",
+  "source": "user-authored Experiment022c decoder with independently revised metadata widths and causal recurrence",
+  "competitor_circuits_reused": false,
+  "source_lineage": {
+    "baseline": "research/dqi022_serial_forney.py: SparseSerialForneyDecoder",
+    "native_candidate": "research/dqi023_metadata_width.py: WidthAuditDecoder, all_narrow",
+    "original_decoder_modified": false,
+    "accepted_experiment020_zip_modified": false
+  },
+  "benchmark": {
+    "n": 70,
+    "m": 4095,
+    "degree": 12
+  },
+  "native_reference_022c": {
+    "Q": 1865,
+    "static_T": 5618901,
+    "operations": 85389880,
+    "phase_512shot": "PASS"
+  },
+  "native_023_candidate": {
+    "Q": 1860,
+    "static_T": 5602269,
+    "operations": 85255780,
+    "metadata_widths": {
+      "n_A": 7,
+      "n_B": 7,
+      "n_a": 7,
+      "n_b": 7,
+      "n_q": 7,
+      "counter": 2,
+      "halting": 8
+    },
+    "full_official_local_verifier": {
+      "ci_run": 44933734979,
+      "status": "PASS",
+      "verified_shots": 102400,
+      "log2_delta": -128,
+      "value_errors": 0,
+      "phase_errors": 0,
+      "mean_toffoli_like": 5601918.613564453,
+      "effective_error_rate": 0.0008660587301657926,
+      "repetition_factor": 1.1912604648115832,
+      "reaction_depth": 169921,
+      "score": 23087101495484.246,
+      "circuit_sha256": "754f9d3a46f08b7105b5e3a0bcb9ecf549307c237fb88406be27be27d6858c9e"
+    },
+    "arbitrary_syndrome_comparison": {
+      "ci_run": 44933734903,
+      "n6_m15_cases": 256,
+      "n70_m70_cases": 64,
+      "phase_disagreements": 0,
+      "value_restoration_failures": 0,
+      "scratch_failures": 0,
+      "exhaustive_over_all_840_syndrome_bits": false
+    }
+  },
+  "reference_experiment020_user_local_verifier": {
+    "Q": 1876,
+    "score": 23555742358022.918,
+    "verified_shots": 102400,
+    "log2_delta": -128,
+    "value_errors": 0,
+    "phase_errors": 0
+  },
+  "verified_DQI_relative_cost_reduction_percent": 1.9894973183855358,
+  "projected_aggregate_public_score_if_invsqrt_and_chemistry_unchanged": 1.0369830327494678,
+  "projection_not_actual_kaggle": true,
+  "independent_classical_recurrence": {
+    "ci_run": 44933586422,
+    "small_cases": 128,
+    "small_phase_errors": 0,
+    "full_cases": 64,
+    "full_phase_errors": 0,
+    "full_max_recurrence_degree": 34,
+    "source_scope": "valid <=35-error syndromes only",
+    "quantum_reversible_decoder": "NOT_BUILT"
+  },
+  "forgetful_BM_noninjectivity": {
+    "ci_run": 44933883296,
+    "gf_degree": 12,
+    "distinct_normalized_sources": 4096,
+    "identical_output_count": 4096,
+    "zero_discrepancy_sources": 1,
+    "source_law": "U(C+tK)=U(C) whenever D(K)=b nonzero",
+    "conclusion": "unrestricted overwrite noninjective, requires source carrier"
+  },
+  "reversible_one_step": {
+    "ci_run": 44934219307,
+    "status": "PASS",
+    "construction": "fixed-source two-shear quantum source lift",
+    "Q": 60,
+    "static_T": 0,
+    "forward_operations": 104,
+    "roundtrip_operations": 208,
+    "forward_basis_cases": 8192,
+    "roundtrip_basis_cases": 8192,
+    "forward_errors": 0,
+    "roundtrip_errors": 0,
+    "former_collisions_preserved_as_distinct_joint_sources": 4096,
+    "dynamic_field_denominator": "NOT_TESTED",
+    "full_DQI": "NOT_BUILT"
+  },
+  "kaggle_023_submission": "NOT_MADE",
+  "kaggle_023_score": "UNKNOWN",
+  "open_next_action": "derive causal future constraint permitting release of a previously retained quantum field quotient carrier"
+}
