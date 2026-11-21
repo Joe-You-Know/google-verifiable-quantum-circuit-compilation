@@ -1,0 +1,56 @@
+name: Experiment 026b rank-adaptive original-source locator
+
+on:
+  pull_request:
+    paths:
+      - 'research/dqi026_hankel_locator.py'
+      - 'research/dqi026_rank_adaptive.py'
+      - 'scripts/bench_dqi026_rank_adaptive.py'
+      - '.github/workflows/dqi026_rank_adaptive.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  rank-adaptive-field4:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: python -m pip install numpy scipy
+      - name: Native coherent source degree selection 0..3 GF4
+        run: |
+          PYTHONPATH="$PWD/kickmix:$PWD/verifiers:$PWD/scripts:$PWD" \
+          python scripts/bench_dqi026_rank_adaptive.py \
+            --degree 4 --max-degree 3 --random 64 --official 0 \
+            --out /tmp/dqi026_rank_GF4.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: dqi026_rank_GF4
+          path: /tmp/dqi026_rank_GF4.json
+
+  rank-adaptive-field12:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: python -m pip install numpy scipy
+      - name: Native original-source locator on full valid error support up to 3 GF12
+        run: |
+          PYTHONPATH="$PWD/kickmix:$PWD/verifiers:$PWD/scripts:$PWD" \
+          python scripts/bench_dqi026_rank_adaptive.py \
+            --degree 12 --max-degree 3 --random 64 --official 128 \
+            --out /tmp/dqi026_rank_GF12.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: dqi026_rank_GF12
+          path: /tmp/dqi026_rank_GF12.json
