@@ -123,3 +123,53 @@ The candidate still improves the EEA by precisely 106,560 static gates.
 required 102,400 shots, confidence parameter `log2_delta=-128`, candidate
 per-shot Toffoli mean and scored DQI confidence factor. No official Kaggle
 submission has been made; all integration exists only on the experiment branch.
+
+## Addendum — full 102,400-shot local DQI verifier PASS and packaging receipt
+
+**New independent execution evidence:** On 2026-11-20 (user's Tower WSL),
+the user ran the supplied repository `verifiers/dqi/verify_submission_dqi.py`
+on `/tmp/vqcc_dqi020.kmb` with `m=4095`, `n=70`,
+`degree=12`, `num_shots=102400`, `batch_size=256`,
+`log2_delta=-128`, `max_workers=1`. The user pasted the stdout.
+This is a **user-observed local result** and not a receipt from Kaggle's server.
+
+The full result supersedes the pending-phase statement earlier in this
+chronological report, without erasing the earlier stage of verification:
+
+| Local full DQI verifier metric | Measured |
+|---|---:|
+| Status | **PASS** |
+| Shots | 102,400 |
+| Value errors | **0** |
+| Phase errors | **0** |
+| Qubits | **1,876** |
+| Mean Toffoli-like / shot | 5,618,551.922958984 |
+| Static Toffoli-like | 5,618,901 |
+| Effective error-rate upper bound | 0.0008660587301657926 |
+| Repetition factor | 1.1912604648115832 |
+| DQI score reported by local verifier | **23,555,742,358,022.918** |
+| Reaction depth | 170,744 |
+| Circuit SHA-256 | `a0775475ebbb5d6d6c634d06ed83a07311c9bb1239b9f9e80fb076daa03148ba` |
+
+The user then packaged a new archive with the repo
+`scripts/package_vqcc_submission.py`, preserving the optimized Experiment 003
+Invsqrt circuit, the baseline chemistry payload, and using the new
+Experiment 020 `dqi.kmb`:
+
+- Path relative to the Tower experiment worktree:
+  `submissions/experiment020/submission.zip`
+- Packager state: `PACKAGED_ONLY`, meaning ZIP integrity and expected paths
+  confirmed, **not** Kaggle leaderboard acceptance
+- Archive bytes: **72,569,254**
+- Archive SHA-256:
+  `335df7a3e823fea7fa262f8f7da0446288e5582c40910c699a36ce075930b64f`
+- Entries: 13 expected members including `invsqrt.kmb`, `dqi.kmb`,
+  `dfthcsos/submission.npz`, and 10 chemistry angle circuits
+
+Machine-readable user-result receipt:
+`research/experiment_020_local_phase_pass_and_zip_receipt.json`.
+
+**Remaining validation boundary:** No Kaggle server-side result for this
+Experiment 020 archive has been supplied. This local DQI score is not a
+three-task competition leaderboard score. Official results for the bundled
+Invsqrt and chemistry assets are not established by this DQI verification.
