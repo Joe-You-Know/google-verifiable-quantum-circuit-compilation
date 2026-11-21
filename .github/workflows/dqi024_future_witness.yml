@@ -27,11 +27,19 @@ jobs:
           python scripts/bench_dqi024_future_witness.py \
             --degree 4 --cases 128 \
             --out /tmp/dqi024_witness_GF4.json
+      - name: Reuse an original syndrome register as quantum witness GF4
+        run: |
+          PYTHONPATH="$PWD/kickmix:$PWD/verifiers:$PWD/scripts:$PWD" \
+          python scripts/bench_dqi024_future_witness.py \
+            --degree 4 --cases 128 --witness-source syndrome0 \
+            --out /tmp/dqi024_syndrome_witness_GF4.json
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: dqi024_witness_GF4
-          path: /tmp/dqi024_witness_GF4.json
+          path: |
+            /tmp/dqi024_witness_GF4.json
+            /tmp/dqi024_syndrome_witness_GF4.json
 
   quantum-witness-gf12:
     runs-on: ubuntu-24.04
@@ -48,8 +56,16 @@ jobs:
           python scripts/bench_dqi024_future_witness.py \
             --degree 12 --cases 128 \
             --out /tmp/dqi024_witness_GF12.json
+      - name: Reuse an original syndrome register as quantum witness GF12
+        run: |
+          PYTHONPATH="$PWD/kickmix:$PWD/verifiers:$PWD/scripts:$PWD" \
+          python scripts/bench_dqi024_future_witness.py \
+            --degree 12 --cases 128 --witness-source syndrome0 \
+            --out /tmp/dqi024_syndrome_witness_GF12.json
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: dqi024_witness_GF12
-          path: /tmp/dqi024_witness_GF12.json
+          path: |
+            /tmp/dqi024_witness_GF12.json
+            /tmp/dqi024_syndrome_witness_GF12.json
