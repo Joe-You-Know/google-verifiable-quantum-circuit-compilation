@@ -14,7 +14,9 @@ import kickmix as km
 
 ROOT=Path(__file__).resolve().parents[1]
 sys.path[:0]=[str(ROOT),str(ROOT/"scripts"),str(ROOT/"verifiers")]
-from research.dqi022_serial_forney import build_serial_forney_circuit
+from research.dqi022_serial_forney import (
+    build_serial_forney_circuit, build_sparse_serial_forney_circuit
+)
 from dqi.verify_submission_dqi import (
     ProblemSpecDQI, default_num_accepted_values, verify)
 
@@ -22,6 +24,7 @@ from dqi.verify_submission_dqi import (
 def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument("--shots",type=int,default=512)
+    p.add_argument("--variant",choices=("serial","combined"),default="serial")
     p.add_argument("--batch-size",type=int,default=128)
     p.add_argument("--log2-delta",type=float,default=-16)
     p.add_argument("--seed",type=int,default=20261121)
@@ -30,8 +33,10 @@ def main():
     a=p.parse_args()
     if a.shots<=0 or a.shots%a.batch_size:
         p.error("shots must be positive and divisible by batch-size")
-    print("BUILDING 70x4095 SERIAL FORNEY CANDIDATE",flush=True)
-    circuit=build_serial_forney_circuit(4095,70,12)
+    print("BUILDING 70x4095",a.variant,"FORNEY CANDIDATE",flush=True)
+    ctor=(build_serial_forney_circuit if a.variant=="serial"
+          else build_sparse_serial_forney_circuit)
+    circuit=ctor(4095,70,12)
     static=circuit.operation_statistics()
     print("COMPILED",json.dumps({
         "Q":circuit.num_qubits,
@@ -46,7 +51,8 @@ def main():
         raise AssertionError("observed errors: "+str({
             "value":v["value_errors"],"phase":v["phase_errors"]}))
     report={
-       "experiment":"022b",
+       "experiment":"022b" if a.variant=="serial" else "022c",
+       "variant":a.variant,
        "status":v["status"],
        "native_dimensions":{"m":4095,"n":70,"degree":12},
        "verification_scope":"Full-dimension, reduced-shot development sample",
