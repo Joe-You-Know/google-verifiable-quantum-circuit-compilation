@@ -111,7 +111,7 @@ def main():
        "public_component_reuse":False,
        "correctness_gate":"sampled only, not full-confidence proof",
        "results":results,
-       "candidate_outcomes":{x["mode"]:x["valid_development_sample"]
+       "candidate_outcomes":{x["mode"]:x.get("valid_development_sample", "NOT_RUN")
                               for x in results},
        "experiment_status":"DIAGNOSTIC_COMPLETED",
        "competition_102400_shot_verifier":"NOT_RUN"
