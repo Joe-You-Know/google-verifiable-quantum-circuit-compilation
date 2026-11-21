@@ -1,0 +1,191 @@
+{
+  "experiment": "024",
+  "timestamp_utc": "2026-11-21",
+  "source": "our Experiment 023 original GF2 field source law, not competitor code",
+  "branch": "research/vqcc-024-quantum-carriers",
+  "pr_number": 7,
+  "abstract_law": {
+    "discrepancy": "D_j(C,S)=XOR_i C_i*S_{j+3-i}",
+    "active": "z_j=(b_j != zero)",
+    "carrier": "F_j^+ = F_j XOR z_j*D_j(C,S)*Inv(b_j)",
+    "polynomial": "C_i^+ = C_i XOR z_j*F_j^+*K_{j,i}",
+    "zero_denominator": "b=0 => z=0 => unchanged C,F; inverse totalization internal is not a mathematical inverse at zero",
+    "source_invariance": "original K,S,b untouched; all local inverse/discrepancy scratch returned to zero",
+    "reverse": "first undo C shear using F^+ K, then reconstruct original discrepancy D(C,S) and undo F shear",
+    "compatibility": "b_j=D_j(K_j,S) is an independently reported witness condition, not assumed by gates"
+  },
+  "full_native_steps": {
+    "run": "https://github.com/Joe-You-Know/google-verifiable-quantum-circuit-compilation/actions/runs/44935805336",
+    "cases_per_variant": 128,
+    "gf4": [
+      {
+        "steps": 1,
+        "roundtrip": false,
+        "Q": 77,
+        "T_static": 163,
+        "operations": 1641
+      },
+      {
+        "steps": 1,
+        "roundtrip": true,
+        "Q": 77,
+        "T_static": 326,
+        "operations": 3283
+      },
+      {
+        "steps": 2,
+        "roundtrip": false,
+        "Q": 101,
+        "T_static": 326,
+        "operations": 3283
+      },
+      {
+        "steps": 2,
+        "roundtrip": true,
+        "Q": 101,
+        "T_static": 652,
+        "operations": 6567
+      }
+    ],
+    "gf12": [
+      {
+        "steps": 1,
+        "roundtrip": false,
+        "Q": 265,
+        "T_static": 1218,
+        "operations": 14560
+      },
+      {
+        "steps": 1,
+        "roundtrip": true,
+        "Q": 265,
+        "T_static": 2436,
+        "operations": 29121
+      },
+      {
+        "steps": 2,
+        "roundtrip": false,
+        "Q": 337,
+        "T_static": 2436,
+        "operations": 29121
+      },
+      {
+        "steps": 2,
+        "roundtrip": true,
+        "Q": 337,
+        "T_static": 4872,
+        "operations": 58243
+      }
+    ],
+    "all_value_phase_source_scratch_errors": 0,
+    "gf12_two_step_absent_denominators": 128,
+    "gf12_two_step_source_consistent_denominators": 128
+  },
+  "two_step_quotient_obstruction": {
+    "S": [
+      3,
+      1,
+      2,
+      7,
+      9
+    ],
+    "K1": [
+      0,
+      1,
+      0,
+      0
+    ],
+    "K2": [
+      0,
+      1,
+      1,
+      0
+    ],
+    "b1": 2,
+    "b2": 5,
+    "b1_nonzero": true,
+    "b2_nonzero": true,
+    "distinct_input_polynomials": 4096,
+    "distinct_full_joint_outputs_C2_F1_F2": 4096,
+    "distinct_projected_outputs_C2_F2": 1,
+    "second_step_alone_recovers_F1": false,
+    "reason": "all original first-step source distinctions in kernel direction K1 have same C1 and therefore deterministic downstream C2,F2"
+  },
+  "external_witness_recovery": {
+    "formula": "W XOR C2[1] XOR z2*F2*K2[1] = z1*F1*K1[1]",
+    "conditions": "W=C0[1], initial F1=0; b1!=0, K1[1]!=0, else retain unresolved",
+    "run": "https://github.com/Joe-You-Know/google-verifiable-quantum-circuit-compilation/actions/runs/44935992604",
+    "gf12_forward": {
+      "Q": 352,
+      "T_static": 3049,
+      "operations": 37634,
+      "cases": 128,
+      "errors": 0,
+      "scratch": 0,
+      "missing_slope_retained_nonzero": 16,
+      "wrong_witness_nonzero_residual": 32,
+      "absent_b1_identity_cases": 32
+    },
+    "gf12_roundtrip": {
+      "Q": 352,
+      "T_static": 6098,
+      "operations": 75269,
+      "cases": 128,
+      "errors": 0,
+      "scratch": 0
+    },
+    "gf4_forward": {
+      "Q": 108,
+      "T_static": 408,
+      "operations": 4177,
+      "cases": 128,
+      "errors": 0
+    }
+  },
+  "already_retained_syndrome_witness": {
+    "input_source_promise": "C_initial[1]=S0",
+    "source": "W is quantum S0 register alias, not newly allocated",
+    "run": "https://github.com/Joe-You-Know/google-verifiable-quantum-circuit-compilation/actions/runs/44936146345",
+    "gf12_forward": {
+      "Q": 340,
+      "T_static": 3049,
+      "operations": 37634,
+      "cases": 128,
+      "errors": 0,
+      "scratch": 0,
+      "missing_slope_retained_nonzero": 16,
+      "wrong_witness_nonzero_residual": 32,
+      "absent_b1_identity_cases": 32
+    },
+    "gf12_roundtrip": {
+      "Q": 340,
+      "T_static": 6098,
+      "operations": 75269,
+      "cases": 128,
+      "errors": 0,
+      "scratch": 0
+    },
+    "gf4_forward": {
+      "Q": 104,
+      "T_static": 408,
+      "operations": 4177,
+      "cases": 128,
+      "errors": 0
+    },
+    "additional_witness_qubits": 0,
+    "Q_difference_compared_to_external_witness": -12,
+    "end_to_end_DQI_source_promise_verified": false,
+    "unconditional_F1_allocator_release": false,
+    "full_DQI_physical_savings": "NOT_ESTABLISHED"
+  },
+  "scope_status": {
+    "native_two_step_reversibility": "PASS",
+    "native_future_witness_recovery": "PASS_ON_VALID_SOURCE_RELATION",
+    "nonexistent_denominator_branch": "EXPLICIT_AND_TESTED",
+    "inconsistent_witness": "RESIDUAL_LEFT_DISTINGUISHABLE",
+    "arbitrary_source_superposition_proof": "NOT_ESTABLISHED_BY_FINITE_BASIS_TESTS",
+    "full_70x4095_decoder": "NOT_BUILT",
+    "full_competition_102400_shots": "NOT_RUN",
+    "kaggle_submission": "NOT_MADE"
+  }
+}
