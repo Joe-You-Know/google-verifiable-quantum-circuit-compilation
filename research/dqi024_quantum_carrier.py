@@ -74,7 +74,69 @@ def source_step(builder, C, K, S, B, F, field, *,
         builder.free(active)
 
 
-def build_dynamic_quantum_steps(*, degree=12, steps=1, roundtrip=False):
+
+def recover_first_with_external_witness(builder, C, K, B, F, W, field):
+    """Conditional, reversible recovery of F1 from an ORIGINAL source W=C0[1].
+
+    At the end of two steps the source relation is
+      W + C2[1] + z2*F2*K2[1] = z1*F1*K1[1].
+    If B1!=0 and K1[1]!=0, divide the witnessed difference by K1[1]
+    and XOR it into F1. This sends F1 to the empty state ONLY when W
+    really is the retained initial source, F1 started at zero, and the
+    two-step source law was followed. For absent denominators/degenerate
+    slopes it explicitly leaves F1 retained rather than inventing a value.
+    The gate map is a reversible XOR even outside that promised subspace.
+    """
+    with builder.mark("future_source_witness_release"):
+        if len(C) != 4 or len(K) != 2 or len(B) != 2:
+            raise ValueError("must follow exactly two source-indexed steps")
+
+        z1 = builder.alloc_qubits(1)[0]
+        z2 = builder.alloc_qubits(1)[0]
+        knz = builder.alloc_qubits(1)[0]
+        enabled = builder.alloc_qubits(1)[0]
+        builder.flip_if_equal(B[0], 0, target=z1)
+        builder.x(z1)
+        builder.flip_if_equal(B[1], 0, target=z2)
+        builder.x(z2)
+        builder.flip_if_equal(K[0][1], 0, target=knz)
+        builder.x(knz)
+        builder.init_and(z1, knz, enabled)
+
+        delta_w = builder.alloc_qubits(field.degree)
+        builder.cx(W, delta_w)
+        builder.cx(C[1], delta_w)
+        builder.ixor_gf2_mul(F[1], K[1][1], target=delta_w,
+                            field=field, control=z2)
+
+        inv_k = builder.alloc_qubits(field.degree)
+        _, inv_chain = builder.init_gf2_inverse_with_scaffold(
+            K[0][1], target=inv_k, field=field)
+        builder.ixor_gf2_mul(delta_w, inv_k, target=F[0],
+                            field=field, control=enabled)
+        builder.del_gf2_inverse_with_scaffold(
+            K[0][1], target=inv_k, scaffold=inv_chain, field=field)
+        builder.free(inv_chain)
+        builder.free(inv_k)
+
+        builder.ixor_gf2_mul(F[1], K[1][1], target=delta_w,
+                            field=field, control=z2)
+        builder.cx(C[1], delta_w)
+        builder.cx(W, delta_w)
+        builder.free(delta_w)
+
+        builder.del_and(z1, knz, enabled)
+        builder.x(knz)
+        builder.flip_if_equal(K[0][1], 0, target=knz)
+        builder.x(z2)
+        builder.flip_if_equal(B[1], 0, target=z2)
+        builder.x(z1)
+        builder.flip_if_equal(B[0], 0, target=z1)
+        builder.free(km.array([z1,z2,knz,enabled]))
+
+
+def build_dynamic_quantum_steps(*, degree=12, steps=1, roundtrip=False,
+                               recover_first=False):
     if degree not in (4, 12):
         raise ValueError("only native trial field degrees 4 and 12")
     if steps not in (1, 2):
@@ -92,14 +154,22 @@ def build_dynamic_quantum_steps(*, degree=12, steps=1, roundtrip=False):
     F = [b.create_quantum_register(degree, name=f"F{j}")
          for j in range(steps)]
     gf = km.GF2Field(degree)
+    W = (b.create_quantum_register(degree, name="W_initial_coefficient1")
+         if recover_first else None)
+    if recover_first and steps != 2:
+        raise ValueError("recovery requires two source-indexed steps")
     for j in range(steps):
         source_step(b, C, K[j], S, B[j], F[j], gf, offset=j)
+    if recover_first:
+        recover_first_with_external_witness(b, C, K, B, F, W, gf)
     if roundtrip:
+        if recover_first:
+            recover_first_with_external_witness(b, C, K, B, F, W, gf)
         for j in reversed(range(steps)):
             source_step(b, C, K[j], S, B[j], F[j], gf,
                         offset=j, adjoint=True)
     return b.finish_circuit(), {
-        "C":C, "S":S, "K":K, "B":B, "F":F,
+        "C":C, "S":S, "K":K, "B":B, "F":F, "W":W,
     }
 
 
