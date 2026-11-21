@@ -1,0 +1,35 @@
+name: Experiment 026c independent small DQI 8192-shot holdout
+
+on:
+  pull_request:
+    paths:
+      - 'research/dqi026_independent_small_decoder.py'
+      - 'scripts/verify_dqi026_small_decoder.py'
+      - '.github/workflows/dqi026_small_holdout.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  small-full-dqi-holdout:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: python -m pip install numpy scipy
+      - name: Run independent 8192-shot holdout at confidence -32
+        run: |
+          PYTHONPATH="$PWD/kickmix:$PWD/verifiers:$PWD/scripts:$PWD" \
+          python scripts/verify_dqi026_small_decoder.py \
+            --n 6 --m 15 --shots 8192 --log2-delta -32 \
+            --seed 20261122 \
+            --out /tmp/dqi026_small_holdout_8192.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: dqi026_small_holdout_8192
+          path: /tmp/dqi026_small_holdout_8192.json

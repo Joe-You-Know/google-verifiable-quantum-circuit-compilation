@@ -1,0 +1,55 @@
+name: Experiment 026 source-regenerated multi-round locator
+
+on:
+  pull_request:
+    paths:
+      - 'research/dqi026_hankel_locator.py'
+      - 'scripts/bench_dqi026_hankel.py'
+      - '.github/workflows/dqi026_hankel_source.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  locator-gf4:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: python -m pip install numpy scipy
+      - name: Exact native 2,3,4 row locator with field4 sources
+        run: |
+          PYTHONPATH="$PWD/kickmix:$PWD/verifiers:$PWD/scripts:$PWD" \
+          python scripts/bench_dqi026_hankel.py \
+            --degree 4 --rounds 2 3 4 --cases 128 --source-crosswalk 0 \
+            --out /tmp/dqi026_GF4.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: dqi026_GF4
+          path: /tmp/dqi026_GF4.json
+
+  locator-gf12:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 65
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: python -m pip install numpy scipy
+      - name: Actual GF12 syndrome-source locator with 2 and 3 row updates
+        run: |
+          PYTHONPATH="$PWD/kickmix:$PWD/verifiers:$PWD/scripts:$PWD" \
+          python scripts/bench_dqi026_hankel.py \
+            --degree 12 --rounds 2 3 --cases 128 --source-crosswalk 96 \
+            --out /tmp/dqi026_GF12.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: dqi026_GF12
+          path: /tmp/dqi026_GF12.json

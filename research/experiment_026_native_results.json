@@ -1,0 +1,189 @@
+{
+  "experiment": "026",
+  "event_date": "2026-11-21",
+  "provenance": "Original independent DQI syndrome-source and earlier Experiments 023-025, no public competitor code",
+  "status": "COMPLETE_SMALL_DQI_VERIFIER_PASS",
+  "correction_history": {
+    "original_compile_failure": "Repeated Hankel source identities generated duplicate-controlled CCX; rejected by native Kickmix",
+    "correction": "For identical quantum field source operands use exact Frobenius square source-bit CNOTs in characteristic two",
+    "failed_initial_run": "https://github.com/Joe-You-Know/google-verifiable-quantum-circuit-compilation/actions/runs/44945131383",
+    "corrected_run": "https://github.com/Joe-You-Know/google-verifiable-quantum-circuit-compilation/actions/runs/44945215726"
+  },
+  "original_source_equations": {
+    "syndrome_contract": "S_k + XOR_{i=1}^t c_i*S_{k-i}=0, k=t..2t-1",
+    "H_source": "H_{row,col}=S_{t+row-col-1}",
+    "y_source": "y_row=S_{t+row}",
+    "K_j": "adj(H) e_j, generated on demand and uncomputed each round",
+    "witness": "H K_j=det(H) e_j",
+    "quotient": "F_j=y_j / det(H) only if det(H)!=0; missing inverse remains unresolved",
+    "source_replay": "F_j recomputed from original syndrome y_j and det(H) only at exact reverse",
+    "persistent_polynomial_K_history": 0,
+    "streaming_persistent_quotient_F_history": 0
+  },
+  "native_full_rank_two_modes": {
+    "run": "https://github.com/Joe-You-Know/google-verifiable-quantum-circuit-compilation/actions/runs/44945215726",
+    "cases_per_mode": 128,
+    "measurement": [
+      {
+        "degree": 4,
+        "rounds": 2,
+        "history_Q": 57,
+        "streaming_Q": 53,
+        "history_static_T": 200,
+        "streaming_static_T": 252,
+        "history_ops": 2169,
+        "streaming_ops": 2681
+      },
+      {
+        "degree": 4,
+        "rounds": 3,
+        "history_Q": 77,
+        "streaming_Q": 69,
+        "history_static_T": 1058,
+        "streaming_static_T": 1136,
+        "history_ops": 9807,
+        "streaming_ops": 10575
+      },
+      {
+        "degree": 4,
+        "rounds": 4,
+        "history_Q": 97,
+        "streaming_Q": 85,
+        "history_static_T": 11274,
+        "streaming_static_T": 11378,
+        "history_ops": 98515,
+        "streaming_ops": 99539
+      },
+      {
+        "degree": 12,
+        "rounds": 2,
+        "history_Q": 205,
+        "streaming_Q": 193,
+        "history_static_T": 1365,
+        "streaming_static_T": 1665,
+        "history_ops": 17540,
+        "streaming_ops": 21068
+      },
+      {
+        "degree": 12,
+        "rounds": 3,
+        "history_Q": 265,
+        "streaming_Q": 241,
+        "history_static_T": 7179,
+        "streaming_static_T": 7629,
+        "history_ops": 74008,
+        "streaming_ops": 79300
+      }
+    ],
+    "all_source_phase_workspace_errors": 0,
+    "unresolved_singular_chart_status": "NOT_A_VALID_DEGREE_t_LOCATOR",
+    "gf12_bm_crosswalk": {
+      "rounds2_valid_full_rank_matches": 24,
+      "rounds2_sampled": 96,
+      "rounds3_valid_full_rank_matches": 15,
+      "rounds3_sampled": 96,
+      "coefficient_disagreements": 0
+    }
+  },
+  "native_rank_adaptive": {
+    "run": "https://github.com/Joe-You-Know/google-verifiable-quantum-circuit-compilation/actions/runs/44945454180",
+    "scheme": "Source flags for degrees0..3; verify all original syndrome recurrence equations, choose first witnessed valid, uncompute other candidates and flags",
+    "field4": {
+      "n": 6,
+      "random_arbitrary_shots": 64,
+      "probe_Q": 88,
+      "probe_T": 8287,
+      "phase_roundtrip_Q": 88,
+      "phase_roundtrip_T": 10168,
+      "phase_ops": 94975,
+      "status": "PASS",
+      "phase_value_source_scratch_errors": 0,
+      "degree_counts": {
+        "0": 8,
+        "1": 8,
+        "3": 37,
+        "unresolved": 11
+      }
+    },
+    "field12": {
+      "n": 6,
+      "first_party_valid_shots": 128,
+      "arbitrary_shots": 64,
+      "probe_Q": 284,
+      "probe_T": 55489,
+      "phase_roundtrip_Q": 284,
+      "phase_roundtrip_T": 68568,
+      "phase_ops": 730883,
+      "status": "PASS",
+      "phase_value_source_scratch_errors": 0,
+      "first_party_BM_locator_disagreements": 0,
+      "first_party_valid_unresolved": 0,
+      "all_degree_counts": {
+        "0": 16,
+        "1": 38,
+        "2": 56,
+        "3": 74,
+        "unresolved": 8
+      }
+    },
+    "persistent_K_histories": 0,
+    "persistent_quotient_histories": 0
+  },
+  "complete_small_DQI": {
+    "run": "https://github.com/Joe-You-Know/google-verifiable-quantum-circuit-compilation/actions/runs/44945612261",
+    "implementation": "Independent rank-adaptive source locator, evaluator Omega, position Chien and Forney phase, exact reversible source cleanup",
+    "n": 6,
+    "m": 15,
+    "degree": 12,
+    "shots": 512,
+    "log2_delta": -16,
+    "status": "PASS",
+    "value_errors": 0,
+    "phase_errors": 0,
+    "Q": 284,
+    "T_static": 87633,
+    "T_mean": 87633,
+    "ops": 965066,
+    "reaction_depth": 317,
+    "local_development_score": 21096773742.425747,
+    "circuit_sha256": "7bab9a078230a88dc4a2e8d55af0f61a98e97f5a70dcc64d8e7fde81d7d1c9f8",
+    "small_experiment023_control": {
+      "Q": 306,
+      "T_static": 111353,
+      "ops": 1145593,
+      "phase_status": "PASS",
+      "full_competition_dimensionality": false
+    },
+    "small_cost_reduction_percent_Q_squared_T": 32.210944248419636,
+    "small_Q_reduction": 22,
+    "small_T_reduction": 23720,
+    "ops_reduction": 180527,
+    "original_source_K_histories": 0,
+    "retained_F_histories": 0,
+    "independent_holdout": {
+      "run": "https://github.com/Joe-You-Know/google-verifiable-quantum-circuit-compilation/actions/runs/44945868608",
+      "seed": 20261122,
+      "verified_shots": 8192,
+      "log2_delta": -32,
+      "status": "PASS",
+      "value_errors": 0,
+      "phase_errors": 0,
+      "Q": 284,
+      "static_T": 87633,
+      "mean_T": 87633,
+      "ops": 965066,
+      "reaction_depth": 317,
+      "score": 9717213330.2116,
+      "circuit_sha256": "7bab9a078230a88dc4a2e8d55af0f61a98e97f5a70dcc64d8e7fde81d7d1c9f8",
+      "meaning": "Separate first-party valid-error holdout; same exact circuit hash at stricter confidence."
+    }
+  },
+  "scope": {
+    "complete_small_DQI": "PROVED_BY_NATIVE_SUPPLIED_VERIFIER_512_SAMPLES",
+    "full_competition_n70_m4095": "NOT_BUILT",
+    "degree35_determinant_method": "FACTORIAL_COMPLEXITY_NOT_PRACTICAL",
+    "Kaggle_submission": "NOT_MADE",
+    "public_leaderboard_score": "UNKNOWN",
+    "future_need": "Efficient source-preserving subresultant or Hankel elimination with bounded Q and no accumulated K/F histories"
+  }
+}

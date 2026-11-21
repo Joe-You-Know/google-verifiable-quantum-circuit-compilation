@@ -1,0 +1,35 @@
+name: Experiment 026c independent full small DQI source phase
+
+on:
+  pull_request:
+    paths:
+      - 'research/dqi026_independent_small_decoder.py'
+      - 'research/dqi026_rank_adaptive.py'
+      - 'scripts/verify_dqi026_small_decoder.py'
+      - '.github/workflows/dqi026_small_dqi_phase.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  full-small-firstparty-verifier:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: python -m pip install numpy scipy
+      - name: Native complete independent 6-syndrome 15-position DQI phase
+        run: |
+          PYTHONPATH="$PWD/kickmix:$PWD/verifiers:$PWD/scripts:$PWD" \
+          python scripts/verify_dqi026_small_decoder.py \
+            --n 6 --m 15 --shots 512 --log2-delta -16 \
+            --out /tmp/dqi026_small_complete.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: dqi026_small_full_phase_receipt
+          path: /tmp/dqi026_small_complete.json
