@@ -127,12 +127,14 @@ def future_source_workspace(builder,S,K,field,*,word_count=12):
         words=[builder.alloc_qubits(field.degree)
                for _ in range(word_count)]
         for j in range(word_count):
-            s=S[j//4]
-            k=K[j//4][j%4]
+            source_row, column = divmod(j,4)
+            s=S[source_row]
+            k=K[0 if source_row==2 else source_row][column]
             builder.ixor_gf2_mul(s,k,target=words[j],field=field)
         for j in reversed(range(word_count)):
-            s=S[j//4]
-            k=K[j//4][j%4]
+            source_row, column = divmod(j,4)
+            s=S[source_row]
+            k=K[0 if source_row==2 else source_row][column]
             builder.ixor_gf2_mul(s,k,target=words[j],field=field)
         for item in reversed(words):
             builder.free(item)
