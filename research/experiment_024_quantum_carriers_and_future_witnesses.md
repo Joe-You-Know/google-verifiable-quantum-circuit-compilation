@@ -114,3 +114,50 @@ The Q savings in this isolated trial are versus the *extra-witness* one-step mic
 **Demonstrated:** two reversible quantum-valued recurrence steps with null/non-null denominator branch, full reverse cleanup, exact two-step future-only insufficiency, and conditional original-source quantum quotient recovery.
 
 **Not established:** a fully reversible multi-round BM decoder that releases all intermediate carriers, whether a suitable witness already exists in all DQI source states, persistent Q reduction for full DQI, and a new Kaggle leaderboard score.
+
+
+## 6. Later native evidence — original syndrome reused instead of independent W
+
+**2026-11-21, completed CI:** https://github.com/Joe-You-Know/google-verifiable-quantum-circuit-compilation/actions/runs/44936146345
+
+The source-constrained witness test was repeated with **W an alias of the already named original quantum register S0**, under the explicitly declared input relation
+
+    C_initial[1] = S0.
+
+This changes no arithmetic operation. Its only physical resource difference
+from the independent-W test is that no additional 12-bit W source register
+is allocated. Importantly, source consistency here is a tested **input
+subspace condition**, not something presently proved for the accepted DQI
+source. Invalid-source cases were also injected and remained distinguishable.
+
+| GF(2^12) quantum native witness mode | Separate W | W=S0 source reuse |
+|---|---:|---:|
+| Physical Q | 352 | **340** |
+| Static Toffoli-like T | 3,049 | 3,049 |
+| Native operations | 37,634 | 37,634 |
+| Tested forward cases | 128 | 128 |
+| Value/phase errors | 0 | 0 |
+| Dirty workspace | 0 | 0 |
+| Valid-witness first carriers nonzero after recovery | 0 | 0 |
+| Missing-slope unresolved nonzero carriers | 16 | 16 |
+| False-witness residuals retained | 32 | 32 |
+| Absent-denominator source identities | 32 | 32 |
+| Exact inverse tested | 128 PASS | 128 PASS |
+
+In GF(2^4), the analogous native comparison reduced physical Q
+from 108 to 104 with identical 408 static Toffoli-like operations, and
+both forward and adjoint checks PASS.
+
+**What was actually demonstrated:** when a source-register relationship
+exists, already retained source storage may serve as the witness required
+to recover a previously distinct quotient history. Both quantum-valued
+K,b branches and all original sources remain intact on the tested
+relations, and independent invalid-source tests exhibit the expected
+nonzero residual rather than false cleanup.
+
+**Not demonstrated:** source relation internally enforced on the entire
+admissible DQI input subspace; unconditional allocator release of F1;
+a native full multi-round reversible locator architecture; any decrease
+from Experiment 023's accepted-for-local-verifier 1860 Q baseline; or
+a Kaggle score change. The 12 Q comparison above is **microcircuit
+witness-register reuse**, not a full decoder saving.
