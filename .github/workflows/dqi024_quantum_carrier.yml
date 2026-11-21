@@ -1,0 +1,55 @@
+name: Experiment 024 quantum source carriers and two-step causal witnesses
+
+on:
+  pull_request:
+    paths:
+      - 'research/dqi024_quantum_carrier.py'
+      - 'scripts/bench_dqi024_quantum_carrier.py'
+      - '.github/workflows/dqi024_quantum_carrier.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  native-four-bit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: python -m pip install numpy scipy
+      - name: Test quantum K,b,S zero/nonzero and exact 2-step reverse, GF4
+        run: |
+          PYTHONPATH="$PWD/kickmix:$PWD/verifiers:$PWD/scripts:$PWD" \
+          python scripts/bench_dqi024_quantum_carrier.py \
+            --degree 4 --cases 128 \
+            --out /tmp/dqi024_q4.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: dqi024_quantum_GF4
+          path: /tmp/dqi024_q4.json
+
+  native-twelve-bit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 50
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: python -m pip install numpy scipy
+      - name: Test native GF12 two-step quantum source and 4096-way witness
+        run: |
+          PYTHONPATH="$PWD/kickmix:$PWD/verifiers:$PWD/scripts:$PWD" \
+          python scripts/bench_dqi024_quantum_carrier.py \
+            --degree 12 --cases 128 \
+            --out /tmp/dqi024_q12.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: dqi024_quantum_GF12
+          path: /tmp/dqi024_q12.json
