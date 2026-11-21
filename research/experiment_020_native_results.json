@@ -71,10 +71,36 @@
     "reason": "static resource-only 70x70 comparison; not a phase test"
   },
   "obligations": {
-    "full_4095_position_compilation": "NOT_RUN",
+    "full_4095_position_compilation": "PASS_NATIVE_STATIC",
     "full_4095_position_official_phase_verifier": "NOT_RUN",
     "production_decoder_changed": false,
     "competition_submission": "NOT_MADE"
   },
-  "next": "Repeat full 70x4095 native compilation and measure scored mean T with the official verifier on sufficient shots; evaluate phase, clean scratch and errors at competition confidence log2_delta=-128."
+  "next": "Run official sampled phase verifier at n=70,m=4095, degree12, 102400 shots, log2_delta=-128 and verify zero workspace and mean Toffoli-like counts before competition submission; feature flag is not yet production.",
+  "competition_width_static": {
+    "n": 70,
+    "m": 4095,
+    "degree": 12,
+    "ci": "https://github.com/Joe-You-Know/google-verifiable-quantum-circuit-compilation/actions/runs/44844416271",
+    "original": {
+      "Q": 1893,
+      "Tstatic": 5725461,
+      "ops": 86051014
+    },
+    "candidate": {
+      "Q": 1876,
+      "Tstatic": 5618901,
+      "ops": 83791054
+    },
+    "difference": {
+      "Q": -17,
+      "Tstatic": -106560,
+      "ops": -2259960
+    },
+    "native_Kickmix_compiled": true,
+    "whole_competition_width_static_Q_T_measured": true,
+    "phase_verifier": "NOT_RUN",
+    "scored_mean_T": "NOT_MEASURED",
+    "confidence": "STATIC RESOURCE COUNT ONLY"
+  }
 }
