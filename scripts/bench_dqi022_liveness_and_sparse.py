@@ -27,7 +27,7 @@ from research.dqi020_experimental_decoder import (
     ProosAndZalkaDecoder, default_n_iters,
 )
 from research.dqi022_sparse_control import SparseControlDecoder
-from research.dqi022_serial_forney import SerialForneyDecoder
+from research.dqi022_serial_forney import SerialForneyDecoder, SparseSerialForneyDecoder
 from dqi.verify_submission_dqi import (
     ProblemSpecDQI, FieldTables, default_num_accepted_values,
     sample_shots, verify,
@@ -165,6 +165,7 @@ def build_audit(n, m, degree, mode, shared_shots=None, seed=20261121,
         "020_reference": ProosAndZalkaDecoder,
         "sparse_control": SparseControlDecoder,
         "serial_forney": SerialForneyDecoder,
+        "sparse_serial_forney": SparseSerialForneyDecoder,
     }[mode]
     cls(n, km.GF2Field(degree), quotient_mode="norm_inverse"
         ).build_syndrome_decoding_mbuc(
@@ -221,7 +222,7 @@ def main():
     p.add_argument("--m", type=int, default=15)
     p.add_argument("--degree", type=int, default=12)
     p.add_argument("--modes", nargs="+", choices=("020_reference",
-         "sparse_control", "serial_forney"), default=["020_reference", "sparse_control"])
+         "sparse_control", "serial_forney", "sparse_serial_forney"), default=["020_reference", "sparse_control"])
     p.add_argument("--shots", type=int, default=512,
          help="0 means native compile/liveness only")
     p.add_argument("--seed", type=int, default=20261121)
